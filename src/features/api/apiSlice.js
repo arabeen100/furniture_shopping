@@ -74,16 +74,6 @@ export const apiSlice= createApi({
                 body:formData,
             })}
         }),
-        forgotPasswoed:builder.mutation({
-            query:()=>{
-                const formData = new FormData();
-                formData.append('email', email);
-                return({
-                url:'/auth/forgotPassword',
-                method:'POST',
-                body:formData,
-            })}
-        }),
         logOut:builder.mutation({
              query:(token)=>({
                 url:'/auth/logout',
@@ -161,8 +151,8 @@ export const apiSlice= createApi({
             })
         }),
         getCategoryProducts:builder.query({
-            query:(productId,{color,size,sort,limit,offset,minPrice,maxPrice})=>({
-                url:`/products/category/${productId}`,
+            query:(categoryId,{color,size,sort,limit,offset,minPrice,maxPrice})=>({
+                url:`/products/category/${categoryId}`,
                 params:{
                     ...(color&&{color}),
                     ...(size&&{size}),
