@@ -1,11 +1,15 @@
-
+import footerLogo from "../assets/footer-logo.svg"
+import facebookLogo from "../assets/facebook.svg"
+import instagramLogo from "../assets/instagram.svg"
+import twitterLogo from "../assets/twitter.svg"
+import youtubeLogo from "../assets/youtube.svg"
 import React from 'react'
 import { Link } from 'react-router-dom'
 const Footer = () => {
   return (
     < footer>
      
-     <Link to="/" className=' relative top-12'><img  src='/src/assets/footer-logo.svg' alt='Al-Rahman_logo' loading='lazy' />
+     <Link to="/" className=' relative top-12'><img  src={footerLogo} alt='Al-Rahman_logo' loading='lazy' />
      </Link> 
       <div className='flex flex-col gap-4 text-white relative top-12 text-right ' >
         <p>فئات</p>
@@ -18,17 +22,17 @@ const Footer = () => {
       <div className='flex flex-col gap-4 text-white relative top-12 text-right ' >
       <p>وسائل التواصل الاجتماعي</p>
       <div className='flex justify-around'>
-         <a href=''> <img src='/src/assets/youtube.svg' alt='youtube_logo'loading='lazy'/>
+         <a href=''> <img src={youtubeLogo} alt='youtube_logo'loading='lazy'/>
          </a>
          <a href=''>
-          <img src='/src/assets/twitter.svg' alt='twitter_logo'loading='lazy'/>
+          <img src={twitterLogo}alt='twitter_logo'loading='lazy'/>
          </a>
           <a href=''>
-          <img src='/src/assets/instagram.svg' alt='instagram_logo'loading='lazy'/>
+          <img src={instagramLogo}alt='instagram_logo'loading='lazy'/>
          </a>
 
          <a href=''>
-          <img src='/src/assets/facebook.svg' alt='facebook_logo'loading='lazy'/>
+          <img src={facebookLogo}alt='facebook_logo'loading='lazy'/>
          </a>
         </div>
         <Link to="/orders/refund">استرجاع</Link>

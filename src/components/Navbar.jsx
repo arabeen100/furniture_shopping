@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import { openSearch } from '@/features/search/searchSlice'
 import { setExpanded } from '../features/sidebar/sidebarSlice'
 import { useSelector } from 'react-redux'
+import profileLogo from "../assets/profile.webp"
+import navbarLogo from "../assets/nav-logo.svg"
 const Navbar = () => {
    const dispatch= useDispatch();
    const {registered}=useSelector((state)=>state.register)
@@ -15,7 +17,7 @@ const Navbar = () => {
       <Link to="/auth/login" className={` ${registered?"hidden":"grid place-content-center"} w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white`}>تسجيل الدخول</Link>
       <Link to='/auth/signup' className={` ${registered?"hidden":"grid  place-content-center"} w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white`}>تسجيل</Link>
       <Link to='/profile/personalinfo' className={`${!registered?"md:hidden":"md:grid md:place-content-center"}  hidden  w-[38px] h-[38px] bg-white rounded-full`}>
-        <img src='/src/assets/profile.webp' alt='profile' loading='lazy' width='25' />
+        <img src={profileLogo} alt='profile' loading='lazy' width='25' />
       </Link>  
       <button onClick={()=>dispatch(openSearch())} className=' cursor-pointer'>
         <Searchicon/> 
@@ -34,7 +36,7 @@ const Navbar = () => {
      </div>
      <div className='flex md:flex-row-reverse  items-center relative right-5 gap-2'>
       <Link to='/'>
-       <img src='/src/assets/nav-logo.svg' alt='Al-rahman_logo'loading='lazy'/>
+       <img src={navbarLogo} alt='Al-rahman_logo'loading='lazy'/>
       </Link>
       <button onClick={()=>dispatch(setExpanded())}>
         <Menuicon/>

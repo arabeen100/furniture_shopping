@@ -10,7 +10,7 @@ export function AppSidebar() {
       const {registered}=useSelector((state)=>state.register)
       return (
          <div className={`${expanded&&"w-full h-full bg-[#00000070] fixed z-20"}`}>
-          <aside  onClick={(e)=>e.stopPropagation()} className={`h-screen bg-white  transition-all duration-300 overflow-hidden  fixed left-0  z-30 ${expanded ? "w-[300px]" : "w-0"}`}>
+          <aside  onClick={(e)=>e.stopPropagation()} className={`h-screen bg-white  transition-all overflow-hidden duration-300  fixed left-0  z-30 w-[300px] ${expanded ? " translate-x-0" : " -translate-x-full"}`}>
             
               <button  onClick={()=>{dispatch(setExpanded())}} className=" relative cursor-pointer top-10 left-5">
                 <Closeicon/>
