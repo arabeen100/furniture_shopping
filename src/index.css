@@ -121,4 +121,58 @@
   body {
     @apply bg-background text-foreground;
   }
+  footer{
+    @apply flex flex-row-reverse  flex-wrap justify-around items-start  fixed bottom-0 w-full gap-5
+    h-[70%] max-h-[100%]  bg-[#042e2e]
+  }
+  nav{
+    @apply w-full h-[85px] flex justify-between items-center  bg-[#042e2e] fixed top-0 z-10
+  }
+  nav svg{
+    @apply stroke-white hover:stroke-[#3f8181] cursor-pointer
+  }
+}
+@layer  components{
+  .App{
+    @apply h-screen 
+  }
+  .categories{
+    @apply hover:-translate-x-[7px] hover:scale-105
+  }
+}
+@layer base {
+  :root {
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+@theme{
+  --animate-open-menu: open-menu .5s ease-in-out ;
+  @keyframes open-menu {
+    0%{
+        trransform:translateX(0)
+    }
+    100%{
+      
+
+    }
+    
+  }
 }

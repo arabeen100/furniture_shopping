@@ -1,3 +1,4 @@
+import Layout from "./components/Layout";
 import Home from "./components/Home";
 import Login from "./components/authentication/Login";
 import Forgotpassword from "./components/authentication/Forgotpassword";
@@ -12,25 +13,26 @@ import Personalinfo from "./components/profile/Personalinfo";
 import Userorders from "./components/profile/Userorders";
 import Wishlist from "./components/profile/Wishlist";
 import {  Route,Routes } from "react-router-dom";
+import Categories from "./components/categories/Categories";
+import Profile from "./components/profile/Profile";
+import { useSelector } from "react-redux";
+import Search from "./components/products/Search";
 function App() {
-
+   
   return (
+ 
     <Routes>
       <Route path="/" element={<Layout/>}>
         <Route index element={<Home/>}/>
         <Route path="auth">
-          <Route path="
-          signup" element={<Signup/>}/>
-           <Route path="
-          verifyemail" element={<Verifyemail/>}/>
-           <Route path="
-          login" element={<Login/>}/>
-           <Route path="
-          forgotpass" element={<Forgotpassword/>}/>
-           <Route path="
-          resetpass" element={<Resetpassword/>}/>
+          <Route path="signup" element={<Signup/>}/>
+           <Route path="verifyemail" element={<Verifyemail/>}/>
+           <Route path="login" element={<Login/>}/>
+           <Route path="forgotpass" element={<Forgotpassword/>}/>
+           <Route path="resetpass" element={<Resetpassword/>}/>
         </Route>
         <Route path="categories">
+          <Route index element={<Categories/>}/>
           <Route path=":name" element={<Category/>}/>
         </Route>
         <Route path="orders">
@@ -40,13 +42,17 @@ function App() {
         <Route path="products">
           <Route path=":name" element={<Product/>}/>
         </Route>
-        <Route path="profile">
-          <Route index element={<Personalinfo/>}/>
+        <Route path="profile" element={<Profile/>}>
+          <Route path="personalinfo" element={<Personalinfo/>}/>
           <Route path="userorders" element={<Userorders/>}/>
           <Route path="wishlist" element={<Wishlist/>}/>
         </Route>
       </Route>
+    
     </Routes>
+  
+  
+
   )
 }
 
