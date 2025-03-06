@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from "react-redux"
 import { Closeicon } from "@/icons"
 import { setExpanded } from "@/features/sidebar/sidebarSlice"
 import { ifNotRegister } from "@/features/register/registerSlice"
-
+import profileLogo from "../assets/profile.webp"
 export function AppSidebar() {
       const dispatch=useDispatch();
       const {expanded} =useSelector((state)=>state.sidebar)
@@ -22,7 +22,7 @@ export function AppSidebar() {
                 <li><Link to='/categories/مجامر'>مجامر</Link></li>
                 <li><Link to='/categories/ستائر'>ستائر</Link></li>
                 <li><Link to='/categories/any'>any</Link></li>
-                <li><Link to='profile/Personalinfo' className={`${!registered&& " hidden"} md:hidden relative top-2 left-64 w-[38px] h-[38px]`} ><img src="/src/assets/profile.webp" width='25' alt="profile-logo"loading="lazy"/></Link></li>
+                <li><Link to='profile/Personalinfo' className={`${!registered&& " hidden"} md:hidden relative top-2 left-64 w-[38px] h-[38px]`} ><img src={profileLogo} width='25' alt="profile-logo"loading="lazy"/></Link></li>
                 <li ><Link onClick={()=>{dispatch(ifNotRegister())}} to='/auth/login' className={`${!registered&& " hidden"} w-[60px] h-[40px] bg-white outline-0  \cursor-pointer                border  text-sm border-black grid place-content-center relative top-6 left-56 `}>logout</Link ></li>
               </ul>
               <ul className={`${!registered?" inline-flex gap-3":"hidden"} relative left-13 top-9`}>
