@@ -26,8 +26,8 @@ export function AppSidebar() {
                 <li ><Link onClick={()=>{dispatch(ifNotRegister())}} to='/auth/login' className={`${!registered&& " hidden"} w-[60px] h-[40px] bg-white outline-0  \cursor-pointer                border  text-sm border-black grid place-content-center relative top-6 left-56 `}>logout</Link ></li>
               </ul>
               <ul className={`${!registered?" inline-flex gap-3":"hidden"} relative left-13 top-9`}>
-                <li><Link to="/auth/login" className={`w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-white border border-black grid  place-content-center `}>تسجيل الدخول</Link></li>
-                <li><Link to="/auth/signup"className={` w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-white border border-black grid  place-content-center `}>تسجيل</Link></li>
+                <li><Link onClick={()=>{dispatch(setExpanded())}} to="/auth/login" className={`w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-white border border-black grid  place-content-center `}>تسجيل الدخول</Link></li>
+                <li><Link onClick={()=>{dispatch(setExpanded())}}  to="/auth/signup"className={` w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-white border border-black grid  place-content-center `}>تسجيل</Link></li>
               </ul>
           </aside>
         </div>
