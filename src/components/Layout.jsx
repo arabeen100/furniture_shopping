@@ -9,6 +9,7 @@ import { setExpanded } from '../features/sidebar/sidebarSlice';
 
 
 const Layout = () => {
+  var heightOfOutlet="300px";
   const dispatch=useDispatch();
   const {isOpen}=useSelector((state)=>state.search)
   const {expanded}=useSelector((state)=>state.sidebar)
@@ -18,7 +19,7 @@ const Layout = () => {
           <AppSidebar/>
           <Navbar/>
           {isOpen&&<Search/>}
-          <div className='h-[350px]'>
+          <div className={`h-[400px]`}>
             <Outlet/>
           </div>
           <Footer/>
