@@ -15,11 +15,14 @@ const Layout = () => {
   return (
 
     <div  onClick={()=>{expanded && dispatch(setExpanded())}} className='App '>
+          <AppSidebar/>
           <Navbar/>
           {isOpen&&<Search/>}
-          <Outlet />
+          <div className='h-[350px]'>
+            <Outlet/>
+          </div>
           <Footer/>
-          <AppSidebar/>
+          
     </div>
   )
 }

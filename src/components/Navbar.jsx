@@ -2,7 +2,7 @@ import React from 'react'
 import { Carticon,Searchicon,Hearticon,Menuicon } from '@/icons'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { openSearch } from '@/features/search/searchSlice'
+import { openSearch } from '../features/search/searchSlice'
 import { setExpanded } from '../features/sidebar/sidebarSlice'
 import { useSelector } from 'react-redux'
 import profileLogo from "../assets/profile.webp"
@@ -14,9 +14,9 @@ const Navbar = () => {
   return (
     <nav>
      <div className='flex justify-baseline items-center gap-3 relative  left-5'>
-      <Link to="/auth/login" className={` ${registered?"hidden":"grid place-content-center"} w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white`}>تسجيل الدخول</Link>
-      <Link to='/auth/signup' className={` ${registered?"hidden":"grid  place-content-center"} w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white`}>تسجيل</Link>
-      <Link to='/profile/personalinfo' className={`${!registered?"md:hidden":"md:grid md:place-content-center"}  hidden  w-[38px] h-[38px] bg-white rounded-full`}>
+      <Link to="/auth/login" className={` ${registered?"hidden":"hidden   large:grid large:place-content-center"}  w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white`}>تسجيل الدخول</Link>
+      <Link to='/auth/signup' className={` ${registered?"hidden":" hidden large:grid  large:place-content-center"} w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white`}>تسجيل</Link>
+      <Link to='/profile/personalinfo' className={`${!registered?"large:hidden":"large:grid large:place-content-center"}  hidden  w-[38px] h-[38px] bg-white rounded-full`}>
         <img src={profileLogo} alt='profile' loading='lazy' width='25' />
       </Link>  
       <button onClick={()=>dispatch(openSearch())} className=' cursor-pointer'>
@@ -34,14 +34,14 @@ const Navbar = () => {
       
       
      </div>
-     <div className='flex md:flex-row-reverse  items-center relative right-5 gap-2'>
+     <div className='flex large:flex-row-reverse  items-center relative right-5 gap-2'>
       <Link to='/'>
        <img src={navbarLogo} alt='Al-rahman_logo'loading='lazy'/>
       </Link>
-      <button onClick={()=>dispatch(setExpanded())}>
+      <button onClick={()=>{dispatch(setExpanded())}}>
         <Menuicon/>
       </button>
-      <p className='hidden md:block  text-white text-[20px]'>فئات</p>
+      <p className='hidden large:block  text-white text-[20px]'>فئات</p>
      
      </div>
     </nav>

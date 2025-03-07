@@ -122,11 +122,12 @@
     @apply bg-background text-foreground;
   }
   footer{
-    @apply flex flex-row-reverse  flex-wrap justify-around items-start  fixed bottom-0 w-full gap-5
-    h-[70%] max-h-[100%]  bg-[#042e2e]
+    @apply flex flex-col  justify-around items-end  sticky top-0 w-full gap-5  bg-[#042e2e] h-[calc(100vh+90px)] 
+    small:justify-around small:flex-row-reverse small:items-start small:h-[73vh]  small:flex-wrap  larger:flex-nowrap larger:h-[63vh] xlarge:h-[55vh]
   }
+
   nav{
-    @apply w-full h-[85px] flex justify-between items-center  bg-[#042e2e] fixed top-0 z-10
+    @apply w-full h-[85px] flex justify-between items-center  bg-[#042e2e] 
   }
   nav svg{
     @apply stroke-white hover:stroke-[#3f8181] cursor-pointer
@@ -164,15 +165,8 @@
   }
 }
 @theme{
-  --animate-open-menu: open-menu .5s ease-in-out ;
-  @keyframes open-menu {
-    0%{
-        trransform:translateX(0)
-    }
-    100%{
-      
-
-    }
-    
-  }
+  --breakpoint-large:992px;
+  --breakpoint-small:576px;
+  --breakpoint-larger:768px;
+  --breakpoint-xlarge:1200px;
 }
