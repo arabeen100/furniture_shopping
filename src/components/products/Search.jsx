@@ -12,7 +12,7 @@ const Search = () => {
        <button className=' bg-[#042e2e] h-15 w-20 rounded-tl-[10px] rounded-bl-[10px] text-white ml-2.5 sm:ml-5 cursor-pointer'>
         <label htmlFor='search'>بحث</label>
        </button>
-       <input className=' w-[80%] sm:w-[90%] h-15 border-[#042e2e] border-2 rounded-br-[10px] rounded-tr-[10px] outline-0 text-xl'
+       <input className=' w-[78%] sm:w-[90%] h-15 border-[#042e2e] border-2 rounded-br-[10px] rounded-tr-[10px] outline-0 text-xl'
        id='search'
        value={searchInput}
        role='searchBox'
