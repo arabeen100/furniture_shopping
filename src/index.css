@@ -173,8 +173,8 @@
 @layer utilities {
   @media (min-width: 667px) and (max-width: 667px) {
     .only-667 {
-      margin-top: 130px;
-      height: 430px;
+      margin-top: 250px;
+      height: 450px;
     }
   }
 }
