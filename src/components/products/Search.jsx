@@ -1,12 +1,26 @@
 import { Closeicon } from '@/icons'
 import { useSelector,useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 import { closeSearch } from '@/features/search/searchSlice'
 import { setSearch } from '@/features/search/searchSlice'
 const Search = () => {
-  var {searchInput}=useSelector((state)=> state.search);
+  const {searchInput}=useSelector((state)=> state.search);
+  const {isOpen}=useSelector((state)=>state.search)
   const dispatch=useDispatch();
+  useEffect(()=>{
+    if(isOpen){
+      document.body.classList.add("overflow-hidden");
+    }else{
+      document.body.classList.remove("overflow-hidden");
+    }
+    return ()=>{
+      document.body.classList.remove("overflow-hidden");
+    }
+
+  },[isOpen])
+
   return ( 
-    <form className='w-[95%] sm:w-[98%] h-[90%] fixed z-10 top-5 left-[2.5%] sm:left-[1%] bg-white mx-auto flex flex-col gap-10 rounded-[8px]' onSubmit={(e)=>e.preventDefault()}>
+    <form className='w-[95%] sm:w-[98%] h-[90%] fixed z-10 top-5 left-[2.5%] sm:left-[1%] bg-white mx-auto flex flex-col gap-10 rounded-[8px] shadow-2xl' onSubmit={(e)=>e.preventDefault()}>
        <button className='cursor-pointer  relative left-[93%] sm:left-[96%] top-5' onClick={()=>dispatch(closeSearch())}><Closeicon/></button>
        <div className=' flex w-full '>
        <button className=' bg-[#042e2e] h-15 w-20 rounded-tl-[10px] rounded-bl-[10px] text-white ml-2.5 sm:ml-5 cursor-pointer'>

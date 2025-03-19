@@ -15,10 +15,11 @@ import Wishlist from "./components/profile/Wishlist";
 import {  Route,Routes } from "react-router-dom";
 import Categories from "./components/categories/Categories";
 import Profile from "./components/profile/Profile";
-import { useSelector } from "react-redux";
-import Search from "./components/products/Search";
+import Contactus from "./components/Contactus";
+import Faqs from "./components/Faqs";
+import Missing from "./components/Missing";
+
 function App() {
-   
   return (
  
     <Routes>
@@ -47,6 +48,9 @@ function App() {
           <Route path="userorders" element={<Userorders/>}/>
           <Route path="wishlist" element={<Wishlist/>}/>
         </Route>
+        <Route path="contactUs" element={<Contactus/>}/>
+        <Route path="FAQ" element={<Faqs/>}/>
+        <Route path="*" element={<Missing/>}/> 
       </Route>
     
     </Routes>

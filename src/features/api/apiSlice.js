@@ -2,86 +2,67 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice= createApi({
     reducerPath:'api',
     baseQuery: fetchBaseQuery({
-        baseUrl:"https://al-rahman-moebel.eu/api"
+        baseUrl:"https://al-rahman-moebel.eu/api",
     }),
     endpoints:(builder)=>({
         register:builder.mutation({
-            query:({email,userName,name,phone,password})=>{
-                const formData=new FormData();
-                formData.append("email", email);
-                formData.append("userName",userName);
-                formData.append('name',name)
-                formData.append("phone",phone);
-                formData.append("password",password);
-                return({
-                url:'/auth/register',
-                method:'POST',
-                body:formData,
-            })}
+            query:(newUser)=>({
+                url: '/auth/register',
+                method: 'POST',
+                body: newUser,
+            })
         }),
         verifyEmail:builder.mutation({
-            query:({email,verificationCode})=>{
-                const formData=new FormData();
-                formData.append("email", email);
-                formData.append("verificationCode",verificationCode);
+            query:(code)=>{
                 return({
                 url:'/auth/verifyEmail',
                 method:'POST',
-                body:formData,
+                body:code,
             })}
         }),
         logIn:builder.mutation({
-            query:(user,{userIdentifier,password})=>{
-                const formData = new FormData();
-                formData.append('userIdentifier', userIdentifier);
-                formData.append('password', password);
+            query:(loginUser)=>{
                 return({
                 url:'/auth/login',
                 method:'POST',
-                body:formData,
+                body:loginUser,
             })}
         }),
         resendCode:builder.mutation({
-            query:({email,codeType})=>{
-                const formData = new FormData();
-                formData.append('email', email);
-                formData.append('codeType', codeType);
+            query:(resendCode)=>{
                 return({
                 url:'/auth/resendCode',
                 method:'POST',
-                body:formData,
+                body:resendCode,
             })}
         }),
         forgotPasswoed:builder.mutation({
-            query:({email})=>{
-                const formData = new FormData();
-                formData.append('email', email);
+            query:(email)=>{
                 return({
                 url:'/auth/forgotPassword',
                 method:'POST',
-                body:formData,
+                body:email,
             })}
         }),
         resetPasswoed:builder.mutation({
-            query:({email,resetPasswordCode,password})=>{
-                const formData = new FormData();
-                formData.append('email', email);
-                formData.append('resetPasswordCode', resetPasswordCode);
-                formData.append('password', password);
+            query:(resetPass)=>{
                 return({
                 url:'/auth/resetPassword',
                 method:'POST',
-                body:formData,
+                body:resetPass,
             })}
         }),
         logOut:builder.mutation({
-             query:(token)=>({
+             query:()=>{
+                 const token=localStorage.getItem("userToken")
+                return{
                 url:'/auth/logout',
                 method:'POST',
                 headers:{
-                    Authorization:`Bearer${token}`
+                    "Authorization":`Bearer ${token}`
                 }
-             })
+              }
+             }
         }),
         getCarousels:builder.query({
             query:()=>'/carousels/'
@@ -90,16 +71,11 @@ export const apiSlice= createApi({
             query:()=>'/categories/'
         }),
         contact:builder.mutation({
-            query:({name,email,phone,message})=>{
-                const formData=new FormData();
-                formData.append("name",name);
-                formData.append("email", email);
-                formData.append("phone",phone);
-                formData.append("message",message);
+            query:(contact)=>{
                 return({
                 url:'/contactus/',
                 method:'POST',
-                body:formData,
+                body:contact,
             })}
         }),
         getFaqs:builder.query({
@@ -344,6 +320,5 @@ export const apiSlice= createApi({
 
     })
 })
-export default apiSlice.reducer;
 export const {useGetCarouselsQuery,useRegisterMutation,useVerifyEmailMutation,useLogInMutation,useResendCodeMutation,useForgotPasswoedMutation,useResetPasswoedMutation,useLogOutMutation,useGetCategoriesQuery,useGetFaqsQuery,useContactMutation,useGetCouponQuery,useCheckOutMutation,useRefundMutation,useGetShippingPriceQuery,useGetProductsQuery,useGetCategoryProductsQuery,useGetProductQuery,useGetSearchQuery,useGetTrendyQuery,useGetProfileQuery,useGetAddressesQuery,useAddAddressMutation,useEditAddressMutation,useDeleteAddressMutation,useGetCartQuery,useAddProductToCartMutation,useDeleteCartMutation,useUpdateInfoMutation,useGetUserOrdersQuery,useGetWishListQuery,useAddProductToWishListMutation,useDeleteProductFromWishListMutation}=apiSlice;
 // Define the API slice
