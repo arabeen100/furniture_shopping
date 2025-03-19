@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { useSelector,useDispatch } from "react-redux";
 import Search from './products/Search';
 import Footer from './Footer'
