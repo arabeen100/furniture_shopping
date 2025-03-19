@@ -6,11 +6,23 @@ import { setExpanded } from "../features/sidebar/sidebarSlice"
 import profileLogo from "../assets/profile.webp"
 import { useNavigate } from "react-router-dom"
 import { setItem, setToken } from "@/features/login/login"
+import { useEffect } from "react"
 export function AppSidebar() {
   const{token}=useSelector((state)=>state.login)
   const navigate=useNavigate();
       const dispatch=useDispatch();
       const {expanded} =useSelector((state)=>state.sidebar)
+        useEffect(()=>{
+          if(expanded){
+            document.body.classList.add("overflow-hidden");
+          }else{
+            document.body.classList.remove("overflow-hidden");
+          }
+          return ()=>{
+            document.body.classList.remove("overflow-hidden");
+          }
+      
+        },[expanded])
       
          const[logoutUser]=useLogOutMutation()
         
@@ -43,12 +55,15 @@ export function AppSidebar() {
                 <li ><button onClick={()=>{
                 dispatch(setExpanded());
                 handleLogout();
-                }}className={`${!token&& " hidden"} w-[60px] h-[40px] bg-white outline-0  \cursor-pointer                border  text-sm border-black grid place-content-center relative top-6 left-56 `}>logout</button ></li>
+                }}className={`${!token&& " hidden"} w-[60px] h-[40px] bg-white outline-0  \cursor-pointer border  text-sm border-black grid place-content-center relative top-6 left-56 `}>logout</button ></li>
+                 <li>
+                  <ul  className={`${!token?"inline-flex gap-3":"hidden"} relative left-1 top-1`}>
+                <li><Link onClick={()=>{dispatch(setExpanded())}} to="/auth/login" className={`w-[140px] outline-none  rounded-[5px] bg-white border-1 border-black grid  place-content-center  transition-colors duration-100 large:hidden hover:bg-[#5bb3ae]  hover:text-white hover:border-[#5bb3ae] `}>تسجيل الدخول</Link></li>
+                <li><Link onClick={()=>{dispatch(setExpanded())}}  to="/auth/signup"className={` w-[80px]  outline-none rounded-[5px] bg-white border border-black grid  place-content-center  transition-colors duration-100 large:hidden hover:bg-[#5bb3ae] hover:text-white hover:border-[#5bb3ae]`}>تسجيل</Link></li>
               </ul>
-              <ul className={`${!token?" inline-flex gap-3":"hidden"} relative left-13 top-9`}>
-                <li><Link onClick={()=>{dispatch(setExpanded())}} to="/auth/login" className={`w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-white border-1 border-black grid  place-content-center  transition-colors duration-100 large:hidden hover:bg-[#5bb3ae]  hover:text-white hover:border-[#5bb3ae] `}>تسجيل الدخول</Link></li>
-                <li><Link onClick={()=>{dispatch(setExpanded())}}  to="/auth/signup"className={` w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-white border border-black grid  place-content-center  transition-colors duration-100 large:hidden hover:bg-[#5bb3ae] hover:text-white hover:border-[#5bb3ae]`}>تسجيل</Link></li>
+              </li>
               </ul>
+           
           </aside>
         </div>
       )
