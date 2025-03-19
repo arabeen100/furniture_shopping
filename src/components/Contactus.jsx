@@ -41,7 +41,7 @@ const Contactus = () =>{
       
      }
   return (
-    <div className='w-full h-160 only-667 '>
+    <div className='contact'>
       {(isSuccess)&&<p className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[150px]"} bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{successMessage} ✔️</p>}
       <div className='h-[calc(100vh-85px)]  grid place-content-center'>
       

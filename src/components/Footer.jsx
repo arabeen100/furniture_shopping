@@ -7,7 +7,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 const Footer = () => {
   return (
-    < footer>
+    < footer className="footer">
     <Link to="/" className=' relative small:top-12 top-5'><img  src={footerLogo} alt='Al-Rahman_logo' loading='lazy' />
     </Link> 
     <div className='flex flex-col gap-4 text-white relative right-7 small:top-12 text-right ' >
