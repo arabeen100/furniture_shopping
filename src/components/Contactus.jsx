@@ -41,11 +41,11 @@ const Contactus = () =>{
       
      }
   return (
-    <div className='w-full h-145 only-667 '>
+    <div className='w-full h-160 only-667 '>
       {(isSuccess)&&<p className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[150px]"} bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{successMessage} ✔️</p>}
       <div className='h-[calc(100vh-85px)]  grid place-content-center'>
       
-        <form onSubmit={handleSubmit} className='flex flex-col w-[365px] sm:w-[450px] gap-5 text-right'>
+        <form onSubmit={handleSubmit} className='flex flex-col w-[300px] sm:w-[450px] gap-5 text-right'>
           <p className='text-center text-4xl mb-15'>اتصل بنا</p>
           <div >
           <label htmlFor='name' className='hidden'>name</label>
