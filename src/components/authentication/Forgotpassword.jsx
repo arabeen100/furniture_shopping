@@ -65,7 +65,7 @@ const Forgotpassword = () => {
         <div>
         <label className='text-right' htmlFor='email'>البريد الإلكتروني</label>
         <input
-        className='text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm'
+        className='text-right text-sm w-[325px] h-[45px] p-1 outline-0 border-[.5px] focus:border-2 focus:border-[#042e2e] rounded-sm'
         id='email'
         type='email'
         placeholder='Type your email'

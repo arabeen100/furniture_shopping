@@ -79,7 +79,7 @@ const Login = () => {
           placeholder='Type your email'
           value={userIdentifier}
           onChange={(e)=>{setUserIdentifier(e.target.value)}} 
-           className={` ${(userError&&!userIdentifier.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm`}/>
+           className={` border-[.5px] ${(userError&&!userIdentifier.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-0 focus:border-2 focus:border-[#042e2e] rounded-sm`}/>
             {(userError&&!userIdentifier) &&<p className="text-red-500 text-xs text-right">{userError}</p>}
           </div>
           <div>
@@ -91,7 +91,7 @@ const Login = () => {
           placeholder='Type your password'
           value={password}
           onChange={(e)=>{setPassword(e.target.value)}}
-          className={`${(passwordError&&!password.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm`}/>
+          className={`$ border-[.5px]{(passwordError&&!password.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-0 focus:border-2 focus:border-[#042e2e] rounded-sm`}/>
               <p className={`absolute left-3 top-2 w-fit cursor-pointer `} onClick={()=>{
             if(passwordType==="password"){setPasswordType("text")}else if(passwordType==="text"){
               setPasswordType("password")

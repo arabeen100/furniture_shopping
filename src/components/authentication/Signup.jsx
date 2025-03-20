@@ -103,7 +103,7 @@ const Signup = () => {
       <h2 className='text-center text-2xl'>أنشئ حسابك</h2>
       <div className='flex flex-col'>
       <label htmlFor='name'>الاسم</label>
-      <input className={` ${(err?.requiredError&&!name.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm`}
+      <input className={` border-[.5px]  ${(err?.requiredError&&!name.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-black text-sm w-[325px] h-[45px] p-1 outline-0 focus:border-2 focus:border-[#042e2e] rounded-sm`}
       id='name'
       type='text'
       placeholder='Type your name'
@@ -114,7 +114,7 @@ const Signup = () => {
       </div>
       <div className='flex flex-col'>
       <label htmlFor='userName'>اسم المستخدم</label>
-      <input className={` ${(err?.requiredError&&!userName.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm `}
+      <input className={` border-[.5px]  ${(err?.requiredError&&!userName.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-0 focus:border-2 focus:border-[#042e2e] rounded-sm `}
       id='userName'
       type='text'
       
@@ -126,7 +126,7 @@ const Signup = () => {
       </div>
       <div className='flex flex-col'>
       <label htmlFor='phone'>رقم الهاتف</label>
-      <input className={` ${((err?.requiredError&&!phone.trim()||(err?.phoneRegexError&&phone.trim())))&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm `}
+      <input className={` border-[.5px]  ${((err?.requiredError&&!phone.trim()||(err?.phoneRegexError&&phone.trim())))&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-0 focus:border-2 focus:border-[#042e2e] rounded-sm `}
       id='phone'
       type='tel'
       value={phone}
@@ -138,7 +138,7 @@ const Signup = () => {
       </div>
       <div className='flex flex-col'>
       <label htmlFor='email'>البريد الإلكتروني </label>
-      <input className={`${(err?.requiredError&&!email.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm `}
+      <input className={` border-[.5px] ${(err?.requiredError&&!email.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-0 focus:border-2 focus:border-[#042e2e] rounded-sm `}
       id='email'
       type='email'
       
@@ -151,7 +151,7 @@ const Signup = () => {
       <div className='flex flex-col'>
       <label htmlFor='password'>كلمة المرور </label>
       <div className='relative'>
-      <input className={`text-right text-sm w-[325px] h-[45px] p-1 outline-1 ${(err?.requiredError&&!password.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} focus:border-[#042e2e] border-2 rounded-sm `}
+      <input className={` border-[.5px] text-right text-sm w-[325px] h-[45px] p-1 outline-0 ${(err?.requiredError&&!password.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} focus:border-[#042e2e] border-2 rounded-sm `}
       id='password'
       type={passwordType}
        value={password}
