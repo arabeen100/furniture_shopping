@@ -113,7 +113,7 @@ const Signup = () => {
       {(err?.requiredError&& !name.trim() )&& <p className="text-red-500 text-xs text-right">{err.requiredError}</p>}
       </div>
       <div className='flex flex-col'>
-      <label htmlFor='userName'>اسم المسنخدم</label>
+      <label htmlFor='userName'>اسم المستخدم</label>
       <input className={` ${(err?.requiredError&&!userName.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} text-right text-sm w-[325px] h-[45px] p-1 outline-1 focus:border-2 focus:border-[#042e2e] rounded-sm `}
       id='userName'
       type='text'
