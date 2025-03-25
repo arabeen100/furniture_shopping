@@ -14,7 +14,6 @@ import Userorders from "./components/profile/Userorders";
 import Wishlist from "./components/profile/Wishlist";
 import {  Route,Routes } from "react-router-dom";
 import Categories from "./components/categories/Categories";
-import Profile from "./components/profile/Profile";
 import Contactus from "./components/Contactus";
 import Faqs from "./components/Faqs";
 import Missing from "./components/Missing";
@@ -43,7 +42,7 @@ function App() {
         <Route path="products">
           <Route path=":name" element={<Product/>}/>
         </Route>
-        <Route path="profile" element={<Profile/>}>
+        <Route path="profile">
           <Route path="personalinfo" element={<Personalinfo/>}/>
           <Route path="userorders" element={<Userorders/>}/>
           <Route path="wishlist" element={<Wishlist/>}/>

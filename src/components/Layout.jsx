@@ -18,9 +18,7 @@ const Layout = () => {
           <Navbar/>
           <Plusbutton/>
           {isOpen&&<Search/>}
-          <div>
-            <Outlet/>
-          </div>
+          <Outlet/>
           <Footer/>
           
     </div>

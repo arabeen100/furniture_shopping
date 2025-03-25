@@ -6,6 +6,7 @@ import { setName,setUserName,setPhone,setEmail,setPassword,setErr,clearErr } fro
 import { useRegisterMutation } from '@/features/api/apiSlice'
 import { setForgotPassStatus, setSignupStatus } from '@/features/responseStatus/responseStatusSlice'
 const Signup = () => {
+  const [errors,setErrors]=useState({});
   const [createUser]=useRegisterMutation();
   const{name,userName,phone,email,password,err}=useSelector((state)=>state.signup)
   const[showError,setShowError]=useState(false)
@@ -13,14 +14,14 @@ const Signup = () => {
   const navigate=useNavigate(); 
   const[passwordType,setPasswordType]=useState('password')
   const phoneRegex = /^(\+?\d{1,4}[-.\s]?)?(\(?\d{2,4}\)?[-.\s]?)?\d{4,10}$/;
-  let errors = {};
+  const passwordRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
   useEffect(()=>{
     const footer=document.querySelector("footer")
     footer.classList.add("hidden")
     return()=>{
       footer.classList.remove("hidden")
     }
-  },[])
+  },[]) 
   useEffect(()=>{
     const plusButton=document.querySelector(".plusButton")
     plusButton.classList.add("hidden")
@@ -40,22 +41,39 @@ const Signup = () => {
    },[err])
   useEffect(()=>{
      if (phone&&phoneRegex.test(phone.trim())){
-        errors.phoneRegexError=""
+        setErrors({...errors,phoneRegexError:""})
+     }else{
+      setErrors({...errors,phoneRegexError:"Incorrect number"})
      }
-  },[phone.trim(),,err?.phoneRegexError])
+  },[phone])
+  useEffect(()=>{
+    if (password&&passwordRegex.test(password.trim())){
+       setErrors({...errors,passwordRegexError:""})
+    }else{
+     setErrors({...errors,passwordRegexError:"A strong password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."})
+    }
+ },[password])
+  useEffect(()=>{
+    if (Object.keys(errors).length > 0 ) {
+      dispatch(setErr(errors))
+      return;
+    } 
+  
+  },[errors])
   const handleSubmit =async(e) => {
     e.preventDefault();
-    if (!name.trim()) errors.requiredError = "This field is required";
+    if (!name.trim()){setErrors({...errors,requiredError:  "This field is required"})} ;
     if (!userName.trim() ){
-      errors.requiredError =  "This field is required";
+      setErrors({...errors,requiredError:  "This field is required"});
     }
     if (!phone.trim()) {
-      errors.requiredError = "This field is required";
-    } else if (!(phoneRegex.test(phone.trim()))) {
+      setErrors({...errors,requiredError:  "This field is required"});
+    }/*  else if (!(phoneRegex.test(phone.trim()))) {
       errors.phoneRegexError = "Incorrect number";
-    }
-    if (!email.trim()) errors.requiredError = "This field is required";
-    if (!password.trim()) {errors.requiredError = "This field is required";}
+    } */
+    if (!email.trim()) setErrors({...errors,requiredError:  "This field is required"});
+    if (!password.trim()) {setErrors({...errors,requiredError:  "This field is required"});}/* else if (!(passwordRegex.test(password.trim()))) {
+      errors.passwordRegexError = "password must have at least one uppercase letter,one lowercase letter,one number,one special character and must be at least 8 characters to be strong"; }*/
 
     const formData=new FormData();
     formData.append("email", email);
@@ -74,19 +92,18 @@ const Signup = () => {
     }
     }catch(e){
       if(e?.data?.errors && Array.isArray(e.data.errors)){
-        errors.apiErrors=e.data.errors;
+        setErrors({...errors,apiErrors:e.data.errors})
       }else{
         errors.general=e?.error||"An unknown error occured"
       }
     }
-    if (Object.keys(errors).length > 0 ) {
-      dispatch(setErr(errors))
-      return;
-    } 
+ 
  
     
    
   };
+
+ 
   
   
  
@@ -154,7 +171,7 @@ const Signup = () => {
       <input className={` border-[.5px] text-right text-sm w-[325px] h-[45px] p-1 outline-0 ${(err?.requiredError&&!password.trim())&&"border-red-500 border-[1px] focus:border-[#042e2e] focus:border-2"} focus:border-[#042e2e] border-2 rounded-sm `}
       id='password'
       type={passwordType}
-       value={password}
+      value={password}  
       onChange={(e)=>{dispatch(setPassword(e.target.value))}}
       placeholder='Type your password'
       />
@@ -165,6 +182,7 @@ const Signup = () => {
       }}>👁</p>
       </div>
       {(err?.requiredError&& !password.trim() )&& <p className="text-red-500 text-xs text-right">{err.requiredError}</p>}
+      {(err?.passwordRegexError&&password)&&  <p className="text-red-500 text-xs text-right">{err.passwordRegexError}</p>}
       </div>
  
       

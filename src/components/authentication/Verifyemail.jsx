@@ -54,7 +54,6 @@ const Verifyemail = () => {
          return ()=>clearTimeout(timer);
           }
     },[status,requiredError])
-      
     const handleSubmit=async(e)=>{
       e.preventDefault();
       if(signupStatus){

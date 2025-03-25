@@ -165,20 +165,24 @@ export const apiSlice= createApi({
             })
         }),
         getProfile:builder.query({
-            query:(token)=>({
+            query:()=>{
+               const token=localStorage.getItem("userToken")
+                return{
                url:'/profile/',
                headers:{
-                   Authorization:`Bearer${token}`
+                   "Authorization":`Bearer ${token}`
                }
-            })
+            }}
        }),
        getAddresses:builder.query({
-        query:(token)=>({
-            url:'/addresses',
-            headers:{
-                Authorization:`bearer${token}`
-            }
-        })
+            query:()=>{
+                const token=localStorage.getItem("userToken")
+                return{
+                url:'/profile/addresses',
+                headers:{
+                    "Authorization":`Bearer ${token}`
+                }
+            }}
     }),
     addAddress:builder.mutation({
         query:(token,{latitude,longitude,location,street_name,building_number})=>{
@@ -190,7 +194,7 @@ export const apiSlice= createApi({
             formData.append("street_name",street_name);
             formData.append("building_number",building_number);
             return({
-            url:'/addresses',
+            url:'/profile/addresses',
             method:'POST',
             body:formData,
             headers:{
@@ -208,7 +212,7 @@ export const apiSlice= createApi({
             formData.append("street_name",street_name);
             formData.append("building_number",building_number);
             return({
-            url:`/addresses/${addressId}`,
+            url:`/profile/addresses/${addressId}`,
             method:'PUT',
             body:formData,
             headers:{
@@ -218,7 +222,7 @@ export const apiSlice= createApi({
     }),
     deleteAddress:builder.mutation({
         query:(addressId,token)=>({
-            url:`/addresses/${addressId}`,
+            url:`/profile/addresses/${addressId}`,
             method:'DELETE',
             headers:{
                 Authorization:`bearer${token}`
@@ -253,19 +257,14 @@ export const apiSlice= createApi({
         })
     }),
     updateInfo:builder.mutation({
-        query:({name,email,userName,password,phone})=>{
-            const formData=new FormData();
-            formData.append("name", name);
-            formData.append("email",email);
-            formData.append('userName',userName)
-            formData.append("password",password);
-            formData.append("phone",phone);
+        query:(updatedUser)=>{
+            const token=localStorage.getItem("userToken")
             return({
             url:'/profile/update',
             method:'POST',
-            body:formData,
+            body:updatedUser,
             headers:{
-               Authorization:`bearer${token}`
+               "Authorization":`Bearer ${token}`
             }
         })}
     }),

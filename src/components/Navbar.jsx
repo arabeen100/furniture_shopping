@@ -14,7 +14,7 @@ const Navbar = () => {
      <div className='flex justify-baseline items-center gap-3 relative  left-5'>
       <Link to="/auth/login" className={` ${token?"hidden ":"hidden large:grid large:place-content-center"} w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white  hover:bg-[#5bb3ae]  `}>تسجيل الدخول</Link>
       <Link to='/auth/signup' className={` ${token?"hidden":" hidden large:grid  large:place-content-center"} w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white  hover:bg-[#5bb3ae]`}>تسجيل</Link>
-      <Link to='/profile/personalinfo' className={`${!token?"large:hidden":"large:grid large:place-content-center"}  hidden  w-[38px] h-[38px] bg-white rounded-full`}>
+      <Link to='/profile/personalinfo' className={`${!token?"larger:hidden":"larger:grid larger:place-content-center"}  hidden  w-[38px] h-[38px] bg-white rounded-full`}>
         <img src={profileLogo} alt='profile' loading='lazy' width='25' />
       </Link>  
       <button onClick={()=>{dispatch(openSearch())}} className=' cursor-pointer'>
@@ -26,7 +26,7 @@ const Navbar = () => {
       <Link to='/orders/checkout'>
         <Carticon/>
       </Link> 
-      <div className='w-5 h-5 rounded-full bg-yellow-300 grid place-content-center relative right-6 bottom-3' >
+      <div className={`${!token&&"hidden"} w-5 h-5 rounded-full bg-yellow-300 grid place-content-center relative right-6 bottom-3`}>
        <p>0</p>
       </div>
       

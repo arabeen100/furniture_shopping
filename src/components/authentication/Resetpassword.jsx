@@ -6,6 +6,7 @@ import { useResetPasswoedMutation } from '@/features/api/apiSlice'
 import { useSelector } from 'react-redux'
 const Resetpassword = () =>{
   const navigate=useNavigate();
+    const passwordRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
   
   const [resetPassword,{isError,isSuccess}]=useResetPasswoedMutation();
   const[password,setPassword]=useState("");
@@ -14,6 +15,7 @@ const Resetpassword = () =>{
   const[showError,setShowError]=useState(false);
   const[confirmPasswordError,setConfirmPasswordError]=useState("");
   const[confirmingError,setConfirmingError]=useState("");
+  const[passwordRegexError,setPasswordRegexError]=useState("");
   const[confirmpasswordType,setConfirmPasswordType]=useState('password');
   const[passwordError,setPasswordError]=useState("");
   const[successMessage,setSuccessMessage]=useState("");
@@ -47,6 +49,13 @@ useEffect(()=>{
     setConfirmingError("");
   }
 },[password,confirmPassword])
+useEffect(()=>{
+  if (password&&passwordRegex.test(password.trim())){
+     setPasswordRegexError("")
+  }else{
+   setPasswordRegexError("A strong password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.")
+  }
+},[password])
 
 
 
@@ -55,7 +64,7 @@ useEffect(()=>{
           if(!confirmPassword){setConfirmPasswordError("This field is required")}
           if(!password){setPasswordError('This field is required')}
           if(confirmPassword!==password){
-            setConfirmingError("Password need to match")
+            setConfirmingError("Passwords need to match")
           }
           const formData = new FormData();
           formData.append("email",userEmail);
@@ -100,6 +109,7 @@ useEffect(()=>{
           }}>👁</p>
           </div>
             {(passwordError&&!password) &&<p className="text-red-500 text-xs text-right">{passwordError}</p>}
+            {(passwordRegexError&&password) &&<p className="text-red-500 text-xs text-right">{passwordRegexError}</p>}
           </div>
           <div>
           <label htmlFor='confirmPassword'>تأكيد كلمة المرور</label>
