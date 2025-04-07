@@ -156,7 +156,7 @@ export const apiSlice= createApi({
             })
         }),
         getTrendy:builder.query({
-            query:({limit})=>({
+            query:({limit=25})=>({
                 url:'/products/trendy',
                 params:{
                     ...(limit&&{limit})

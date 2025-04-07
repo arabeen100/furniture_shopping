@@ -132,6 +132,7 @@
   nav svg{
     @apply stroke-white hover:stroke-[#3f8181] cursor-pointer
   }
+
 }
 @layer  components{
   .App{
@@ -140,6 +141,9 @@
   .categories{
     @apply hover:-translate-x-[7px] hover:scale-105
   }
+ 
+
+
 }
 @layer base {
   :root {
@@ -182,4 +186,5 @@
     }
   }
 }
+
 

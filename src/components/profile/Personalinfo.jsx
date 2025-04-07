@@ -4,7 +4,10 @@ import { Updateicon } from '@/icons'
 import { useGetProfileQuery,useGetAddressesQuery,useUpdateInfoMutation } from '@/features/api/apiSlice'
 import { setProfileClicked, setUserOrdersClicked, setWishlistClicked } from '@/features/sidebar/sidebarSlice'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { setToken,setItem } from '@/features/login/login'
 const Personalinfo = () => {
+  const navigate=useNavigate();
   const dispatch=useDispatch();
   const[errors,setErrors]=useState('')
   const[showError,setShowError]=useState(false)  
@@ -24,6 +27,10 @@ const Personalinfo = () => {
       setSecondName(userInfo.data.user.name.split(" ")[1]);
       setPhone(userInfo.data.user.phone);
       setEmail(userInfo.data.user.email);
+    }else{
+      dispatch(setToken(""));
+      dispatch(setItem());
+      navigate("/auth/login");
     }
   },[userInfo])
     useEffect(()=>{

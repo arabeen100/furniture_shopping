@@ -34,7 +34,10 @@ export function AppSidebar() {
             dispatch(setItem())
             navigate('/auth/login')
            }
-          }catch(e){ console.log(e.data.errors)}
+          }catch(e){ console.log(e.data.errors);
+                     dispatch(setToken(""));
+                     dispatch(setItem());
+          }
          }
     
       return (
