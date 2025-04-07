@@ -13,4 +13,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ["swiper"],
   },
+  build: {
+    rollupOptions: {
+      external: ["swiper"],
+    },
+  },
 })
