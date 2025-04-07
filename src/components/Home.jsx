@@ -43,7 +43,7 @@ const Home = () => {
         {carousels?.data?.carousels.map(carousel=>
           <SwiperSlide  key={carousel.id}>
           <div className='w-full h-full bg-[#00000070] fixed z-20'></div>
-          <div className='w-full h-[366.844px] small:h-[466.109px]  larger:h-[530px] large:h-[585px] xlarge:h-[585px] '>
+          <div className='w-full h-[366.844px] small:h-[466.109px]  larger:h-[530px] large:h-[585px] xlarge:h-[585px] min-[2000px]:h-[885px]'>
             <img className='w-full h-full object-center object-cover'  src={`${carousel.image_link}`} loading='lazy' />
           </div>
           </SwiperSlide> )}
