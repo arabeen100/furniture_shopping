@@ -10,12 +10,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  optimizeDeps: {
-    include: ["swiper"],
-  },
-  build: {
-    rollupOptions: {
-      external: ["swiper"],
-    },
-  },
 })
