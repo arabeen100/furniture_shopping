@@ -4,6 +4,7 @@ const initialState={
     profileClicked:false,
     wishlistClicked:false,
     userOrdersClicked:false,
+    expandedMenu:false,
 }
 const sidebarSlice=createSlice({
     name:"sidebar",
@@ -20,8 +21,11 @@ const sidebarSlice=createSlice({
         },
         setUserOrdersClicked:(state,{payload})=>{
             state.userOrdersClicked=payload
-        }
+        },
+        setExpandedMenu:(state)=>{
+            state.expandedMenu= !state.expandedMenu;
+        },
     }
 })
 export default sidebarSlice.reducer;
-export const {setExpanded,setProfileClicked,setUserOrdersClicked,setWishlistClicked}=sidebarSlice.actions
+export const {setExpanded,setProfileClicked,setUserOrdersClicked,setWishlistClicked,setExpandedMenu}=sidebarSlice.actions

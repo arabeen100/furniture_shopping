@@ -9,6 +9,8 @@ import verifyCodeReducer from "../features/verifycode/verifyCodeSlice"
 import forgotPassReducer from "../features/forgotpassword/forgotPassword"
 import plusButtonReducer from "../features/plusButton/plusButton"
 import userDataReducer from "../features/userData/userDataSlice"
+import likedItemsReducer from "../features/likeditems/likedItems"
+import catProductsReducer from "../features/categoryproducts/catProducts"
 export const store= configureStore({
     reducer:{
         [apiSlice.reducerPath]:apiSlice.reducer,
@@ -21,6 +23,8 @@ export const store= configureStore({
         userData:userDataReducer,
         verifyCode:verifyCodeReducer,
         plusButton:plusButtonReducer,
+        likedItems:likedItemsReducer,
+        catProducts:catProductsReducer,
 
 
 

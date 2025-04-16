@@ -17,9 +17,9 @@ const Personalinfo = () => {
   const[phone,setPhone]=useState("")
   const[email,setEmail]=useState("")
   const[password,setPassword]=useState("")
-  const{data:userInfo}=useGetProfileQuery();
+  const{data:userInfo,error}=useGetProfileQuery();
   const{data:addresses}=useGetAddressesQuery();
-  const[updatedUser,{data:updata,isError,isSuccess}]=useUpdateInfoMutation();
+  const[updatedUser,{data:update,isError,isSuccess}]=useUpdateInfoMutation();
   useEffect(()=>{
     if(userInfo){
       console.log(userInfo);
@@ -28,9 +28,10 @@ const Personalinfo = () => {
       setPhone(userInfo.data.user.phone);
       setEmail(userInfo.data.user.email);
     }else{
+      if(error){
       dispatch(setToken(""));
       dispatch(setItem());
-      navigate("/auth/login");
+      navigate("/auth/login");}
     }
   },[userInfo])
     useEffect(()=>{
@@ -52,8 +53,10 @@ const Personalinfo = () => {
   useEffect(()=>{
       dispatch(setProfileClicked(true));
       dispatch(setUserOrdersClicked(false));
-      dispatch(setWishlistClicked(false))
+      dispatch(setWishlistClicked(false));
+    
   },[])
+
   const handleSubmit=async(e)=>{
     e.preventDefault();
     const formData=new FormData();
@@ -75,17 +78,17 @@ const Personalinfo = () => {
 
 
   return (
-    <div className='w-full flex small:w-fit px-3 mx-auto   '>
+    <div className='w-full flex small:w-fit px-3 mx-auto  '>
       <div className=' w-full justify-center   flex-grow  mt-9 flex flex-col items-end '>
          <div className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[300px]"}`}>
-         {(isSuccess)&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{updata?.data.message} ✔️</p>}
+         {(isSuccess)&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{update?.data.message} ✔️</p>}
          {isError&&errors?.[0]&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{errors[0]} ❌</p>}
          {isError&&errors?.[1]&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{errors[1]} ❌</p>}
          </div>
 
         <p className='text-right text-4xl text-[#042e2e] mr-5 mb-9 '>ملفي الشخصي</p> 
         <div className='w-full larger:flex larger:flex-row-reverse flex-col   larger:items-baseline'>
-        <Profilecard name={(updata?.data.user.name)||(userInfo?.data.user.name)}/>
+        <Profilecard />
         <div className='flex flex-col items-end'>
         <form onSubmit={handleSubmit} className='flex flex-col text-right text-sm items-end  mt-5 mb-8 gap-10'>
           <button className='flex cursor-pointer text-white bg-[#5bb3ae]  p-4 rounded-lg text-[15px] w-[170px] justify-center items-center gap-2'>تحديث <Updateicon/></button>

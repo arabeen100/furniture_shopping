@@ -127,7 +127,7 @@ export const apiSlice= createApi({
             })
         }),
         getCategoryProducts:builder.query({
-            query:(categoryId,{color,size,sort,limit,offset,minPrice,maxPrice})=>({
+            query:({categoryId,color,size,sort,limit,offset,min_price,max_price})=>({
                 url:`/products/category/${categoryId}`,
                 params:{
                     ...(color&&{color}),
@@ -135,8 +135,8 @@ export const apiSlice= createApi({
                     ...(sort&&{_sort:sort}),
                     ...(limit&&{limit}),
                     ...(offset&&{offset}),
-                    ...(minPrice&&{minPrice}),
-                    ...(maxPrice&&{maxPrice}),
+                    ...(min_price&&{min_price}),
+                    ...(max_price&&{max_price}),
                 }
             })
         }),
@@ -156,7 +156,7 @@ export const apiSlice= createApi({
             })
         }),
         getTrendy:builder.query({
-            query:({limit=25})=>({
+            query:({limit})=>({
                 url:'/products/trendy',
                 params:{
                     ...(limit&&{limit})
@@ -172,7 +172,9 @@ export const apiSlice= createApi({
                headers:{
                    "Authorization":`Bearer ${token}`
                }
-            }}
+            }},
+            providesTags:["profile"]
+           
        }),
        getAddresses:builder.query({
             query:()=>{
@@ -266,7 +268,9 @@ export const apiSlice= createApi({
             headers:{
                "Authorization":`Bearer ${token}`
             }
-        })}
+        })},
+        invalidatesTags:["profile"]
+        
     }),
     getUserOrders:builder.query({
         query:(token)=>({
@@ -277,30 +281,40 @@ export const apiSlice= createApi({
         })
     }),
     getWishList:builder.query({
-        query:(token)=>({
-            url:'/wishlist',
+        query:()=>{
+            const token=localStorage.getItem("userToken")
+            return({
+            url:'/profile/wishlist',
             headers:{
-                Authorization:`bearer${token}`
-            }
-        })
+                "Authorization":`Bearer ${token}`
+            },
+            
+        })},
+        providesTags:["wish"],
     }),
     addProductToWishList:builder.mutation({
-        query:(productId,token)=>({
-            url:`/wishlist/${productId}`,
+        query:(productId)=>{
+            const token=localStorage.getItem("userToken")
+            return({
+            url:`/profile/wishlist/${productId}`,
             method:'POST',
             headers:{
-                Authorization:`bearer${token}`
+                "Authorization":`Bearer ${token}`
             }
-        })
+        })},
+        invalidatesTags:["wish"]
     }),
     deleteProductFromWishList:builder.mutation({
-        query:(productId,token)=>({
-            url:`/wishlist/${productId}`,
+        query:(productId)=>{
+            const token=localStorage.getItem("userToken")
+            return({
+            url:`/profile/wishlist/${productId}`,
             method:'DELETE',
             headers:{
-                Authorization:`bearer${token}`
+                "Authorization":`Bearer ${token}`
             }
-        })
+        })},
+        invalidatesTags:["wish"]
     }),
 
 

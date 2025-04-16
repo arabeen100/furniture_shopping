@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {PackageIcon} from 'lucide-react'
 import { Hearticon, Usericon } from '@/icons'
 import { useSelector,useDispatch } from 'react-redux'
-import { setProfileClicked, setUserOrdersClicked, setWishlistClicked } from '@/features/sidebar/sidebarSlice'
-const Profilecard = ({name}) => {
+import { useGetProfileQuery } from '@/features/api/apiSlice'
+import { setProfileClicked, setUserOrdersClicked, setWishlistClicked } 
+from '@/features/sidebar/sidebarSlice'
+import { setName } from '@/features/userData/userDataSlice'
+const Profilecard = () => {
+     const{data:userInfo,error}=useGetProfileQuery();
+     const{name}=useSelector((state)=>state.userData);
     const dispatch=useDispatch();
     const{profileClicked}=useSelector((state)=>state.sidebar)
  /*    const[wishlistClicked,setWishlistClicked]=useState(false);
@@ -12,9 +17,12 @@ const Profilecard = ({name}) => {
     const[personalinfoClicked,setPersonalinfoClicked]=useState(false); */
     const{wishlistClicked}=useSelector((state)=>state.sidebar);
     const{userOrdersClicked}=useSelector((state)=>state.sidebar)
+    useEffect(()=>{
+        dispatch(setName((userInfo?.data?.user?.name)))
+      },[userInfo])
   return (
-   <div className='w-full flex flex-grow larger:mx-2'>
-    <div className={`flex-grow  ml-2 flex  flex-col justify-between  items-end  h-fit  w-fit small:w-[543px] small-flex-grow-0  gap-16 border  rounded-2xl text-right larger:w-[295px] larger:justify-normal larger:flex-grow-0  larger:h-[390px] `}>
+   <div className='w-full larger:w-fit flex flex-grow larger:mx-2 '>
+    <div className={` flex-grow  ml-2 flex  flex-col justify-between  items-end  h-fit  w-fit small:w-[543px] small-flex-grow-0  gap-16 border  rounded-2xl text-right larger:w-[295px] larger:justify-normal larger:flex-grow-0  larger:h-[390px] `}>
         <p className='mt-3 mr-5'>{name}</p>
         <div className=' flex-grow larger:flex-grow-0 max-[459px]:flex max-[459px]:flex-row max-[459px]:flex-wrap-reverse max-[459px]:justify-end w-full larger:flex larger:flex-col-reverse larger:self-center flex flex-row'>
 

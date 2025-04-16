@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useLogInMutation } from '@/features/api/apiSlice'
 import { setItem, setToken } from '@/features/login/login'
-import { setName,setUsername,setEmail,setPhone } from '@/features/userData/userDataSlice'
+
 const Login = () => {
   const navigate=useNavigate();
   const dispatch=useDispatch();
@@ -51,10 +51,6 @@ const Login = () => {
           formData.append('user_identifier', userIdentifier);
           formData.append('password', password);
           try{const response=await loginUser(formData).unwrap();
-           /*  dispatch(setName(response.data.name));
-            dispatch(setUsername(response.data.username));
-            dispatch(setEmail(response.data.email));
-            dispatch(setPhone(response.data.phone)); */
             localStorage.setItem("user",JSON.stringify(response.data.user))
             if(response.status){
               dispatch(setToken(response.data.token))
