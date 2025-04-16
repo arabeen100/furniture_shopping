@@ -63,7 +63,7 @@ const Wishlist = () => {
           <HeartIcon fill={`red`} color={`red`} className={` size-4.5 `}/>
           </div>
         <Link to={`/products/${wishlistProduct.name_ar}`} className=' flex justify-center w-full h-[190px] larger:h-[250px] large:h-[250px] xlarge:h-[250px]'>  
-        <img  className=' rounded-t-[20px] h-full w-full object-center object-cover ' src={`${wishlistProduct.images?.[0].image_link}`} loading='lazy' />
+        <img  className=' rounded-t-[20px] h-full w-full object-center object-cover ' src={`${wishlistProduct.images?.[0]?.image_link}`} loading='lazy' />
         </Link>
         <div className='bg-[#042e2e] w-full h-[70px] rounded-b-[20px]'>
          <p className='text-right text-white p-1 text-lg flex flex-row-reverse '>{wishlistProduct.name_ar.length>12?`...${wishlistProduct.name_ar.slice(0,12)}`:`${wishlistProduct.name_ar}`}
