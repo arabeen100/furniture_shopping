@@ -2,13 +2,16 @@ import React from 'react'
 import Profilecard from './Profilecard'
 import { setProfileClicked,setUserOrdersClicked,setWishlistClicked } from '@/features/sidebar/sidebarSlice'
 import { useEffect,useState } from 'react'
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useDeleteProductFromWishListMutation, useGetWishListQuery } from '@/features/api/apiSlice'
 import { HeartIcon,ShoppingCartIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { setItem, setToken } from '@/features/login/login'
 const Wishlist = () => {
  
- const{data:wishlistProducts}=useGetWishListQuery();
+ const{data:wishlistProducts,error}=useGetWishListQuery();
+
+
  const[deleteProduct,{data:res,isSuccess:succ}]=useDeleteProductFromWishListMutation(); 
   const[showMessage,setShowMessage]=useState(false)
   const dispatch=useDispatch();
@@ -29,6 +32,12 @@ const Wishlist = () => {
     useEffect(()=>{
       if(wishlistProducts){
         console.log(wishlistProducts)
+      }else{
+        if(error){
+          dispatch(setToken(""));
+          dispatch(setItem());
+          navigate("/auth/login");
+        }
       }
     },[wishlistProducts])
     const handleDeleteWishlistProduct=async(productId)=>{
