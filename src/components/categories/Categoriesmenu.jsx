@@ -3,6 +3,7 @@ import { useSelector,useDispatch } from 'react-redux'
 import { XIcon,ChevronDownIcon } from 'lucide-react'
 import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
 import Slider from 'rc-slider';
+import { Link } from 'react-router-dom';
 import "rc-slider/assets/index.css";
 import { setColor, setMaxPriceP, setMinPriceP, setSize } from '@/features/categoryproducts/catProducts';
 import { useGetCategoryProductsQuery } from '@/features/api/apiSlice';
@@ -33,6 +34,10 @@ const Categoriesmenu = () => {
                 console.log(categoryProducts);
               }
             },[categoryProducts])
+            useEffect(()=>{
+              console.log(size,typeof(size));
+              
+            },[size])
   return (
     <div className={`${expandedMenu&&"w-full h-full bg-[#00000070] fixed z-20"}`}>
     <div  onClick={(e)=>e.stopPropagation()} className={`h-full flex justify-center bg-white  transition-all overflow-y-auto duration-300  fixed left-0  z-30 w-[300px] ${expandedMenu ? " translate-x-0" : " -translate-x-full"}`}>
@@ -48,23 +53,23 @@ const Categoriesmenu = () => {
         <div className={`flex flex-col gap-5 ${catMenuClicked1?"max-h-0 opacity-0 ":"max-h-fit opacity-100"} transition-all `}>
         <div className={`flex justify-between`}>
           <p>3</p>
-          <p>غرف النوم</p>
+          <Link to='/categories/غرف النوم'>غرف النوم</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>5</p>
-          <p>مجالس</p>
+          <Link to='/categories/مجالس'>مجالس</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>1</p>
-          <p>مجامر</p>
+          <Link to='/categories/مجامر'>مجامر</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>3</p>
-          <p>ستائر</p>
+          <Link  to='/categories/ستائر'>ستائر</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>3</p>
-          <p>any</p>
+          <Link to='/categories/any'>any</Link>
         </div>
         </div>
       </div>
@@ -132,7 +137,7 @@ const Categoriesmenu = () => {
         <div className='flex justify-end'>
         <button onClick={()=>{dispatch(setMinPriceP(minPrice));
           dispatch(setMaxPriceP(maxPrice));
-        }} className='w-[120px] h-[40px] grid place-content-center bg-[#0675a8] text-white rounded-sm' >Apply Filter </button>
+        }} className='cursor-pointer w-[120px] h-[40px] grid place-content-center bg-[#0675a8] text-white rounded-sm' >Apply Filter </button>
         </div>
       </div>
       </div>
@@ -142,10 +147,10 @@ const Categoriesmenu = () => {
           <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked3?"rotate-180":"rotate-0"}`} size={20}/>
           <p className='text-lg'>تصفية حسب اللون</p>
          </div>
-         <div className={`flex flex-col gap-2 ${catMenuClicked3?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
+         <div className={`flex flex-col gap-2  ${catMenuClicked3?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
         {categoryProducts?.data?.filters?.colors.map(colour=>
-          <div key={colour.id} className='flex justify-end gap-2 '>
-            <label className='flex flex-row-reverse ' htmlFor={`${colour.id}`}>
+         <div key={colour.id} className=' flex justify-end gap-2 '>
+            <label className='cursor-pointer flex flex-row-reverse ' htmlFor={colour.id}>
               {colour.colors.map((specificColor,index)=>
                 <div key={index} style={{backgroundColor:specificColor}} className={`w-[25px] h-[50px]`}></div>
               )}
@@ -153,14 +158,15 @@ const Categoriesmenu = () => {
             </label>
             <input 
             type="radio"
-             name='color'
+            name='color'
             id={colour.id}
             value={colour.id}
-            checked={color===colour.id}
-            onChange={(e)=>{dispatch(setColor(colour.id))}}
-            />
-
-          </div>
+            checked={String(color)===String(colour.id)}
+            onChange={(e)=>{dispatch(setColor(e.target.value));
+            }}
+            className='cursor-pointer'
+            /> 
+            </div>
         )}
         </div>
       </div>}
@@ -173,16 +179,18 @@ const Categoriesmenu = () => {
          <div className={`flex flex-col gap-2 ${catMenuClicked4?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
         {categoryProducts?.data?.filters?.sizes.map(sizee=>
           <div key={sizee.id} className='flex justify-end gap-2 '>
-            <label className='flex flex-row-reverse ' htmlFor={`${sizee.value}`}>
-              <p className='font-semibold '>{sizee.value}</p>
+            <label className=' cursor-pointer' htmlFor={sizee.value}>
+            <p className='font-semibold '>{sizee.value}</p>
             </label>
             <input 
             type="radio"
-             name='size'
+            name='size'
             id={sizee.value}
             value={sizee.value}
-            checked={size===sizee.value}
-            onChange={(e)=>{dispatch(setSize(e.target.value))}}
+            checked={String(size)===String(sizee.value)}
+            onChange={(e)=>{dispatch(setSize(e.target.value));
+            }}
+            className='cursor-pointer'
             />
 
           </div>
@@ -190,11 +198,13 @@ const Categoriesmenu = () => {
         </div>
       </div>}
       <div className='flex justify-end mt-5 '>
-        <button onClick={()=>{dispatch(setMinPriceP(""));
-          dispatch(setMaxPriceP(""));
-          dispatch(setColor(""));
+        <button onClick={()=>{dispatch(setMinPriceP(0));
+          dispatch(setMaxPriceP(0));
+          dispatch(setColor(0));
           dispatch(setSize(""));
-        }} className='w-[120px] h-[40px] grid place-content-center bg-red-500 text-white rounded-sm' >مسح الفلاتر </button>
+          setMinPrice(0);
+          setMaxPrice(1500);
+        }} className='cursor-pointer w-[120px] h-[40px] grid place-content-center bg-red-500 text-white rounded-sm' >مسح الفلاتر </button>
         </div>
       </div>
       

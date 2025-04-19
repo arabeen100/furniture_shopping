@@ -8,6 +8,7 @@ import { AppSidebar } from "./AppSidebar"
 import { setExpanded, setExpandedMenu } from '../features/sidebar/sidebarSlice';
 import Plusbutton from './Plusbutton';
 import Categoriesmenu from './categories/Categoriesmenu';
+import Scrolltop from './Scrolltop';
 const Layout = () => {
   const dispatch=useDispatch();
   const {isOpen}=useSelector((state)=>state.search)
@@ -20,6 +21,7 @@ const Layout = () => {
     }} className='App '>
           <Categoriesmenu/>
           <AppSidebar/>
+          <Scrolltop/>
           <Navbar/>
           <Plusbutton/>
           {isOpen&&<Search/>}

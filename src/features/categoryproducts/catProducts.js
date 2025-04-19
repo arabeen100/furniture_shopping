@@ -1,13 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState={
-    color:"",
+    color:0,
     size:"",
     sort:"",
     limit:12,
     offset:0,
-    minPriceP:"",
-    maxPriceP:"",
+    minPriceP:0,
+    maxPriceP:0,
     categoryId:10,
+   /*  radioColor:"",
+    radiosize:"", */
 }
 const catProductsSlice=createSlice({
     name:"catProducts",
@@ -37,6 +39,12 @@ const catProductsSlice=createSlice({
         setCategoryId:(state,{payload})=>{
             state.categoryId=payload;
         },
+      /*   setRadioColor:(state,{payload})=>{
+            state.radioColor=payload;
+        },
+        setRadioSize:(state,{payload})=>{
+            state.radiosize=payload;
+        }, */
      
     }
 })
