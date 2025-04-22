@@ -5,11 +5,13 @@ import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
 import Slider from 'rc-slider';
 import { Link } from 'react-router-dom';
 import "rc-slider/assets/index.css";
-import { setColor, setMaxPriceP, setMinPriceP, setSize } from '@/features/categoryproducts/catProducts';
-import { useGetCategoryProductsQuery } from '@/features/api/apiSlice';
+import { setCategoryId,setColor, setMaxPriceP, setMinPriceP, setSize } from '@/features/categoryproducts/catProducts';
+import { useGetCategoryProductsQuery,useGetCategoriesQuery } from '@/features/api/apiSlice';
 const Categoriesmenu = () => {
+  const {data:categories}=useGetCategoriesQuery();
     const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId}=useSelector((state)=>state.catProducts)
-    const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP});
+    const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP},{skip:!categoryId});
+
   const[minPrice,setMinPrice]=useState(0);
   const[maxPrice,setMaxPrice]=useState(1500);
   const[catMenuClicked1,setCatMenuClicked1]=useState(false);
@@ -38,12 +40,13 @@ const Categoriesmenu = () => {
               console.log(size,typeof(size));
               
             },[size])
+            
   return (
     <div className={`${expandedMenu&&"w-full h-full bg-[#00000070] fixed z-20"}`}>
     <div  onClick={(e)=>e.stopPropagation()} className={`h-full flex justify-center bg-white  transition-all overflow-y-auto duration-300  fixed left-0  z-30 w-[300px] ${expandedMenu ? " translate-x-0" : " -translate-x-full"}`}>
       <div className='w-[95%] flex flex-col h-fit pb-8'>
        <div>
-      <XIcon onClick={()=>{dispatch(setExpandedMenu())}} size={21} className='mt-6 ml-4.5 '/>
+      <XIcon onClick={()=>{dispatch(setExpandedMenu())}} size={21} className='cursor-pointer mt-6 ml-4.5 '/>
       </div> 
       <div className={`flex flex-col gap-5 text-lg mt-6 `}>
         <div onClick={()=>{setCatMenuClicked1(!catMenuClicked1)}} className='flex justify-between cursor-pointer'>
@@ -53,23 +56,23 @@ const Categoriesmenu = () => {
         <div className={`flex flex-col gap-5 ${catMenuClicked1?"max-h-0 opacity-0 ":"max-h-fit opacity-100"} transition-all `}>
         <div className={`flex justify-between`}>
           <p>3</p>
-          <Link to='/categories/غرف النوم'>غرف النوم</Link>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[0].id))}} to='/categories/غرف النوم'>غرف النوم</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>5</p>
-          <Link to='/categories/مجالس'>مجالس</Link>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[1].id))}} to='/categories/مجالس'>مجالس</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>1</p>
-          <Link to='/categories/مجامر'>مجامر</Link>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[2].id))}} to='/categories/مجامر'>مجامر</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>3</p>
-          <Link  to='/categories/ستائر'>ستائر</Link>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[3].id))}} to='/categories/ستائر'>ستائر</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>3</p>
-          <Link to='/categories/any'>any</Link>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[4].id))}} to='/categories/any'>any</Link>
         </div>
         </div>
       </div>

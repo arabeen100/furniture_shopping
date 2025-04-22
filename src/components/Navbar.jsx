@@ -1,14 +1,19 @@
 import React from 'react'
 import { Carticon,Searchicon,Hearticon,Menuicon } from '@/icons'
-import { Link } from 'react-router-dom'
+import { useGetCartQuery } from '@/features/api/apiSlice'
+import { Link ,useNavigate} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { openSearch } from '../features/search/searchSlice'
 import { setExpanded } from '../features/sidebar/sidebarSlice'
 import profileLogo from "../assets/profile.webp"
 import navbarLogo from "../assets/nav-logo.svg" 
+import { setError } from '@/features/login/login'
 const Navbar = () => {
   const{token}=useSelector((state)=>state.login)
-  const dispatch= useDispatch();   
+  const{data:cart}=useGetCartQuery(undefined,{skip:!token})
+  const navigate=useNavigate();
+  const dispatch= useDispatch(); 
+  const count=cart?.data?.cart_products?.length;  
   return (
     <nav>
      <div className='flex justify-baseline items-center gap-3 relative  left-5'>
@@ -20,14 +25,21 @@ const Navbar = () => {
       <button onClick={()=>{dispatch(openSearch())}} className=' cursor-pointer'>
         <Searchicon/> 
       </button>
-      <Link to='/profile/wishlist'>
+      <button onClick={()=>{if(token){
+        navigate('/profile/wishlist')
+      }else{
+        navigate("/auth/login");
+        dispatch(setError("يجب ان تسجل الدخول اولا"));
+      }}}className='cursor-pointer' >
        <Hearticon/>
-      </Link> 
-      <Link to='/orders/checkout'>
+      </button> 
+      <button onClick={()=>{if(token){ navigate('/orders/checkout')}else{navigate('/auth/login');
+        dispatch(setError("يجب ان تسجل الدخول اولا"));
+      }}}>
         <Carticon/>
-      </Link> 
+      </button> 
       <div className={`${!token&&"hidden"} w-5 h-5 rounded-full bg-yellow-300 grid place-content-center relative right-6 bottom-3`}>
-       <p>0</p>
+       <p>{count||0}</p>
       </div>
       
       

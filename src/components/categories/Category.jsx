@@ -5,14 +5,18 @@ import seatings from "../../assets/seatings.png"
 import curtains from "../../assets/curtains.png"
 import fireplaces from "../../assets/fire_places.png"
 import any from "../../assets/any.jpg"
-import { useParams ,Link} from 'react-router-dom'
+import { useParams ,Link,useNavigate} from 'react-router-dom'
 import { useDispatch,useSelector} from 'react-redux'
-import { useGetCategoryProductsQuery,useGetWishListQuery ,useAddProductToWishListMutation,useDeleteProductFromWishListMutation } from '@/features/api/apiSlice'
+import { useGetCategoryProductsQuery,useGetCategoriesQuery,useGetWishListQuery ,useAddProductToWishListMutation,useDeleteProductFromWishListMutation } from '@/features/api/apiSlice'
 import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
 import { setCategoryId, setColor, setLimit, setMaxPriceP, setMinPriceP, setOffset, setSize, setSort } from '@/features/categoryproducts/catProducts'
 import Slider from 'rc-slider';
 import { ChevronDownIcon } from 'lucide-react'
+import { setError } from '@/features/login/login'
 const Category = () => {
+   const{token}=useSelector((state)=>state.login)
+    const navigate=useNavigate();
+   const {data:categories}=useGetCategoriesQuery();
     const{expandedMenu}=useSelector((state)=>state.sidebar)
     const[minPrice,setMinPrice]=useState(0);
     const[maxPrice,setMaxPrice]=useState(1500);
@@ -23,19 +27,20 @@ const Category = () => {
   const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId}=useSelector((state)=>state.catProducts)
   const dispatch=useDispatch();
   const{name}=useParams();
-  useEffect(()=>{
+  /* useEffect(()=>{
     dispatch( setCategoryId( name==="غرف النوم"?10:name==="مجالس"?11:name==="مجامر"?12:name==="ستائر"?13:name==="any"?14:null));
-  },[name,dispatch]) 
-
-  
-
+  },[name,dispatch])  */
+  useEffect(()=>{
+    if(categories){
+    const matchedCategory=categories?.data?.categories?.find(category=>category.name_ar?.trim()===name.trim());
+    dispatch(setCategoryId(matchedCategory.id))}
+  },[categories]);
   const [likedItems,setLikedItems]=useState({});
- 
     const[addStatus,setAddStatus]=useState(false);
     const[deleteStatus,setDeleteStatus]=useState(false);
      const[showMessage,setShowMessage]=useState(false)
-  const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP});
-  const{data:wishlistProducts}=useGetWishListQuery();
+  const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP},{skip:!categoryId});
+  const{data:wishlistProducts}=useGetWishListQuery(undefined,{skip:!token});
   const[addProduct,{data:resp,isSuccess:success}]=useAddProductToWishListMutation();
     const[deleteProduct,{data:res,isSuccess:succ}]=useDeleteProductFromWishListMutation();
   useEffect(()=>{
@@ -64,11 +69,11 @@ const Category = () => {
       dispatch(setColor(0));
       dispatch(setSize(""));
       dispatch(setSort(""));
-      dispatch(setLimit(12));
+      dispatch(setLimit(20));
       dispatch(setOffset(0));
       dispatch(setMinPriceP(0));
       dispatch(setMaxPriceP(0));
-    },[name,dispatch])  
+    },[categoryId,dispatch])  
     /* useEffect(()=>{
       setReady(false)
       setTimeout(()=>{
@@ -77,6 +82,7 @@ const Category = () => {
     },[name]) 
     if(!ready)return null;*/  
           const handleHeartIconClick=async(productId)=>{
+            if(token){
             if(!likedItems[productId]){
               try {
                 const response= await addProduct(productId).unwrap();
@@ -99,6 +105,9 @@ const Category = () => {
                 } catch (e) {
                  console.log(e?.data?.errors)
                 }
+             }}else{
+              navigate("/auth/login");
+               dispatch(setError("يجب ان تسجل الدخول اولا"));
              }
             
             } 
@@ -155,23 +164,23 @@ const Category = () => {
         <div className={`flex flex-col gap-5 ${catMenuClicked1?"max-h-0 opacity-0 ":"max-h-fit opacity-100"} transition-all `}>
         <div className={`flex justify-between`}>
           <p>3</p>
-           <Link to='/categories/غرف النوم'>غرف النوم</Link>
+           <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[0].id))}} to='/categories/غرف النوم'>غرف النوم</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>5</p>
-           <Link to='/categories/مجالس'>مجالس</Link>
+           <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[1].id))}} to='/categories/مجالس'>مجالس</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>1</p>
-            <Link to='/categories/مجامر'>مجامر</Link>
+            <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[2].id))}} to='/categories/مجامر'>مجامر</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>3</p>
-          <Link  to='/categories/ستائر'>ستائر</Link>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[3].id))}} to='/categories/ستائر'>ستائر</Link>
         </div>
         <div className={`flex justify-between`}>
           <p>3</p>
-         <Link to='/categories/any'>any</Link>
+         <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[4].id))}} to='/categories/any'>any</Link>
         </div>
         </div>
       </div>

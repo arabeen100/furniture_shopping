@@ -1,12 +1,13 @@
 import React from 'react'
 import { useEffect,useState } from 'react'
 import background from "../../assets/background.webp"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useLogInMutation } from '@/features/api/apiSlice'
 import { setItem, setToken } from '@/features/login/login'
 
 const Login = () => {
+  const{error}=useSelector((state)=>state.login)
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const [loginUser,{isError}]=useLogInMutation();
@@ -32,14 +33,14 @@ const Login = () => {
       }
     },[])
  useEffect(()=>{
-      if(isError){
+      if(isError||error){
        setShowError(true);
        const timer=setTimeout(()=>{
          setShowError(false);
       },3000)
      return ()=>clearTimeout(timer);
       }
-},[isError])
+},[isError,error])
 
 
 
@@ -62,8 +63,13 @@ const Login = () => {
      }
   return (
     <div className='larger:flex larger:items-start'>
+          <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showError?"translate-y-0":"-translate-y-[300px]"}`}>
+          {(isError&&password&&userIdentifier)&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}> Login failed: wrong email or password ❌</p>}
+          {error&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}> {error}❌</p>}
+       
+        </div>
 
-      {(isError&&password&&userIdentifier)&&<p className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[150px]"} bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}> Login failed: wrong email or password ❌</p>}
+  
       <div className=' w-full h-[100vh] grid place-content-center   larger:w-[50%]'>
       
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 w-[325px] text-right'>

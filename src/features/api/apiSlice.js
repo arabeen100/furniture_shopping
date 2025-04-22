@@ -113,7 +113,7 @@ export const apiSlice= createApi({
             query:()=>'/orders/shipping'
         }),
         getProducts:builder.query({
-            query:({color,size,sort,limit,offset,minPrice,maxPrice})=>({
+            query:({color,size,sort,limit,offset,min_price,max_price})=>({
                 url:'/products/',
                 params:{
                     ...(color&&{color}),
@@ -121,8 +121,8 @@ export const apiSlice= createApi({
                     ...(sort&&{_sort:sort}),
                     ...(limit&&{limit}),
                     ...(offset&&{offset}),
-                    ...(minPrice&&{minPrice}),
-                    ...(maxPrice&&{maxPrice}),
+                    ...(min_price&&{min_price}),
+                    ...(max_price&&{max_price}),
                 }
             })
         }),
@@ -232,31 +232,40 @@ export const apiSlice= createApi({
         })
     }),
     getCart:builder.query({
-        query:(token)=>({
+        query:()=>{
+            const token=localStorage.getItem("userToken")
+            return({
             url:'/profile/cart',
             headers:{
-                Authorization:`bearer${token}`
+                "Authorization":`Bearer ${token}`
             }
-        })
+        })},
+        providesTags:["cart"]
     }),
     addProductToCart:builder.mutation({
-        query:(productData,token)=>({
+        query:(productData)=>{
+            const token=localStorage.getItem("userToken")
+            return({
             url:'/profile/cart',
             method:'POST',
             body:productData,
             headers:{
-                Authorization:`Bearer ${token}`
+                "Authorization":`Bearer ${token}`
             }
-        })
+        })},
+        invalidatesTags:["cart"]
     }),
     deleteCart:builder.mutation({
-        query:(cartId,token)=>({
+        query:(cartId)=>{
+            const token=localStorage.getItem("userToken")
+            return({
             url:` /profile/cart/${cartId}`,
             method:'DELETE',
             headers:{
-                Authorization:`bearer${token}`
+                "Authorization":`Bearer ${token}`
             }
-        })
+        })},
+        invalidatesTags:["cart"]
     }),
     updateInfo:builder.mutation({
         query:(updatedUser)=>{

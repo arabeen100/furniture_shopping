@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useGetCarouselsQuery,useGetTrendyQuery,useGetCategoriesQuery,useAddProductToWishListMutation,useDeleteProductFromWishListMutation ,useGetWishListQuery} from '@/features/api/apiSlice'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import {Swiper,SwiperSlide}from "swiper/react"
 import"swiper/css"
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination ,Autoplay} from 'swiper/modules';
 import { HeartIcon ,ShoppingCartIcon } from 'lucide-react';
-import { useSelector } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
+import { setCategoryId } from '@/features/categoryproducts/catProducts'
+import { setError } from '@/features/login/login'
 const Home = () => {
+  const{token}=useSelector((state)=>state.login)
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
   const {data:carousels,isLoading,error}=useGetCarouselsQuery();
   const[addStatus,setAddStatus]=useState(false);
   const[deleteStatus,setDeleteStatus]=useState(false);
@@ -19,7 +24,7 @@ const Home = () => {
   const {data:categories}=useGetCategoriesQuery();
  const[addProduct,{data:resp,isSuccess:success}]=useAddProductToWishListMutation();
   const[deleteProduct,{data:res,isSuccess:succ}]=useDeleteProductFromWishListMutation(); 
-  const{data:wishlistProducts}=useGetWishListQuery();
+  const{data:wishlistProducts}=useGetWishListQuery(undefined,{skip:!token});
 /*   const toggleLike=(id)=>{
     setLikedItems((prev)=>({
       ...prev,[id]:!prev[id]
@@ -71,6 +76,7 @@ useEffect(()=>{
   }
 },[wishlistProducts])
 const handleHeartIconClick=async(productId)=>{
+  if(token){
     if(!likedItems[productId]){
       try {
         const response= await addProduct(productId).unwrap();
@@ -93,6 +99,9 @@ const handleHeartIconClick=async(productId)=>{
         } catch (e) {
          console.log(e?.data?.errors)
         }
+     }}else{
+      navigate('/auth/login');
+       dispatch(setError("يجب ان تسجل الدخول اولا"));
      }
     
     } 
@@ -172,7 +181,7 @@ const handleHeartIconClick=async(productId)=>{
         )} */}
         <div className='grid grid-col-2 larg:grid-col-4 large:gap-2 larger:grid-cols-3 larger:gap-2' >
           
-          <Link to='/categories/غرف النوم' className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px] p-1 '>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[0].id))}} to='/categories/غرف النوم' className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px] p-1 '>
            
            <div className='w-full'>
             
@@ -180,25 +189,25 @@ const handleHeartIconClick=async(productId)=>{
            </div>
             <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[0].name_ar}</p>
           </Link>
-          <Link to='/categories/مجالس' className= 'larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1  '>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[1].id))}}  to='/categories/مجالس' className= 'larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1  '>
           <div className='w-full '>
             <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[1].image_link} alt='category' loading='lazy'/>
            </div>
             <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[1].name_ar}</p>
           </Link>
-          <Link to='/categories/مجامر' className=' larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px]   p-1 '>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[2].id))}}  to='/categories/مجامر' className=' larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px]   p-1 '>
           <div className='w-full '>
             <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[2].image_link} alt='category' loading='lazy'/>
             </div>
             <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[2].name_ar}</p>
           </Link>
-          <Link to='/categories/ستائر' className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1'>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[3].id))}}  to='/categories/ستائر' className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1'>
           <div className='w-full '>
             <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[3].image_link} alt='category' loading='lazy'/>
            </div>
             <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[3].name_ar}</p>
           </Link>
-          <Link to='/categories/any' className='col-start-2 large:col-start-4 larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1'>
+          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[4].id))}}  to='/categories/any' className='col-start-2 large:col-start-4 larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1'>
            <div className='w-full  '>
             <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[4].image_link} alt='category' loading='lazy'/>
            </div>
