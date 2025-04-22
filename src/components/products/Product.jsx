@@ -7,6 +7,7 @@ import { setCount, setProductId, setSelectedColor, setSelectedSize } from '@/fea
 import { useNavigate } from 'react-router-dom'
 import { setError } from '@/features/login/login'
 const Product = () => {
+  const[err,setErr]=useState(false);
   const[status,setStatus]=useState(false);
   const[buyClick,setBuyClick]=useState(false);
   const{token}=useSelector((state)=>state.login)
@@ -59,16 +60,23 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
      
       }
     },[wishlistProducts])
-
+    useEffect(()=>{
+      if(isError){
+        setErr(true);
+        setTimeout(()=>{
+          setErr(false);
+        },3500)
+      }
+    },[isError])
   useEffect(()=>{
-    if(addStatus||deleteStatus||finalLimit||status||isError){
+    if(addStatus||deleteStatus||finalLimit||status||err){
      setShowMessage(true);
      const timer=setTimeout(()=>{
        setShowMessage(false);
     },3000)
    return ()=>clearTimeout(timer);
     }
-},[addStatus,deleteStatus,finalLimit,status,isError])
+},[addStatus,deleteStatus,finalLimit,status,err])
   useEffect(()=>{
     if(product){
       console.log(product)
@@ -83,6 +91,7 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
       setBuyClick(false)
     }
   },[isSuccess,buyClick,cartItems])
+  
   const handleAddToCart=async()=>{
       try {
         const response=await addedProduct({...productt,["selectedColor"]:selectedColor,["selectedSize"]:selectedSize,["quantity"]:count}).unwrap();
@@ -129,7 +138,7 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
          <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[300px]"}`}>
          {addStatus&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{resp?.data?.message}✔️</p>}
          {deleteStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{res?.data?.message }✔️</p>}
-         {(finalLimit||isError)&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>
+         {(finalLimit||err)&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>
          لقد نفذت الكمية ❌</p>}
          {status&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>
          تمت إضافة المنتج بنجاح✔️</p>}
