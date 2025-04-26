@@ -259,7 +259,7 @@ export const apiSlice= createApi({
         query:(cartId)=>{
             const token=localStorage.getItem("userToken")
             return({
-            url:` /profile/cart/${cartId}`,
+            url:`/profile/cart/${cartId}`,
             method:'DELETE',
             headers:{
                 "Authorization":`Bearer ${token}`

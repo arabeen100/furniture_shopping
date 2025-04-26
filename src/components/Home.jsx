@@ -11,10 +11,11 @@ import { useDispatch,useSelector } from 'react-redux'
 import { setCategoryId } from '@/features/categoryproducts/catProducts'
 import { setError } from '@/features/login/login'
 const Home = () => {
-  const{token}=useSelector((state)=>state.login)
+  const{token}=useSelector((state)=>state.login);
+  const{error}=useSelector((state)=>state.checkout)
   const navigate=useNavigate();
   const dispatch=useDispatch();
-  const {data:carousels,isLoading,error}=useGetCarouselsQuery();
+  const {data:carousels,isLoading}=useGetCarouselsQuery();
   const[addStatus,setAddStatus]=useState(false);
   const[deleteStatus,setDeleteStatus]=useState(false);
   const [limit,setLimit]=useState(25);
@@ -47,14 +48,14 @@ const Home = () => {
     }
   },[wishlistProducts])
    useEffect(()=>{
-            if(addStatus||deleteStatus){
+            if(addStatus||deleteStatus||error){
              setShowMessage(true);
              const timer=setTimeout(()=>{
                setShowMessage(false);
             },3000)
            return ()=>clearTimeout(timer);
             }
-      },[addStatus,deleteStatus])
+      },[addStatus,deleteStatus,error])
   useEffect(()=>{
       if(carousels){
         console.log(carousels)
@@ -111,6 +112,7 @@ const handleHeartIconClick=async(productId)=>{
       <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[250px]"}`}>
          {addStatus&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{resp?.data?.message}✔️</p>}
          {deleteStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{res?.data?.message }✔️</p>}
+         {error&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{error}</p>}
       </div>
         <Swiper modules={[Navigation,Pagination,Autoplay]}
         slidesPerView={1}

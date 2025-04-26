@@ -11,6 +11,7 @@ import plusButtonReducer from "../features/plusButton/plusButton"
 import userDataReducer from "../features/userData/userDataSlice"
 import likedItemsReducer from "../features/likeditems/likedItems"
 import catProductsReducer from "../features/categoryproducts/catProducts"
+import checkoutReducer from "../features/checkout/checkout"
 export const store= configureStore({
     reducer:{
         [apiSlice.reducerPath]:apiSlice.reducer,
@@ -25,6 +26,7 @@ export const store= configureStore({
         plusButton:plusButtonReducer,
         likedItems:likedItemsReducer,
         catProducts:catProductsReducer,
+        checkout:checkoutReducer,
 
 
 

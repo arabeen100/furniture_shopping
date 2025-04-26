@@ -10,8 +10,7 @@ const Product = () => {
   const[err,setErr]=useState(false);
   const[status,setStatus]=useState(false);
   const[buyClick,setBuyClick]=useState(false);
-  const{token}=useSelector((state)=>state.login)
-  const[productAdded,setProductAdded]=useState({});
+  const{token}=useSelector((state)=>state.login);
   const{data:cart}=useGetCartQuery(undefined,{skip:!token});
   const[finalLimit,setFinalLimit]=useState(0);
   const navigate=useNavigate();
@@ -48,8 +47,6 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
   useEffect(()=>{
     if(cart){
       console.log(cart);
-      const productAdded=cart?.data?.cart_products?.find((product)=>(product.id===productId&& JSON.stringify(product.selectedColor)===JSON.stringify(selectedColor)&&JSON.stringify(product.selectedSize)===JSON.stringify(selectedSize)));
-      setProductAdded(productAdded);
     }
   },[cart])
    useEffect(()=>{
@@ -115,7 +112,9 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
            if(response.status){
             setLikedItems((prev)=>({...prev,[productId]:true}))
              setAddStatus(true);
-             setDeleteStatus(false);
+             setTimeout(()=>{
+              setAddStatus(false)
+             },3500)
            }
          } catch (e) {
            console.log(e?.data?.errors)
@@ -125,8 +124,10 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
            const response=await deleteProduct(productId).unwrap();
            if(response.status){
             setLikedItems((prev)=>({...prev,[productId]:false}))
-             setAddStatus(false);
              setDeleteStatus(true);
+             setTimeout(()=>{
+              setDeleteStatus(false)
+             },3500)
            }
           } catch (e) {
            console.log(e?.data?.errors)
