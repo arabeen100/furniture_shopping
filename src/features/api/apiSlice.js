@@ -85,7 +85,8 @@ export const apiSlice= createApi({
             query:({coupon})=>({
                 url:'/orders/coupon',
                 params:{coupon},
-            })
+            }),
+            
         }),
         checkOut:builder.mutation({
             query:(orderData,token)=>({

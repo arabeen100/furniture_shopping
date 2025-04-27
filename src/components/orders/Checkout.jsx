@@ -19,6 +19,9 @@ const Checkout = () => {
   const{sum,coupon,total}=useSelector((state)=>state.checkout)
   const{data:couponInfo,isError:isErr,isSuccess,requestId}=useGetCouponQuery({coupon:coupon},{skip:!coupon||!applyClicked,
     refetchOnMountOrArgChange:true,
+  
+    
+   
   });
   const [count,setCount]=useState(0); 
   const{token}=useSelector((state)=>state.login)
@@ -143,7 +146,7 @@ const deleteCart=async(cartId)=>{
             {cart?.data?.cart_products?.map(product=><tr className="w-full flex-grow flex flex-row-reverse justify-start border-b pb-3  " key={product.id}>
              <td className='ml-2 flex-grow w-3/10 flex flex-row-reverse justify-start items-center gap-1'>
                <div className='flex-grow max-w-26 grid place-content-center  border p-2 rounded-sm'>
-                <div className='flex-grow  max-w-[24] h-24'>
+                <div className='flex-grow  max-w-24 h-24'>
                 <img src={product.images?.[0]?.image_link} alt={product.name_ar} className='w-full h-full object-center object-cover '/>
                 </div>
                </div>
@@ -190,7 +193,7 @@ const deleteCart=async(cartId)=>{
            </div>
            <div className={`${removeCoupon?"block":"hidden"} text-right `}>
             <p>أدخل رمز الخصم</p>
-            <div className='flex mt-2'>
+            <form onSubmit={(e)=>{e.preventDefault()}} className='flex mt-2'>
               <button onClick={()=>{
                 setApplyClicked(true);
                   setTimeout(()=>{
@@ -206,7 +209,7 @@ const deleteCart=async(cartId)=>{
                 setApplyClicked(false) ;
               }}
               />
-            </div>
+            </form>
            </div>
           <div className={`${!removeCoupon?"flex": "hidden"} mt-5.5 justify-between items-center gap-9.5 large:gap-20`}>
             <button onClick={()=>{setRemoveCoupon(true)}} className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500'>حذف</button>
