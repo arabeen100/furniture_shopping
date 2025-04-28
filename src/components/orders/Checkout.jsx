@@ -17,11 +17,8 @@ const Checkout = () => {
   const[addedProduct,{data:cartItems,isError}]=useAddProductToCartMutation();
   const[deletedProduct,{data}]=useDeleteCartMutation();
   const{sum,coupon,total}=useSelector((state)=>state.checkout)
-  const{data:couponInfo,isError:isErr,isSuccess,requestId}=useGetCouponQuery({coupon:coupon},{skip:!coupon||!applyClicked,
+  const{data:couponInfo,isError:isErr,isFetching,isSuccess,requestId}=useGetCouponQuery({coupon:coupon},{skip:!coupon||!applyClicked ,
     refetchOnMountOrArgChange:true,
-  
-    
-   
   });
   const [count,setCount]=useState(0); 
   const{token}=useSelector((state)=>state.login)
@@ -67,14 +64,16 @@ const Checkout = () => {
     }
   },[isErr])
   useEffect(()=>{
-    if(isSuccess&&requestId){
+    if(isSuccess&&!isFetching&&requestId){
       setApplyStatus(true);
       setTimeout(()=>{
         setApplyStatus(false);
       },3500)
       setRemoveCoupon(false);
+    
     }
-  },[isSuccess,requestId])
+   
+  },[isFetching,isSuccess,requestId])
  useEffect(()=>{
   if(couponInfo){
    dispatch(setTotal(sum*((100-couponInfo?.data?.value)/100))) 
