@@ -129,11 +129,11 @@ const handleHeartIconClick=async(productId)=>{
       }}
         loop={true}
         navigation
-        className='w-[75vw] xlarge:w-[95%] large:w-[95%] large:max-w-[1000px] xlarge:max-w-[1100px] larger:w-[95%] min-w-[360px]'
+        className='w-[75vw] xlarge:w-[95%] large:w-[95%] large:max-w-[1000px] xlarge:max-w-[1100px] larger:w-[95%] min-w-[340px]'
         >
        
         {trendy?.data?.products?.map(product=>
-          <SwiperSlide className='w-[20vw] max-w-[300px] min-w-[172.5px]' key={product.id}>
+          <SwiperSlide className='w-[20vw] max-w-[300px] min-w-[167px]' key={product.id}>
            
             <div className='relative  bg-gray-200 flex flex-col w-full h-[260px] larger:h-[320px] large:h-[320px] xlarge:h-[320px]  rounded-[20px] '>
               <div onClick={()=>{handleHeartIconClick(product.id)}}  className=' cursor-pointer w-9 h-9 rounded-full bg-white absolute grid place-content-center left-1.5 t.5'>
@@ -159,9 +159,9 @@ const handleHeartIconClick=async(productId)=>{
       </div>
       <div className=' flex flex-col justify-center items-center gap-7 mt-15 mb-15 p-2 '>
         <p className='text-4xl text-center text-[#042e2e] ' >الفئات</p>
-        <div  className='flex justify-center flex-wrap gap-1.5'>
+        <div  className='flex justify-center flex-wrap '>
           {categories?.data?.categories?.map(category=>
-            <Link className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px] p-1 ' key={category.id} to={`/categories/${category.name_ar}`}>
+            <Link className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[167px] p-1 ' key={category.id} to={`/categories/${category.name_ar}`}>
             <div className='w-full'>
             <img className='  w-full h-full object-center object-cover hover:brightness-50' src={category.image_link} alt='category' loading='lazy'/>
            </div>

@@ -9,6 +9,8 @@ const initialState={
     offset:0,
     minPriceP:null,
     maxPriceP:null,
+    minPrice:null,
+    maxPrice:null,
     categoryId:null,
     productId:null,
     catMenuClicked1:false,
@@ -78,8 +80,14 @@ const catProductsSlice=createSlice({
         },
         setSelectedColorId:(state,{payload})=>{
             state.selectedColorId=payload;
+        },
+        setMinPrice:(state,{payload})=>{
+            state.minPrice=payload;
         }, 
+        setMaxPrice:(state,{payload})=>{
+            state.maxPrice=payload;
+        },
     }
 })
 export default catProductsSlice.reducer;
-export const {setSelectedColorId,setSelectedSizeId,setCatMenuClicked1,setCatMenuClicked2,setCatMenuClicked3,setCatMenuClicked4,setSelectedColor,setSelectedSize,setCount,setProductId,setColor,setLimit,setMaxPriceP,setMinPriceP,setOffset,setSize,setSort,setCategoryId}=catProductsSlice.actions
+export const {setMinPrice,setMaxPrice,setSelectedColorId,setSelectedSizeId,setCatMenuClicked1,setCatMenuClicked2,setCatMenuClicked3,setCatMenuClicked4,setSelectedColor,setSelectedSize,setCount,setProductId,setColor,setLimit,setMaxPriceP,setMinPriceP,setOffset,setSize,setSort,setCategoryId}=catProductsSlice.actions

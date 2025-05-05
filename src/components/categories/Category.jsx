@@ -9,7 +9,7 @@ import { useParams ,Link,useNavigate} from 'react-router-dom'
 import { useDispatch,useSelector} from 'react-redux'
 import { useGetCategoryProductsQuery,useGetCategoriesQuery,useGetWishListQuery ,useAddProductToWishListMutation,useDeleteProductFromWishListMutation } from '@/features/api/apiSlice'
 import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
-import { setCategoryId, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setColor, setLimit, setMaxPriceP, setMinPriceP, setOffset, setSize, setSort,setSelectedSizeId,setSelectedColorId } from '@/features/categoryproducts/catProducts'
+import { setCategoryId, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setColor, setLimit, setMaxPriceP, setMinPriceP, setOffset, setSize, setSort,setSelectedSizeId,setSelectedColorId,setMinPrice,setMaxPrice } from '@/features/categoryproducts/catProducts'
 import Slider from 'rc-slider';
 import { ChevronDownIcon } from 'lucide-react'
 import { setError } from '@/features/login/login'
@@ -18,16 +18,16 @@ const Category = () => {
     const navigate=useNavigate();
    const {data:categories}=useGetCategoriesQuery();
     const{expandedMenu}=useSelector((state)=>state.sidebar)
-    const[minPrice,setMinPrice]=useState(0);
-    const[maxPrice,setMaxPrice]=useState(1500);
-  const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId}=useSelector((state)=>state.catProducts)
+  const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId,minPrice,maxPrice}=useSelector((state)=>state.catProducts)
   const dispatch=useDispatch();
   const{name}=useParams();
   useEffect(()=>{
     if(categories){
     const matchedCategory=categories?.data?.categories?.find(category=>category.name_ar?.trim()===name.trim());
     dispatch(setCategoryId(matchedCategory.id))}
+    
   },[categories,name]);
+
   const [likedItems,setLikedItems]=useState({});
     const[addStatus,setAddStatus]=useState(false);
     const[deleteStatus,setDeleteStatus]=useState(false);
@@ -39,8 +39,12 @@ const Category = () => {
   useEffect(()=>{
     if(categoryProducts){
       console.log(categoryProducts);
+      dispatch(setMinPrice(minPrice||categoryProducts?.data?.filters?.min_price));
+      dispatch(setMaxPrice(maxPrice||categoryProducts?.data?.filters?.max_price))
+   
     }
   },[categoryProducts])
+
    useEffect(()=>{
       if(wishlistProducts?.data?.wishlist_products){
         setLikedItems(()=>
@@ -166,10 +170,10 @@ const Category = () => {
           <p className='text-right'>Min price:</p>
           <Slider
           reverse
-          min={0}
-          max={1500}
-          value={minPrice}
-          onChange={(value)=>setMinPrice(Math.min(value,maxPrice))}
+          min={Number(categoryProducts?.data?.filters?.min_price)}
+          max={Number(categoryProducts?.data?.filters?.max_price)}
+          value={Number(minPrice)}
+          onChange={(value)=>dispatch(setMinPrice(Math.min(Number(value),Number(maxPrice))))}
           styles={{
             track:{backgroundColor:"#3b82f6",height:6},
             handle:{
@@ -194,10 +198,10 @@ const Category = () => {
           <p className='text-right'>Max price:</p>
           <Slider
           reverse
-          min={0}
-          max={1500}
-          value={maxPrice}
-          onChange={(value)=>setMaxPrice(Math.max(value,minPrice))}
+          min={Number(categoryProducts?.data?.filters?.min_price)}
+          max={Number(categoryProducts?.data?.filters?.max_price)}
+          value={Number(maxPrice)}
+          onChange={(value)=>dispatch(setMaxPrice(Math.max(value,Number(minPrice))))}
           styles={{
             track:{backgroundColor:"#0675a8",height:6},
             handle:{
@@ -275,10 +279,10 @@ const Category = () => {
           dispatch(setMaxPriceP(0));
           dispatch(setColor(""));
           dispatch(setSize(""));
-          setMinPrice(0);
-          setMaxPrice(1500);
           dispatch(setSelectedSizeId(0));
           dispatch(setSelectedColorId(0));
+          dispatch(setMinPrice(categoryProducts?.data?.filters?.min_price));
+          dispatch(setMaxPrice(categoryProducts?.data?.filters?.max_price));
 
         }} className='cursor-pointer w-[120px] h-[40px] grid place-content-center bg-red-500 text-white rounded-sm' >مسح الفلاتر </button>
         </div>

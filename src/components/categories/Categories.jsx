@@ -17,7 +17,7 @@ const Categories = () => {
         <p className='text-4xl text-center text-[#042e2e] ' >الفئات</p>
         <div className='flex flex-wrap justify-center'>
           {categories?.data?.categories.map((category)=>
-            <Link onClick={()=>{dispatch(setCategoryId(category.id))}} key={category.id} to={`/categories/${category.name_ar}`} className={`larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px] p-1 `}>
+            <Link onClick={()=>{dispatch(setCategoryId(category.id))}} key={category.id} to={`/categories/${category.name_ar}`} className={`larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[167px] p-1 `}>
            
             <div className='w-full'>
              

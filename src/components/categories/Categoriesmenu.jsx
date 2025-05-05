@@ -5,15 +5,13 @@ import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
 import Slider from 'rc-slider';
 import { Link } from 'react-router-dom';
 import "rc-slider/assets/index.css";
-import { setCategoryId,setColor, setMaxPriceP, setMinPriceP, setSize ,setLimit,setOffset,setSort, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setSelectedSizeId,setSelectedColorId} from '@/features/categoryproducts/catProducts';
+import { setCategoryId,setColor, setMaxPriceP, setMinPriceP, setSize ,setLimit,setOffset,setSort, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setSelectedSizeId,setSelectedColorId,setMinPrice,setMaxPrice} from '@/features/categoryproducts/catProducts';
 import { useGetCategoryProductsQuery,useGetCategoriesQuery } from '@/features/api/apiSlice';
 const Categoriesmenu = () => {
   const {data:categories}=useGetCategoriesQuery();
-    const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId}=useSelector((state)=>state.catProducts)
+    const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId,minPrice,maxPrice}=useSelector((state)=>state.catProducts)
     const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP},{skip:!categoryId,
     });
-  const[minPrice,setMinPrice]=useState(0);
-  const[maxPrice,setMaxPrice]=useState(1500);
   const{expandedMenu}=useSelector((state)=>state.sidebar)
   const dispatch=useDispatch();
    useEffect(()=>{
@@ -68,10 +66,10 @@ const Categoriesmenu = () => {
           <p className='text-right'>Min price:</p>
           <Slider
           reverse
-          min={0}
-          max={1500}
-          value={minPrice}
-          onChange={(value)=>setMinPrice(Math.min(value,maxPrice))}
+         min={Number(categoryProducts?.data?.filters?.min_price)}
+          max={Number(categoryProducts?.data?.filters?.max_price)}
+          value={Number(minPrice)}
+          onChange={(value)=>dispatch(setMinPrice(Math.min(Number(value),Number(maxPrice))))}
           styles={{
             track:{backgroundColor:"#3b82f6",height:6},
             handle:{
@@ -96,10 +94,10 @@ const Categoriesmenu = () => {
           <p className='text-right'>Max price:</p>
           <Slider
           reverse
-          min={0}
-          max={1500}
-          value={maxPrice}
-          onChange={(value)=>setMaxPrice(Math.max(value,minPrice))}
+           min={Number(categoryProducts?.data?.filters?.min_price)}
+           max={Number(categoryProducts?.data?.filters?.max_price)}
+           value={Number(maxPrice)}
+           onChange={(value)=>dispatch(setMaxPrice(Math.max(value,Number(minPrice))))}
           styles={{
             track:{backgroundColor:"#0675a8",height:6},
             handle:{
@@ -173,14 +171,15 @@ const Categoriesmenu = () => {
         </div>
       </div>}
       <div className='flex justify-end mt-5 '>
-        <button onClick={()=>{dispatch(setMinPriceP(0));
+        <button onClick={()=>{
+          dispatch(setMinPriceP(0));
           dispatch(setMaxPriceP(0));
           dispatch(setColor(0));
           dispatch(setSize(""));
-          setMinPrice(0);
-          setMaxPrice(1500);
           dispatch(setSelectedSizeId(0));
           dispatch(setSelectedColorId(0));
+          dispatch(setMinPrice(categoryProducts?.data?.filters?.min_price));
+          dispatch(setMaxPrice(categoryProducts?.data?.filters?.max_price));
         }} className='cursor-pointer w-[120px] h-[40px] grid place-content-center bg-red-500 text-white rounded-sm' >مسح الفلاتر </button>
         </div>
       </div>
