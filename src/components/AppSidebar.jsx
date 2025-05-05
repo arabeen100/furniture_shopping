@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useSelector,useDispatch } from "react-redux"
-import { useLogOutMutation } from "@/features/api/apiSlice"
+import { useLogOutMutation,useGetCategoriesQuery } from "@/features/api/apiSlice"
 import { Closeicon } from "@/icons"
 import { setExpanded} from "../features/sidebar/sidebarSlice"
 import profileLogo from "../assets/profile.webp"
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { setItem, setToken } from "@/features/login/login"
 import { useEffect } from "react"
 export function AppSidebar() {
+  const {data:categories}=useGetCategoriesQuery();
   const{token}=useSelector((state)=>state.login)
   const navigate=useNavigate();
       const dispatch=useDispatch();
@@ -50,11 +51,9 @@ export function AppSidebar() {
               </button>
               <ul className=" text-right leading-10 mr-5 flex flex-col justify-end ">
                 <li>فئات</li>
-                <li><Link to='/categories/غرف النوم'>غرف النوم</Link></li>
-                <li><Link to='/categories/مجالس'>مجالس</Link></li>
-                <li><Link to='/categories/مجامر'>مجامر</Link></li>
-                <li><Link to='/categories/ستائر'>ستائر</Link></li>
-                <li><Link to='/categories/any'>any</Link></li>
+                {categories?.data?.categories?.map(category=>
+                  <li  key={category.id}><Link to={`/categories/${category.name_ar}`}>{category.name_ar}</Link></li>
+                )}
                 <li><Link  to='profile/Personalinfo' className={`${!token&& " hidden"} larger:hidden relative top-2 left-64 w-[38px] h-[38px]`} ><img src={profileLogo} width='25' alt="profile-logo"loading="lazy"/></Link></li>
                 <li ><button onClick={()=>{
                 dispatch(setExpanded());

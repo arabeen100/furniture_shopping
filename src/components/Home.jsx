@@ -8,7 +8,6 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination ,Autoplay} from 'swiper/modules';
 import { HeartIcon ,ShoppingCartIcon } from 'lucide-react';
 import { useDispatch,useSelector } from 'react-redux'
-import { setCategoryId } from '@/features/categoryproducts/catProducts'
 import { setError } from '@/features/login/login'
 const Home = () => {
   const{token}=useSelector((state)=>state.login);
@@ -26,19 +25,6 @@ const Home = () => {
  const[addProduct,{data:resp,isSuccess:success}]=useAddProductToWishListMutation();
   const[deleteProduct,{data:res,isSuccess:succ}]=useDeleteProductFromWishListMutation(); 
   const{data:wishlistProducts}=useGetWishListQuery(undefined,{skip:!token});
-/*   const toggleLike=(id)=>{
-    setLikedItems((prev)=>({
-      ...prev,[id]:!prev[id]
-    })
-
-    )
-  } */
-  /*  useEffect(()=>{
-    wishlistProducts?.data?.wishlist_products?.forEach(wishlistProduct=>{if(isFirstReneder.current){ toggleLike(wishlistProduct.id);
-      isFirstReneder.current=false;
-    }
-    })
-  },[wishlistProducts]) */
   useEffect(()=>{
     if(wishlistProducts?.data?.wishlist_products){
       setLikedItems(()=>
@@ -173,48 +159,18 @@ const handleHeartIconClick=async(productId)=>{
       </div>
       <div className=' flex flex-col justify-center items-center gap-7 mt-15 mb-15 p-2 '>
         <p className='text-4xl text-center text-[#042e2e] ' >الفئات</p>
-       {/*  {categories?.data?.categories.map((category,index)=>
-
-        <div className='flex flex-col ' key={category.id}>
-              <img className='scale-45' src={category.image_link} loading='lazy' alt='category'/>
-              <p className='text-center mt-0'>{category.name_ar}</p>
-
-        </div>
-        )} */}
-        <div className='grid grid-col-2 larg:grid-col-4 large:gap-2 larger:grid-cols-3 larger:gap-2' >
+        <div  className='flex justify-center flex-wrap gap-1.5'>
+          {categories?.data?.categories?.map(category=>
+            <Link className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px] p-1 ' key={category.id} to={`/categories/${category.name_ar}`}>
+            <div className='w-full'>
+            <img className='  w-full h-full object-center object-cover hover:brightness-50' src={category.image_link} alt='category' loading='lazy'/>
+           </div>
+            <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{category.name_ar}</p>
+              
+            </Link>
+          )}
           
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[0].id))}} to='/categories/غرف النوم' className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px] p-1 '>
-           
-           <div className='w-full'>
-            
-            <img className='  w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[0].image_link} alt='category' loading='lazy'/>
-           </div>
-            <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[0].name_ar}</p>
-          </Link>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[1].id))}}  to='/categories/مجالس' className= 'larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1  '>
-          <div className='w-full '>
-            <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[1].image_link} alt='category' loading='lazy'/>
-           </div>
-            <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[1].name_ar}</p>
-          </Link>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[2].id))}}  to='/categories/مجامر' className=' larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[172.5px]   p-1 '>
-          <div className='w-full '>
-            <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[2].image_link} alt='category' loading='lazy'/>
-            </div>
-            <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[2].name_ar}</p>
-          </Link>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[3].id))}}  to='/categories/ستائر' className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1'>
-          <div className='w-full '>
-            <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[3].image_link} alt='category' loading='lazy'/>
-           </div>
-            <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e] '>{categories?.data?.categories?.[3].name_ar}</p>
-          </Link>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[4].id))}}  to='/categories/any' className='col-start-2 large:col-start-4 larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[40vw] max-w-[300px] min-w-[172.5px]  p-1'>
-           <div className='w-full  '>
-            <img className='w-full h-full object-center object-cover hover:brightness-50' src={categories?.data?.categories?.[4].image_link} alt='category' loading='lazy'/>
-           </div>
-            <p className='text-lg text-white grid place-content-center w-full h-[50px] bg-[#042e2e]'>{categories?.data?.categories?.[4].name_ar}</p>
-          </Link>
+    
         </div>
         <Link to="/categories" className='  text-xl text-white bg-[#042e2e] small:px-7 small:py-5 small:text-2xl py-2.5 px-5' >تسوق الان</Link>
 

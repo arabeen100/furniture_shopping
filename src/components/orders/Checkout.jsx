@@ -1,5 +1,5 @@
 import React, { useEffect ,useState} from 'react'
-import { Trash2Icon } from 'lucide-react'
+import { Trash2Icon ,HouseIcon} from 'lucide-react'
 import { useGetCartQuery,useAddProductToCartMutation,useDeleteCartMutation, useGetCouponQuery } from '@/features/api/apiSlice'
 import { useSelector,useDispatch } from 'react-redux'
 import { resetSum, setCoupon ,setError,setSum, setTotal} from '@/features/checkout/checkout'
@@ -226,7 +226,20 @@ const deleteCart=async(cartId)=>{
            </div>
          </div>
       </div>}
-      {<div></div>}
+      {<div className='flex  flex-col large:flex-row-reverse large:gap-5 large:items-start  items-end gap-23 w-full '>
+        <div className='flex flex-col items-end gap-7'>
+        <p className='text-4xl text-[#042e2e]'>عنوان الشحن</p>
+        <div>
+          <div className='flex flex-row-reverse'>
+          <div className='bg-[#51a5a1] p-2.5 grid place-content-center rounded-md'><HouseIcon color='white' size={20} /></div>
+          <div className='w-100 mb-3 border-b border-dashed'></div>
+          </div>
+          <p className='text-right'>العنوان</p>
+        </div>
+
+
+        </div>
+      </div>}
       </div>
         
     </div>

@@ -2,18 +2,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState={
     color:0,
     size:"",
-    sort:"",
+    selectedSizeId:0,
+    selectedColorId:0,
+    sort:null,
     limit:20,
     offset:0,
-    minPriceP:0,
-    maxPriceP:0,
-    categoryId:0,
-    productId:0,
+    minPriceP:null,
+    maxPriceP:null,
+    categoryId:null,
+    productId:null,
+    catMenuClicked1:false,
+    catMenuClicked2:false,
+    catMenuClicked3:false,
+    catMenuClicked4:false,
     count:1,
     selectedColor:{},
     selectedSize:{},
    /*  radioColor:"",
-    radiosize:"", */
+    radiosize:"", */ 
 }
 const catProductsSlice=createSlice({
     name:"catProducts",
@@ -55,14 +61,25 @@ const catProductsSlice=createSlice({
         setSelectedSize:(state,{payload})=>{
             state.selectedSize=payload;
         },
-      /*   setRadioColor:(state,{payload})=>{
-            state.radioColor=payload;
+        setCatMenuClicked1:(state,{payload})=>{
+            state.catMenuClicked1=payload;
         },
-        setRadioSize:(state,{payload})=>{
-            state.radiosize=payload;
-        }, */
-     
+        setCatMenuClicked2:(state,{payload})=>{
+            state.catMenuClicked2=payload;
+        },
+        setCatMenuClicked3:(state,{payload})=>{
+            state.catMenuClicked3=payload;
+        },
+        setCatMenuClicked4:(state,{payload})=>{
+            state.catMenuClicked4=payload;
+        },
+        setSelectedSizeId:(state,{payload})=>{
+            state.selectedSizeId=payload;
+        },
+        setSelectedColorId:(state,{payload})=>{
+            state.selectedColorId=payload;
+        }, 
     }
 })
 export default catProductsSlice.reducer;
-export const {setSelectedColor,setSelectedSize,setCount,setProductId,setColor,setLimit,setMaxPriceP,setMinPriceP,setOffset,setSize,setSort,setCategoryId}=catProductsSlice.actions
+export const {setSelectedColorId,setSelectedSizeId,setCatMenuClicked1,setCatMenuClicked2,setCatMenuClicked3,setCatMenuClicked4,setSelectedColor,setSelectedSize,setCount,setProductId,setColor,setLimit,setMaxPriceP,setMinPriceP,setOffset,setSize,setSort,setCategoryId}=catProductsSlice.actions

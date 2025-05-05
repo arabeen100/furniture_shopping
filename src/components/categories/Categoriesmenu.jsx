@@ -5,19 +5,15 @@ import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
 import Slider from 'rc-slider';
 import { Link } from 'react-router-dom';
 import "rc-slider/assets/index.css";
-import { setCategoryId,setColor, setMaxPriceP, setMinPriceP, setSize } from '@/features/categoryproducts/catProducts';
+import { setCategoryId,setColor, setMaxPriceP, setMinPriceP, setSize ,setLimit,setOffset,setSort, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setSelectedSizeId,setSelectedColorId} from '@/features/categoryproducts/catProducts';
 import { useGetCategoryProductsQuery,useGetCategoriesQuery } from '@/features/api/apiSlice';
 const Categoriesmenu = () => {
   const {data:categories}=useGetCategoriesQuery();
-    const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId}=useSelector((state)=>state.catProducts)
-    const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP},{skip:!categoryId});
-
+    const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId}=useSelector((state)=>state.catProducts)
+    const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP},{skip:!categoryId,
+    });
   const[minPrice,setMinPrice]=useState(0);
   const[maxPrice,setMaxPrice]=useState(1500);
-  const[catMenuClicked1,setCatMenuClicked1]=useState(false);
-  const[catMenuClicked2,setCatMenuClicked2]=useState(false);
-  const[catMenuClicked3,setCatMenuClicked3]=useState(false);
-  const[catMenuClicked4,setCatMenuClicked4]=useState(false);
   const{expandedMenu}=useSelector((state)=>state.sidebar)
   const dispatch=useDispatch();
    useEffect(()=>{
@@ -49,39 +45,25 @@ const Categoriesmenu = () => {
       <XIcon onClick={()=>{dispatch(setExpandedMenu())}} size={21} className='cursor-pointer mt-6 ml-4.5 '/>
       </div> 
       <div className={`flex flex-col gap-5 text-lg mt-6 `}>
-        <div onClick={()=>{setCatMenuClicked1(!catMenuClicked1)}} className='flex justify-between cursor-pointer'>
+        <div onClick={()=>{dispatch(setCatMenuClicked1(!catMenuClicked1))}} className='flex justify-between cursor-pointer'>
          <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked1?"rotate-180":"rotate-0"}`}  size={20}/>
          <p>فئات</p>
         </div>
-        <div className={`flex flex-col gap-5 ${catMenuClicked1?"max-h-0 opacity-0 ":"max-h-fit opacity-100"} transition-all `}>
-        <div className={`flex justify-between`}>
-          <p>3</p>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[0].id))}} to='/categories/غرف النوم'>غرف النوم</Link>
-        </div>
-        <div className={`flex justify-between`}>
-          <p>5</p>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[1].id))}} to='/categories/مجالس'>مجالس</Link>
-        </div>
-        <div className={`flex justify-between`}>
-          <p>1</p>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[2].id))}} to='/categories/مجامر'>مجامر</Link>
-        </div>
-        <div className={`flex justify-between`}>
-          <p>3</p>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[3].id))}} to='/categories/ستائر'>ستائر</Link>
-        </div>
-        <div className={`flex justify-between`}>
-          <p>3</p>
-          <Link onClick={()=>{dispatch(setCategoryId(categories?.data?.categories?.[4].id))}} to='/categories/any'>any</Link>
-        </div>
+        <div className={`flex flex-col gap-5 ${catMenuClicked1?"max-h-0 opacity-0  pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"} transition-all `}>
+           {categories?.data?.categories?.map(category=>
+                  <div key={category.id} className={`flex justify-between`}>
+                    <p>{category.total_category_products}</p>
+                    <Link to={`/categories/${category.name_ar}`}>{category.name_ar}</Link>
+                  </div>  
+                )}
         </div>
       </div>
       <div className='flex flex-col gap-5 mt-8'>
-      <div onClick={()=>{setCatMenuClicked2(!catMenuClicked2)}}  className='flex justify-between items-baseline cursor-pointer'>
+      <div onClick={()=>{dispatch(setCatMenuClicked2(!catMenuClicked2))}} className='flex justify-between items-baseline cursor-pointer'>
         <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked2?"rotate-180":"rotate-0"}`} size={20}/>
         <p className='text-lg'>تصفية حسب السعر</p>
       </div>
-      <div className={`flex flex-col gap-5 ${catMenuClicked2?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
+      <div className={`flex flex-col gap-5 ${catMenuClicked2?"max-h-0 opacity-0 pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"}`}>
         <div className='flex flex-col gap-3 w-2/3 self-end'>
           <p className='text-right'>Min price:</p>
           <Slider
@@ -146,57 +128,47 @@ const Categoriesmenu = () => {
       </div>
       {categoryProducts?.data?.filters?.colors?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
-         <div onClick={()=>{setCatMenuClicked3(!catMenuClicked3)}}  className='flex justify-between items-baseline cursor-pointer'>
+         <div onClick={()=>{dispatch(setCatMenuClicked3(!catMenuClicked3))}}  className='flex justify-between items-baseline cursor-pointer'>
           <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked3?"rotate-180":"rotate-0"}`} size={20}/>
           <p className='text-lg'>تصفية حسب اللون</p>
          </div>
-         <div className={`flex flex-col gap-2  ${catMenuClicked3?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
-        {categoryProducts?.data?.filters?.colors.map(colour=>
-         <div key={colour.id} className=' flex justify-end gap-2 '>
-            <label className='cursor-pointer flex flex-row-reverse ' htmlFor={colour.id}>
+         <div className={`flex flex-col gap-2  ${catMenuClicked3?"max-h-0 opacity-0  pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"}`}>
+         { categoryProducts?.data?.filters?.colors.map(colour=>
+         <div  key={colour.id} className='flex justify-end'>
+          <div onClick={()=>{
+          dispatch(setColor(colour.id));
+          dispatch(setSelectedColorId(colour.id));
+         }} className=' flex  justify-end items-center gap-2  cursor-pointer w-fit'>
+           <div className=' flex flex-row-reverse '>
               {colour.colors.map((specificColor,index)=>
                 <div key={index} style={{backgroundColor:specificColor}} className={`w-[25px] h-[50px]`}></div>
               )}
-
-            </label>
-            <input 
-            type="radio"
-            name='color'
-            id={colour.id}
-            value={colour.id}
-            checked={String(color)===String(colour.id)}
-            onChange={(e)=>{dispatch(setColor(e.target.value));
-            }}
-            className='cursor-pointer'
-            /> 
             </div>
-        )}
+            <div className={`w-3.5 h-3.5 border-[0.5px] border-black rounded-full ${(selectedColorId===colour.id)&& "bg-[#0675a8] border-white "} `}>
+            </div>
+          </div>  
+          </div>
+
+         )}
         </div>
       </div>}
       {categoryProducts?.data?.filters?.sizes?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
-         <div onClick={()=>{setCatMenuClicked4(!catMenuClicked4)}} className='flex justify-between items-baseline cursor-pointer'>
+         <div  onClick={()=>{dispatch(setCatMenuClicked4(!catMenuClicked4))}} className='flex justify-between items-baseline cursor-pointer'>
           <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked4?"rotate-180":"rotate-0"}`} size={20}/>
           <p className='text-lg'>تصفية حسب الحجم</p>
          </div>
-         <div className={`flex flex-col gap-2 ${catMenuClicked4?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
+         <div className={`flex flex-col gap-2 ${catMenuClicked4?"max-h-0 opacity-0  pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"}`}>
         {categoryProducts?.data?.filters?.sizes.map(sizee=>
-          <div key={sizee.id} className='flex justify-end gap-2 '>
-            <label className=' cursor-pointer' htmlFor={sizee.value}>
-            <p className='font-semibold '>{sizee.value}</p>
-            </label>
-            <input 
-            type="radio"
-            name='size'
-            id={sizee.value}
-            value={sizee.value}
-            checked={String(size)===String(sizee.value)}
-            onChange={(e)=>{dispatch(setSize(e.target.value));
-            }}
-            className='cursor-pointer'
-            />
-
+        <div key={sizee.id} className='flex justify-end'>
+          <div className='flex justify-end items-baseline gap-2 cursor-pointer w-fit'  onClick={()=>{
+            dispatch(setSize(sizee.value));
+            dispatch(setSelectedSizeId(sizee.id))
+          }}>
+            <p  className='font-semibold '>{sizee.value}</p>
+            <div className={`w-3.5 h-3.5 border-[0.5px] border-black rounded-full ${(selectedSizeId===sizee.id)&& "bg-[#0675a8] border-white "} `}></div>
           </div>
+        </div>  
         )}
         </div>
       </div>}
@@ -207,6 +179,8 @@ const Categoriesmenu = () => {
           dispatch(setSize(""));
           setMinPrice(0);
           setMaxPrice(1500);
+          dispatch(setSelectedSizeId(0));
+          dispatch(setSelectedColorId(0));
         }} className='cursor-pointer w-[120px] h-[40px] grid place-content-center bg-red-500 text-white rounded-sm' >مسح الفلاتر </button>
         </div>
       </div>
