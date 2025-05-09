@@ -62,7 +62,7 @@ const Editaddress = () => {
             }
         }
   return (
-    <div className='w-[97%]  h-[90%] bg-white fixed z-10 top-5 left-[1.5%] right-[1.5%]  mx-auto  shadow-2xl border rounded-[8px] flex flex-col  items-center '>
+    <div className='w-[97%]  h-[90%] bg-white fixed z-60 top-5 left-[1.5%] right-[1.5%]  mx-auto  shadow-2xl border rounded-[8px] flex flex-col  items-center overflow-y-auto'>
       <button className='cursor-pointer  absolute right-3  top-3' onClick={()=>dispatch(setOpenEdit(false))}><XIcon size={18}/></button>
       <form onSubmit={handleEditAddress} className='w-[92%] flex flex-col items-center gap-10 mt-15'>
           <div className='w-full flex flex-col  gap-1 text-right text-sm'>

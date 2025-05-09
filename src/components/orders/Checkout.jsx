@@ -3,10 +3,11 @@ import { Trash2Icon ,HouseIcon,SquarePenIcon} from 'lucide-react'
 import { useGetCartQuery,useAddProductToCartMutation,useDeleteCartMutation, useGetCouponQuery,useGetAddressesQuery,useDeleteAddressMutation,useAddAddressMutation,useGetShippingPriceQuery ,useCheckOutMutation} from '@/features/api/apiSlice'
 import { useSelector,useDispatch } from 'react-redux'
 import { resetSum, setCoupon ,setError,setFinalTotal,setOpenEdit,setSelectedAddressId,setSum, setTotal} from '@/features/checkout/checkout'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate ,useLocation} from 'react-router-dom'
 import paypal from "../../assets/paypal.webp"
 import klarna from"../../assets/klarna.webp"
 const Checkout = () => {
+  const{pathname}=useLocation();
   const [addAddressStatus,setAddAddressStatus]=useState(false);
   const[products,setProducts]=useState([]);
   const [order,{data:checkout,isSuccess:Success}]=useCheckOutMutation();
@@ -159,7 +160,9 @@ const Checkout = () => {
   }
  },[couponInfo,sum,total,shippingPrice])
  
-
+useEffect(()=>{
+  dispatch(setCoupon(""))
+},[pathname])
   const handleAddToCart=async(selectedCart,count)=>{
     setCount(count)
     try {
@@ -354,7 +357,7 @@ const handleCheckout=async()=>{
                 setApplyClicked(true);
                   setTimeout(()=>{
                   setApplyClicked(false)
-                },500) 
+                },500)
               
               }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg'>طبق</button>
               <input className='text-right outline-0 border w-48 h-15 focus:border-2 focus:border-[#042e2e] rounded-r-lg large:w-30 xlarge:w-60'
@@ -534,7 +537,7 @@ const handleCheckout=async()=>{
                 setApplyClicked(true);
                   setTimeout(()=>{
                   setApplyClicked(false)
-                },500) 
+                },500) ;
               
               }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg'>طبق</button>
               <input className='text-right outline-0 border flex-grow w-48 h-15 focus:border-2 focus:border-[#042e2e] rounded-r-lg large:w-30 xlarge:w-60'

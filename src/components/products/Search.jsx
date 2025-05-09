@@ -20,7 +20,7 @@ const Search = () => {
   },[isOpen])
 
   return ( 
-    <div className='w-[95%] sm:w-[98%] h-[90%] bg-white fixed z-10 top-5 left-[2.5%] sm:left-[1%] mx-auto shadow-2xl rounded-[8px]'>
+    <div className='w-[95%] sm:w-[98%] h-[90%] bg-white fixed z-60 top-5 left-[2.5%] sm:left-[1%] mx-auto shadow-2xl rounded-[8px] overflow-y-auto'>
     <form className=' w-full flex flex-col gap-10  ' onSubmit={(e)=>e.preventDefault()}>
        <button className='cursor-pointer  relative left-[90%] sm:left-[96%] top-5' onClick={()=>dispatch(closeSearch())}><Closeicon/></button>
        <div className=' w-full flex justify-center '>
