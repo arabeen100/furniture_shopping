@@ -154,11 +154,14 @@ const Checkout = () => {
    
   },[isFetching,isSuccess,requestId])
  useEffect(()=>{
-  if(couponInfo){
+  if(couponInfo&&applyClicked){
    dispatch(setTotal(sum*((100-couponInfo?.data?.value)/100))) ;
    dispatch(setFinalTotal((total+Number(shippingPrice))*((100-couponInfo?.data?.value)/100)))
+  }else{
+    dispatch(setTotal(sum));
+    dispatch(setFinalTotal(total+Number(shippingPrice)))  
   }
- },[couponInfo,sum,total,shippingPrice])
+ },[couponInfo,sum,total,shippingPrice,applyClicked])
  
 useEffect(()=>{
   dispatch(setCoupon(""))
@@ -239,8 +242,8 @@ const handleCheckout=async()=>{
     formData.append("shipping",Number(shippingPrice));
     formData.append("products",JSON.stringify(products));
     formData.append("payment_gate",payment);
-    if(coupon){
-    formData.append("coupon",coupon);}
+    if(couponInfo&&!removeCoupon){
+    formData.append("coupon",couponInfo?.data?.coupon);}
     const response=await order(formData).unwrap();
    
     if (response?.data?.payment_info?.payment_link) {
@@ -355,9 +358,9 @@ const handleCheckout=async()=>{
             <form onSubmit={(e)=>{e.preventDefault()}} className='flex mt-2'>
               <button onClick={()=>{
                 setApplyClicked(true);
-                  setTimeout(()=>{
+                /*   setTimeout(()=>{
                   setApplyClicked(false)
-                },500)
+                },500) */
               
               }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg'>طبق</button>
               <input className='text-right outline-0 border w-48 h-15 focus:border-2 focus:border-[#042e2e] rounded-r-lg large:w-30 xlarge:w-60'
@@ -371,7 +374,11 @@ const handleCheckout=async()=>{
             </form>
            </div>
           <div className={`${!removeCoupon?"flex": "hidden"} mt-5.5 justify-between items-center gap-9.5 large:gap-20`}>
-            <button onClick={()=>{setRemoveCoupon(true)}} className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500'>حذف</button>
+            <button onClick={()=>{setRemoveCoupon(true);
+              setApplyClicked(false)
+            }
+             
+          } className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500'>حذف</button>
             <p className='text-green-500 whitespace-nowrap'>تم تطبيق الكوبون بنجاح</p>
            </div>
            <div className='w-full border-t pt-6' >
@@ -535,9 +542,9 @@ const handleCheckout=async()=>{
             <form onSubmit={(e)=>{e.preventDefault()}} className='flex mt-2'>
               <button onClick={()=>{
                 setApplyClicked(true);
-                  setTimeout(()=>{
+               /*    setTimeout(()=>{
                   setApplyClicked(false)
-                },500) ;
+                },500) ; */
               
               }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg'>طبق</button>
               <input className='text-right outline-0 border flex-grow w-48 h-15 focus:border-2 focus:border-[#042e2e] rounded-r-lg large:w-30 xlarge:w-60'
@@ -551,7 +558,9 @@ const handleCheckout=async()=>{
             </form>
            </div>
           <div className={`${!removeCoupon?"flex": "hidden"} mt-5.5 justify-between items-center gap-9.5 large:gap-20`}>
-            <button onClick={()=>{setRemoveCoupon(true)}} className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500'>حذف</button>
+            <button onClick={()=>{setRemoveCoupon(true)
+              setApplyClicked(false)
+            }} className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500'>حذف</button>
             <p className='text-green-500 whitespace-nowrap'>تم تطبيق الكوبون بنجاح</p>
            </div>
            <div className='w-full border-t pt-6' >
