@@ -88,14 +88,16 @@ export const apiSlice= createApi({
             }),
         }),
         checkOut:builder.mutation({
-            query:(orderData,token)=>({
-                url:'/checkout',
+            query:(orderData)=>{
+                const token=localStorage.getItem("userToken")
+                return({
+                url:'/orders/checkout',
                 method:'POST',
                 body:orderData,
                 headers:{
-                    Authorization:`Bearer ${token}`
+                    "Authorization":`Bearer ${token}`
                 }
-            })
+            })}
         }),
         refund:builder.mutation({
             query:({orderId,email,notes})=>{
@@ -184,52 +186,46 @@ export const apiSlice= createApi({
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
-            }}
+            }},
+            providesTags:["address"]
     }),
     addAddress:builder.mutation({
-        query:(token,{latitude,longitude,location,street_name,building_number})=>{
-            const formData=new FormData();
-            formData.append("latitude", latitude);
-            formData.append("longitude",longitude);
-            if(location){
-            formData.append('location',location)};
-            formData.append("street_name",street_name);
-            formData.append("building_number",building_number);
+        query:(newAddress)=>{
+            const token=localStorage.getItem("userToken")
             return({
             url:'/profile/addresses',
             method:'POST',
-            body:formData,
+            body:newAddress,
             headers:{
-               Authorization:`bearer${token}`
+               "Authorization":`Bearer ${token}`
             }
-        })}
+        })},
+        invalidatesTags:["address"]
     }),
     editAddress:builder.mutation({
-        query:(addressId,token,{latitude,longitude,location,street_name,building_number})=>{
-            const formData=new FormData();
-            formData.append("latitude", latitude);
-            formData.append("longitude",longitude);
-            if(location){
-            formData.append('location',location)};
-            formData.append("street_name",street_name);
-            formData.append("building_number",building_number);
+        query:({addressId,addressEdit})=>{
+            const token=localStorage.getItem("userToken")
             return({
             url:`/profile/addresses/${addressId}`,
-            method:'PUT',
-            body:formData,
+            method:'PATCH',
+            body:addressEdit,
             headers:{
-               Authorization:`bearer${token}`
+               "Authorization":`Bearer ${token}`
             }
-        })}
+        })},
+        invalidatesTags:["address"]
     }),
     deleteAddress:builder.mutation({
-        query:(addressId,token)=>({
+        query:(addressId)=>{
+            const token=localStorage.getItem("userToken")
+            return({
             url:`/profile/addresses/${addressId}`,
             method:'DELETE',
             headers:{
-                Authorization:`bearer${token}`
+                "Authorization":`Bearer ${token}`
             }
-        })
+        })},
+        invalidatesTags:["address"]
     }),
     getCart:builder.query({
         query:()=>{
