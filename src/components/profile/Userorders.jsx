@@ -35,7 +35,7 @@ const Userorders = () => {
             اعرض الطلب
           </div>
           <div className='flex flex-col items-end'>
-            <p className='text-right'>#{order.Order_ID}</p>
+            <p className='text-right'>{order.Order_ID}</p>
             {order.Status==="Processing"? <p>طلبك تحت المعالجة</p>:order.Status==="Cancelled"?<p>طلبك تم إلغاؤه</p>:<p>طلبك تم تسليمه</p>}
             <div className={` ${order.Status==="Processing"?"text-amber-400 bg-amber-50":order.Status==="Cancelled"?"bg-red-50 text-red-400":"bg-green-50 text-green-400"} grid  place-content-center w-30 p-1  rounded-xs `}>
               {order.Status==="Processing"? <p> تحت المعالجة</p>:order.Status==="Cancelled"?<p> ملغى</p>:<p> تم الإستلام</p>}

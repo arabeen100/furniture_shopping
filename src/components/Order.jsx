@@ -28,7 +28,7 @@ const Order = () => {
             {matchedOrder.Products?.map(product=>
                 <div className='w-full flex flex-col items-end gap-4' key={product.ID}>
                     <div className='w-full flex justify-between'>
-                    <p className='font-semibold text-lg'>{(Number(product.Total)+((Number(JSON.parse(product.Size)?.price)||0)*Number( product.Count)))}$</p>
+                    <p className='font-semibold text-lg'>{product.Total}$</p>
                     <div className='flex gap-4'>
                     <div className='flex flex-col items-end'>
                         <p>{product.Product?.name_ar}</p>
