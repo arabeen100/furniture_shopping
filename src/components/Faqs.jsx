@@ -13,7 +13,7 @@ const Faqs = () => {
         }
     },[FAQs])
   return (
-    <div className='flex flex-col justify-center items-center gap-10'>
+    <main className='flex flex-col justify-center items-center gap-10'>
       <h1 className='text-center text-4xl mt-20'>أسئلة متكررة</h1>
       <div >
         
@@ -34,7 +34,7 @@ const Faqs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

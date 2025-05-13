@@ -16,6 +16,7 @@ const Navbar = () => {
   const count=cart?.data?.cart_products?.length;  
   return (
     <nav>
+    <div className='w-full  small:w-[576px] larger:w-[768px] large:w-[992px] xlarge:w-[1200px] flex justify-between items-center '>
      <div className='flex justify-baseline items-center gap-3 relative  left-5'>
       <Link to="/auth/login" className={` ${token?"hidden ":"hidden large:grid large:place-content-center"} w-[140px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white  hover:bg-[#5bb3ae]  `}>تسجيل الدخول</Link>
       <Link to='/auth/signup' className={` ${token?"hidden":" hidden large:grid  large:place-content-center"} w-[80px] h-[30px]outline-none p-1 rounded-[5px] bg-[#042e2e] border border-white text-white  hover:bg-[#5bb3ae]`}>تسجيل</Link>
@@ -54,6 +55,7 @@ const Navbar = () => {
       <p className='hidden large:block  text-white text-[20px]'>فئات</p>
      
      </div>
+    </div>
     </nav>
   )
 }

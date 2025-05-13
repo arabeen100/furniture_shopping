@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState={
     isOpen:false,
-    searchInput:"",
+    name:"",
 }
 export const searchSlice=createSlice({
     name:"search",
@@ -13,10 +13,10 @@ export const searchSlice=createSlice({
         closeSearch:(state)=>{
             state.isOpen=false;
         },
-        setSearch:(state,{payload})=>{
-            state.searchInput=payload
+        setName:(state,{payload})=>{
+            state.name=payload
         }
     }
 })
 export default searchSlice.reducer
-export const {openSearch,setSearch,closeSearch}=searchSlice.actions
+export const {openSearch,setName,closeSearch}=searchSlice.actions

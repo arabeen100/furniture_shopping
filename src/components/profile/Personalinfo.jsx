@@ -78,7 +78,7 @@ const Personalinfo = () => {
 
 
   return (
-    <div className='w-full flex small:w-fit px-3 mx-auto  '>
+    <main className='w-full flex small:w-fit px-3 mx-auto  '>
       <div className=' w-full justify-center   flex-grow  mt-9 flex flex-col items-end '>
          <div className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[300px]"}`}>
          {(isSuccess)&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{update?.data.message} ✔️</p>}
@@ -91,7 +91,7 @@ const Personalinfo = () => {
         <Profilecard />
         <div className='flex flex-col items-end'>
         <form onSubmit={handleSubmit} className='flex flex-col text-right text-sm items-end  mt-5 mb-8 gap-10'>
-          <button className='flex cursor-pointer text-white bg-[#5bb3ae]  p-4 rounded-lg text-[15px] w-[170px] justify-center items-center gap-2'>تحديث <Updateicon/></button>
+          <button className='flex cursor-pointer text-white bg-[#5bb3ae]  p-4 rounded-lg text-[15px] w-[170px] justify-center items-center gap-2 hover:opacity-90'>تحديث <Updateicon/></button>
           <div className='flex flex-col gap-6 '>
             <div className='flex gap-4 flex-row-reverse'>
             <div className='flex flex-col'  >
@@ -138,7 +138,7 @@ const Personalinfo = () => {
             <label htmlFor='password'> كلمة المرور</label>
             <div className='relative flex'>
             <input
-            className=" p-3 max-[459px]:w-[350px] w-[370px] larger:w-[415px] large:w-[615px] xlarge:w-[815px] larger:ml-12 ml-8 h-[52px] border rounded-lg focus:border-3 focus:border-[#44bdad]  text-right "
+            className=" p-3 max-[459px]:w-[335px] w-[370px] larger:w-[415px] large:w-[615px] xlarge:w-[815px] larger:ml-12 ml-8 h-[52px] border rounded-lg focus:border-3 focus:border-[#44bdad]  text-right "
              id='password'
              value={password}
              onChange={(e)=>{setPassword(e.target.value)}} 
@@ -153,7 +153,7 @@ const Personalinfo = () => {
           </div>
         </form>
         {addresses?.data.addresses?(addresses?.data.addresses.map((address,index)=>
-          <div className=' w-[370px] text-right border rounded-sm flex flex-col gap-2 mr-1 p-2 mb-15 larger:w-[415px] large:w-[615px] xlarge:w-[815px] max-[459px]:w-[350px]' key={address.id}  >
+          <div className=' w-[370px] text-right border rounded-sm flex flex-col gap-2 mr-1 p-2 mb-15 larger:w-[415px] large:w-[615px] xlarge:w-[815px] max-[459px]:w-[330px]' key={address.id}  >
           <p className='text-xs'> {index+1}العنوان</p>
           <p>{address.street_name}:اسم الشارع</p>
           <p>{address.building_number}:رقم المبني</p>
@@ -165,7 +165,7 @@ const Personalinfo = () => {
     
 
       </div>
-    </div>
+    </main>
   )
 }
 

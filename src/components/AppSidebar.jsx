@@ -52,13 +52,13 @@ export function AppSidebar() {
               <ul className=" text-right leading-10 mr-5 flex flex-col justify-end ">
                 <li>فئات</li>
                 {categories?.data?.categories?.map(category=>
-                  <li  key={category.id}><Link to={`/categories/${category.name_ar}`}>{category.name_ar}</Link></li>
+                  <li className="hover:text-[#5bb3ae]" key={category.id}><Link to={`/categories/${category.name_ar}`}>{category.name_ar}</Link></li>
                 )}
                 <li><Link  to='profile/Personalinfo' className={`${!token&& " hidden"} larger:hidden relative top-2 left-64 w-[38px] h-[38px]`} ><img src={profileLogo} width='25' alt="profile-logo"loading="lazy"/></Link></li>
                 <li ><button onClick={()=>{
                 dispatch(setExpanded());
                 handleLogout();
-                }}className={`${!token&& " hidden"} w-[60px] h-[33px] bg-white outline-0  cursor-pointer border  text-sm border-black rounded-sm grid hover:bg-[#5bb3ae]  hover:text-white hover:border-[#5bb3ae] place-content-center relative top-6 left-56 `}>logout</button ></li>
+                }}className={`${!token&& " hidden"} px-2.5 h-[33px] bg-white outline-0  cursor-pointer border  text-sm border-black rounded-sm grid hover:bg-[#5bb3ae]  hover:text-white hover:border-[#5bb3ae] place-content-center relative top-6 left-56 `}>logout</button ></li>
                  <li>
                   <ul  className={`${!token?"inline-flex gap-3":"hidden"} relative left-1 top-1`}>
                 <li><Link onClick={()=>{dispatch(setExpanded())}} to="/auth/login" className={`w-[140px] outline-none  rounded-[5px] bg-white h-[37px] border-1 border-black grid  place-content-center  transition-colors duration-100 large:hidden hover:bg-[#5bb3ae]  hover:text-white hover:border-[#5bb3ae] `}>تسجيل الدخول</Link></li>

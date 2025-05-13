@@ -68,12 +68,9 @@ const Signup = () => {
     }
     if (!phone.trim()) {
       setErrors({...errors,requiredError:  "This field is required"});
-    }/*  else if (!(phoneRegex.test(phone.trim()))) {
-      errors.phoneRegexError = "Incorrect number";
-    } */
+    }
     if (!email.trim()) setErrors({...errors,requiredError:  "This field is required"});
-    if (!password.trim()) {setErrors({...errors,requiredError:  "This field is required"});}/* else if (!(passwordRegex.test(password.trim()))) {
-      errors.passwordRegexError = "password must have at least one uppercase letter,one lowercase letter,one number,one special character and must be at least 8 characters to be strong"; }*/
+    if (!password.trim()) {setErrors({...errors,requiredError:  "This field is required"});}
 
     const formData=new FormData();
     formData.append("email", email);
@@ -108,14 +105,14 @@ const Signup = () => {
   
  
   return (
-    <div className='larger:flex larger:items-start'>
+    <main className='w-full larger:flex larger:items-start'>
      <div className={` fixed top-[23px] left-[50%] -translate-x-[50%] larger:left-[50%] larger:-translate-x-[50%] h-[300px] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[300px]"}`}>
       {err?.apiErrors?.[0]&&!err?.requiredError&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{err.apiErrors[0]} ❌</p>}
       {err?.apiErrors?.[1]&&!err?.requiredError&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{err.apiErrors[1]} ❌</p>}
       {err?.apiErrors?.[2]&&!err?.requiredError&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{err.apiErrors[2]} ❌</p>}
       </div>
    
-    <div className='flex justify-center items-center larger:w-[50%] p-5'>
+    <section className='flex justify-center items-center larger:w-[50%] p-5'>
     <form onSubmit={handleSubmit} className='mt-13 flex flex-col gap-5 w-[325px] text-right'>
       <h2 className='text-center text-2xl'>أنشئ حسابك</h2>
       <div className='flex flex-col'>
@@ -192,9 +189,9 @@ const Signup = () => {
       </button>
     </form>
    
-    </div>
-    <img src={background} alt='background' loading='lazy' width='735' height='735' className='hidden larger:block' />
-    </div>
+    </section>
+    <img src={background} alt='background' loading='lazy'  className='hidden larger:block w-[50%] h-screen' />
+    </main>
   
   )
 }

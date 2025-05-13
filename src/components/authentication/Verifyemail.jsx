@@ -105,12 +105,12 @@ const Verifyemail = () => {
   }
 }
   return (
-    <div  className='larger:flex larger:items-start w-full '>
+    <main  className='larger:flex larger:items-start w-full '>
       <div className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[250px]"}`}>
          {status&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}> لقد تم إرسال البريد الإلكتروني إليك بنجاح✔️</p>}
          {requiredError&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{requiredError[0]||"Something Went Wrong, Please Try Again."}❌</p>}
       </div>
-        <div className=' larger:w-[50%] grid place-content-center  h-[calc(100vh-85px)]'>
+        <section className=' larger:w-[50%] grid place-content-center  h-[calc(100vh-85px)]'>
           <form onSubmit={handleSubmit} className='flex flex-col gap-6 w-[300px]'>
             <label className='text-center font-bold text-xl' htmlFor='verify'>قم بإدخال الرمز المرسل إلي بريدك الإلكترونى   </label>
             <div className='flex gap-6'>
@@ -164,9 +164,9 @@ const Verifyemail = () => {
           </form>
           <p onClick={handleResendcode} className='text-center mt-6 underline text-2xl cursor-pointer relative right-2 h-fit'>أعد إرسال الرمز</p>
           
-        </div>
-        <img src={background} alt='background' loading='lazy' width='735' height='735' className='hidden larger:block' />
-    </div>
+        </section>
+        <img src={background} alt='background' loading='lazy'  className='hidden larger:block w-[50%] h-screen' />
+    </main>
   )
 }
 

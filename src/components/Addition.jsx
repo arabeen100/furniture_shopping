@@ -1,13 +1,17 @@
+import { setOpenAddition } from '@/features/addition/addition';
+import { XIcon } from 'lucide-react';
+import { useDispatch,useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react'
 import { HeartIcon,FacebookIcon,TwitterIcon,InstagramIcon,StarIcon } from 'lucide-react'
 import { useAddProductToCartMutation, useGetProductQuery,useGetProductsQuery,useGetWishListQuery ,useAddProductToWishListMutation,useDeleteProductFromWishListMutation,useGetCartQuery} from '@/features/api/apiSlice'
 import { useParams } from 'react-router-dom'
-import { useSelector,useDispatch } from 'react-redux'
 import { setCount, setProductId, setSelectedColor, setSelectedSize } from '@/features/categoryproducts/catProducts'
 import { useNavigate } from 'react-router-dom'
 import { setError } from '@/features/login/login'
-const Product = () => {
-  const[err,setErr]=useState(false);
+const Addition = () => {
+       const {openAddition}=useSelector((state)=>state.addition)
+    const dispatch=useDispatch();
+ const[err,setErr]=useState(false);
   const[status,setStatus]=useState(false);
   const[buyClick,setBuyClick]=useState(false);
   const{token}=useSelector((state)=>state.login);
@@ -18,20 +22,12 @@ const Product = () => {
     const[deleteStatus,setDeleteStatus]=useState(false);
   const[showMessage,setShowMessage]=useState(false)
     const [likedItems,setLikedItems]=useState({});
-  const dispatch=useDispatch();
   const{name}=useParams();
   const{color,sort,size,limit,offset,minPriceP,maxPriceP,productId,count,selectedColor,selectedSize}=useSelector((state)=>state.catProducts);
    const{data:wishlistProducts}=useGetWishListQuery(undefined,{skip:!token});
     const[addProduct,{data:resp,isSuccess:success}]=useAddProductToWishListMutation();
      const[deleteProduct,{data:res,isSuccess:succ}]=useDeleteProductFromWishListMutation(); 
   const{data:products}=useGetProductsQuery({color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP})
-  useEffect(()=>{
-    if(products){
-      console.log(products)
-      const matchedProduct=products?.data?.products?.find(product=>((product?.name_ar).trim())===name.trim())
-      dispatch(setProductId(matchedProduct.id));
-    }
-},[products,name,dispatch])
 const{data:product}=useGetProductQuery(productId,{skip:!productId});
 const[addedProduct,{data:cartItems,isSuccess,isError}]=useAddProductToCartMutation();
 const productt=product?.data?.product;
@@ -134,9 +130,20 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
           }
        }
       } 
+      useEffect(()=>{
+        if(openAddition){
+          document.body.classList.add("overflow-hidden");
+        }else{
+          document.body.classList.remove("overflow-hidden");
+        }
+        return ()=>{
+          document.body.classList.remove("overflow-hidden");
+        }
+    
+      },[openAddition])
   return (
-    <main className='w-full flex flex-col gap-6'>
-         <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[300px]"}`}>
+      <div className='w-[97%]  h-[95%] bg-white fixed z-60 top-5 left-[1.5%] right-[1.5%]  mx-auto  shadow-2xl border rounded-[8px] flex flex-col  items-center overflow-y-auto'>
+           <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[300px]"}`}>
          {addStatus&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{resp?.data?.message}✔️</p>}
          {deleteStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{res?.data?.message }✔️</p>}
          {(finalLimit||err)&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>
@@ -144,10 +151,15 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
          {status&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>
          تمت إضافة المنتج بنجاح✔️</p>}
         </div>
-        <div className='w-full small:self-center small:w-fit large:w-[992px] xlarge:w-[1200px] flex flex-col gap-7 mb-15 large:flex large:flex-row-reverse large:items-start '>
+        <button className='cursor-pointer  absolute right-3  top-3' onClick={()=>{dispatch(setOpenAddition(false));        
+        }}><XIcon size={18}/>
+        </button>
+        <div className='w-[92%] flex flex-col gap-6'>
+      
+        <div className='w-full small:self-center flex flex-col gap-7 mb-15 large:flex large:flex-row-reverse large:items-start '>
           <div className='flex flex-col gap-7 '>
             <div className='flex justify-center'>
-               <div className='  flex flex-col  w-[576px] h-[226px] larger:w-[768px] large:w-[492px] xlarge:w-[596px] larger:h-[422px] border mt-15'>
+               <div className='  flex flex-col  w-full  h-[226px]  large:w-[452px] xlarge:w-[554px] larger:h-[422px] border mt-15'>
                 <div className=' self-center h-full w-[224px] larger:w-[440px] '>
                     <img className='w-full h-full object-center object-cover' alt={productt?.name_ar} src={productt?.images?.[0]?.image_link}/>
                 </div>
@@ -233,7 +245,7 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
                         navigate("/auth/login");
                          dispatch(setError("يجب ان تسجل الدخول اولا"));
                       }
-                    }} className='cursor-pointer w-[170px] h-[50px] rounded-sm text-white bg-[#51a5a1] grid place-content-center hover:opacity-90'>
+                    }} className='cursor-pointer w-[170px] h-[50px] rounded-sm text-white bg-[#51a5a1] grid place-content-center'>
                       <p>أضف للعربة</p>
                     </div>
                     <div onClick={()=>{
@@ -246,7 +258,7 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
                         navigate("/auth/login");
                          dispatch(setError("يجب ان تسجل الدخول اولا"));
                       }
-                    }} className='cursor-pointer w-[170px] h-[50px] rounded-sm text-[#51a5a1] border-[#51a5a1] border-1 grid place-content-center hover:opacity-90'>
+                    }} className='cursor-pointer w-[170px] h-[50px] rounded-sm text-[#51a5a1] border-[#51a5a1] border-1 grid place-content-center '>
                     <p>اشترِ الآن</p>
                     </div>
                     </div>
@@ -270,13 +282,10 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
             </div>
 
         </div>
-      
-     
-       
-      
-      
-    </main>
+        </div>
+
+    </div>
   )
 }
 
-export default Product
+export default Addition

@@ -8,6 +8,8 @@ const initialState={
     editStatus:false,
     selectedAddressId:null,
     finalTotal:0,
+    openOrder:false,
+    orderId:0,
     location:[
     {
       id:1,
@@ -59,9 +61,16 @@ const checkoutSlice=createSlice({
       setEditStatus:(state,{payload})=>{
         state.editStatus= payload;
       },
+       setOpenorder:(state,{payload})=>{
+        state.openOrder= payload;
+      },
+        setOrderId:(state,{payload})=>{
+        state.orderId= payload;
+      },
+
 
     },
         
 })
 export default checkoutSlice.reducer;
-export const {setEditStatus,setOpenEdit,setFinalTotal,setSelectedAddressId,setTotal,setError,setCoupon,setSum,resetSum}=checkoutSlice.actions;
+export const {setOrderId,setOpenorder,setEditStatus,setOpenEdit,setFinalTotal,setSelectedAddressId,setTotal,setError,setCoupon,setSum,resetSum}=checkoutSlice.actions;

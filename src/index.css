@@ -122,12 +122,11 @@
     @apply bg-background text-foreground ;
   }
   footer{
-    @apply flex flex-col  justify-around items-end   w-full gap-5  bg-[#042e2e] h-[calc(100vh+90px)] 
-    small:justify-around small:flex-row-reverse small:items-start small:h-[73vh]  small:flex-wrap  larger:flex-nowrap larger:h-[63vh] xlarge:h-[55vh]
+    @apply w-full bg-[#042e2e] 
   }
 
   nav{
-    @apply w-full h-fit p-3 flex justify-between items-center  bg-[#042e2e] 
+    @apply w-full h-fit p-3 flex justify-center bg-[#042e2e] 
   }
   nav svg{
     @apply stroke-white hover:stroke-[#3f8181] cursor-pointer
@@ -175,15 +174,13 @@
   --breakpoint-xlarge:1200px;
 }
 @layer utilities {
-  @media (min-width: 667px) and (max-width: 932px) {
-    .contact {
-      margin-top: 160px;
-      width: 100%;
-      height: 500px;
+   @media (min-width:576px) and (max-width: 767px) {
+
+    .contact{
+      margin-left:auto ;
+      margin-right:30px;
     }
-    .footer{
-      height:85vh ;
-    }
+
   }
 }
 

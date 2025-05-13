@@ -264,19 +264,12 @@ const handleCheckout=async()=>{
     
   } catch (e) {
     console.log(e?.data?.errros);
-   /*  if(deliveryInfo==="branch"){
-      navigate('/');
-      dispatch(setError("no cart found ❌"));
-      setTimeout(() => {
-        dispatch(setError(""));
-      }, 3500); 
-    }*/
     }
   }
 
   return (
    
-    <div  className='w-full flex  justify-center  '>
+    <main  className='w-full flex  justify-center  '>
            <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[300px]"}`}>
          {err&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>
          لقد نفذت الكمية ❌</p>}
@@ -340,7 +333,7 @@ const handleCheckout=async()=>{
                
              </td> 
              <td className=' flex-grow w-2/10 grid place-content-center  whitespace-nowrap'>{((Number(product.price)+(Number(product.selectedSize?.price)||0))*product.quantity).toFixed(2)} $</td> 
-             <td className='flex-grow w-1/10 grid place-content-center '><Trash2Icon className='cursor-pointer' onClick={()=>{
+             <td className='flex-grow w-1/10 grid place-content-center  '><Trash2Icon className='cursor-pointer hover:opacity-80' onClick={()=>{
               deleteCart(product.cart_id);
              }} size={22} color='red' /></td> 
             </tr>)}
@@ -358,11 +351,8 @@ const handleCheckout=async()=>{
             <form onSubmit={(e)=>{e.preventDefault()}} className='flex mt-2'>
               <button onClick={()=>{
                 setApplyClicked(true);
-                /*   setTimeout(()=>{
-                  setApplyClicked(false)
-                },500) */
               
-              }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg'>طبق</button>
+              }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg hover:opacity-90'>طبق</button>
               <input className='text-right outline-0 border w-48 h-15 focus:border-2 focus:border-[#042e2e] rounded-r-lg large:w-30 xlarge:w-60'
               type='text'
               value={coupon}
@@ -378,7 +368,7 @@ const handleCheckout=async()=>{
               setApplyClicked(false)
             }
              
-          } className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500'>حذف</button>
+          } className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500 hover:opacity-90'>حذف</button>
             <p className='text-green-500 whitespace-nowrap'>تم تطبيق الكوبون بنجاح</p>
            </div>
            <div className='w-full border-t pt-6' >
@@ -392,7 +382,7 @@ const handleCheckout=async()=>{
             <button onClick={()=>{
               setFirstPayment(true);
               setReturnToCart(false);
-            }} className=' cursor-pointer outline-0 text-white w-full bg-[#042e2e] h-15 grid place-content-center rounded-lg'>الذهاب للدفع</button>
+            }} className=' cursor-pointer outline-0 text-white w-full bg-[#042e2e] h-15 grid place-content-center rounded-lg hover:opacity-90'>الذهاب للدفع</button>
            </div>
          </div>
       </div>
@@ -470,7 +460,7 @@ const handleCheckout=async()=>{
               <p>{address.street_name}</p>
               <p>الموقع: {address.latitude}, {address.longitude}</p>
               <div className='flex justify-end gap-3'>
-                <button onClick={()=>{handleDeleteAddress(address.id)}} className='flex items-center justify-center gap-1 p-2 outline-0 bg-red-100 text-red-500  rounded-sm cursor-pointer'>
+                <button onClick={()=>{handleDeleteAddress(address.id)}} className='flex items-center justify-center gap-1 p-2 outline-0 bg-red-100 text-red-500  rounded-sm cursor-pointer hover:opacity-80'>
                   <p>حذف</p>
                   <Trash2Icon color='red' size={16}/>
                   
@@ -478,7 +468,7 @@ const handleCheckout=async()=>{
                 <button onClick={()=>{
                   dispatch(setSelectedAddressId(address.id));
                   dispatch(setOpenEdit(true));
-                }} className='flex items-center gap-1 outline-0 bg-gray-100 p-2 rounded-sm text-gray-800 cursor-pointer'>
+                }} className='flex items-center gap-1 outline-0 bg-gray-100 p-2 rounded-sm text-gray-800 cursor-pointer hover:opacity-80'>
                   <p>تعديل</p>
                   <SquarePenIcon size={16}/>
                 </button>
@@ -487,7 +477,7 @@ const handleCheckout=async()=>{
           )}
           </div>
         </div>
-        <div className='w-full flex flex-col gap-2.5 items-end '>
+        <div className={`${deliverClick?"block":"hidden"} w-full flex flex-col gap-2.5 items-end `}>
         <p className='text-2xl'>أضف عنوانًا جديدًا</p>
         <form onSubmit={(e)=>{handleAddAddress(e);
         setStreetName("");
@@ -528,7 +518,7 @@ const handleCheckout=async()=>{
             onChange={(e)=>{setBuildingNumber(e.target.value)}}
             />
           </div>
-          <button className='cursor-pointer outline-0 py-4 px-3 text-white bg-[#042e2e] rounded-md'>أضف عنوانًا جديدًا</button>
+          <button className='cursor-pointer outline-0 py-4 px-3 text-white bg-[#042e2e] rounded-md hover:opacity-90'>أضف عنوانًا جديدًا</button>
         </form>
         </div>
        </div> 
@@ -542,11 +532,7 @@ const handleCheckout=async()=>{
             <form onSubmit={(e)=>{e.preventDefault()}} className='flex mt-2'>
               <button onClick={()=>{
                 setApplyClicked(true);
-               /*    setTimeout(()=>{
-                  setApplyClicked(false)
-                },500) ; */
-              
-              }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg'>طبق</button>
+              }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg hover:opacity-90'>طبق</button>
               <input className='text-right outline-0 border flex-grow w-48 h-15 focus:border-2 focus:border-[#042e2e] rounded-r-lg large:w-30 xlarge:w-60'
               type='text'
               value={coupon}
@@ -560,7 +546,7 @@ const handleCheckout=async()=>{
           <div className={`${!removeCoupon?"flex": "hidden"} mt-5.5 justify-between items-center gap-9.5 large:gap-20`}>
             <button onClick={()=>{setRemoveCoupon(true)
               setApplyClicked(false)
-            }} className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500'>حذف</button>
+            }} className='p-4 text-white rounded-lg outline-0 cursor-pointer bg-red-500 hover:opacity-90'>حذف</button>
             <p className='text-green-500 whitespace-nowrap'>تم تطبيق الكوبون بنجاح</p>
            </div>
            <div className='w-full border-t pt-6' >
@@ -571,18 +557,18 @@ const handleCheckout=async()=>{
             </div>
             <p>المجموع الكلي</p>
             </div>
-            <button onClick={handleCheckout} className=' cursor-pointer outline-0 text-white w-full bg-[#042e2e] h-15 grid place-content-center rounded-lg'>الدفع</button>
+            <button onClick={handleCheckout} className=' cursor-pointer outline-0 text-white w-full bg-[#042e2e] h-15 grid place-content-center rounded-lg hover:opacity-90'>الدفع</button>
             
             <button onClick={()=>{
               setFirstPayment(false);
               setReturnToCart(true);
-            }} className=' cursor-pointer outline-0 text-white w-full bg-[#042e2e] h-15 grid place-content-center rounded-lg mt-4'>عد للعربة</button>
+            }} className=' cursor-pointer outline-0 text-white w-full bg-[#042e2e] h-15 grid place-content-center rounded-lg mt-4 hover:opacity-90'>عد للعربة</button>
            </div>
        </div>
       </div>
       </div>
         
-    </div>
+    </main>
   )
 }
 

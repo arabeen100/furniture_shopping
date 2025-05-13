@@ -9,7 +9,7 @@ import { setCategoryId,setColor, setMaxPriceP, setMinPriceP, setSize ,setLimit,s
 import { useGetCategoryProductsQuery,useGetCategoriesQuery } from '@/features/api/apiSlice';
 const Categoriesmenu = () => {
   const {data:categories}=useGetCategoriesQuery();
-    const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId,minPrice,maxPrice}=useSelector((state)=>state.catProducts)
+    const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId,minPrice,maxPrice,min,max}=useSelector((state)=>state.catProducts)
     const{data:categoryProducts}=useGetCategoryProductsQuery({categoryId:categoryId,color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP},{skip:!categoryId,
     });
   const{expandedMenu}=useSelector((state)=>state.sidebar)
@@ -56,7 +56,7 @@ const Categoriesmenu = () => {
                 )}
         </div>
       </div>
-      <div className='flex flex-col gap-5 mt-8'>
+     {min<max&&<div className='flex flex-col gap-5 mt-8'>
       <div onClick={()=>{dispatch(setCatMenuClicked2(!catMenuClicked2))}} className='flex justify-between items-baseline cursor-pointer'>
         <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked2?"rotate-180":"rotate-0"}`} size={20}/>
         <p className='text-lg'>تصفية حسب السعر</p>
@@ -123,7 +123,7 @@ const Categoriesmenu = () => {
         }} className='cursor-pointer w-[120px] h-[40px] grid place-content-center bg-[#0675a8] text-white rounded-sm' >Apply Filter </button>
         </div>
       </div>
-      </div>
+      </div>}
       {categoryProducts?.data?.filters?.colors?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
          <div onClick={()=>{dispatch(setCatMenuClicked3(!catMenuClicked3))}}  className='flex justify-between items-baseline cursor-pointer'>

@@ -7,10 +7,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 const Footer = () => {
   return (
-    < footer className="footer">
-    <Link to="/" className=' relative small:top-12 top-5'><img  src={footerLogo} alt='Al-Rahman_logo' loading='lazy' />
+    < footer>
+    <div className=" flex flex-col  justify-around items-end   w-[98%] py-3 small:py-5 larger:py-20   gap-7   small:justify-around small:flex-row-reverse small:items-start  small:flex-wrap  larger:flex-nowrap ">
+    <Link to="/" className=' mb-2'><img  src={footerLogo} alt='Al-Rahman_logo' loading='lazy' />
     </Link> 
-    <div className='flex flex-col gap-4 text-white relative right-7 small:top-12 text-right ' >
+    <div className='flex flex-col gap-4 text-white  text-right text-lg pr-3.5 ' >
         <p>فئات</p>
         <Link  className=' categories' to={`/categories/غرف النوم`}>غرف النوم</Link>
         <Link className='categories' to={`/categories/مجالس`} >مجالس</Link>
@@ -18,8 +19,8 @@ const Footer = () => {
         <Link className=' categories' to={`/categories/ستائر`}>ستائر</Link>
         <Link className=' categories' to={`/categories/any`}>any</Link>
       </div> 
-      <div className='flex flex-col gap-4 text-white relative right-7 small:top-12  text-right ' >
-      <p>وسائل التواصل الاجتماعي</p>
+      <div className='flex flex-col gap-4 text-white text-right  text-lg pr-3.5' >
+      <p >وسائل التواصل الاجتماعي</p>
       <div className='flex justify-around'>
          <a href=''> <img src={youtubeLogo} alt='youtube_logo'loading='lazy'/>
          </a>
@@ -37,12 +38,12 @@ const Footer = () => {
         <Link to="/orders/refund">استرجاع</Link>
 
       </div> 
-      <div className='text-white flex flex-col relative right-7 small:top-12  text-right gap-4'  >
+      <div className=' contact text-white flex flex-col text-right gap-4 text-lg pr-3.5 contact'  >
        <p>اتصل بنا</p>
-       
        <p>حجز فندقي:123-456-7890</p>
        <p>مكتب التذاكر:123-456-7890</p>
-      </div> 
+      </div>
+    </div> 
     </footer>
   )
 }

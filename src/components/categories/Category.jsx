@@ -9,16 +9,17 @@ import { useParams ,Link,useNavigate} from 'react-router-dom'
 import { useDispatch,useSelector} from 'react-redux'
 import { useGetCategoryProductsQuery,useGetCategoriesQuery,useGetWishListQuery ,useAddProductToWishListMutation,useDeleteProductFromWishListMutation } from '@/features/api/apiSlice'
 import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
-import { setCategoryId, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setColor, setLimit, setMaxPriceP, setMinPriceP, setOffset, setSize, setSort,setSelectedSizeId,setSelectedColorId,setMinPrice,setMaxPrice } from '@/features/categoryproducts/catProducts'
+import { setCategoryId, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setColor, setLimit, setMaxPriceP, setMinPriceP, setOffset, setSize, setSort,setSelectedSizeId,setSelectedColorId,setMinPrice,setMaxPrice, setProductId,setMax,setMin } from '@/features/categoryproducts/catProducts'
 import Slider from 'rc-slider';
 import { ChevronDownIcon } from 'lucide-react'
 import { setError } from '@/features/login/login'
+import { setOpenAddition } from '@/features/addition/addition'
 const Category = () => {
    const{token}=useSelector((state)=>state.login)
     const navigate=useNavigate();
    const {data:categories}=useGetCategoriesQuery();
     const{expandedMenu}=useSelector((state)=>state.sidebar)
-  const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId,minPrice,maxPrice}=useSelector((state)=>state.catProducts)
+  const{color,sort,size,limit,offset,minPriceP,maxPriceP,categoryId,catMenuClicked1,catMenuClicked2,catMenuClicked3,catMenuClicked4,selectedSizeId,selectedColorId,minPrice,maxPrice,min,max}=useSelector((state)=>state.catProducts)
   const dispatch=useDispatch();
   const{name}=useParams();
   useEffect(()=>{
@@ -37,13 +38,18 @@ const Category = () => {
   const[addProduct,{data:resp,isSuccess:success}]=useAddProductToWishListMutation();
     const[deleteProduct,{data:res,isSuccess:succ}]=useDeleteProductFromWishListMutation();
   useEffect(()=>{
-    if(categoryProducts){
-      console.log(categoryProducts);
-      dispatch(setMinPrice(minPrice||categoryProducts?.data?.filters?.min_price));
-      dispatch(setMaxPrice(maxPrice||categoryProducts?.data?.filters?.max_price))
-   
+      if(name&&categoryProducts){
+      const newMin=Number(categoryProducts?.data?.filters?.min_price);
+      const newMax=Number(categoryProducts?.data?.filters?.max_price);
+      dispatch(setMin(newMin));
+      dispatch(setMax(newMax));
+      dispatch(setMinPrice(minPriceP||newMin));
+      dispatch(setMaxPrice(maxPriceP||newMax));    
     }
-  },[categoryProducts])
+  },[name,categoryProducts])
+  useEffect(()=>{
+    console.log(min,max)
+  },[min,max])
 
    useEffect(()=>{
       if(wishlistProducts?.data?.wishlist_products){
@@ -102,7 +108,7 @@ const Category = () => {
             
             } 
   return (
-    <div className= ' flex justify-center w-full pl-3 pr-3'>
+    <main className= ' flex justify-center w-full pl-3 pr-3'>
        <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[250px]"}`}>
          {addStatus&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{resp?.data?.message}✔️</p>}
          {deleteStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{res?.data?.message }✔️</p>}
@@ -130,7 +136,12 @@ const Category = () => {
             </Link>
             <div className='bg-[#042e2e] w-full h-[70px] rounded-b-[20px]'>
              <p className='text-right text-white p-1 text-lg flex flex-row-reverse '>{product.name_ar.length>12?`...${product.name_ar.slice(0,12)}`:`${product.name_ar}`}
-              <span className='cursor-pointer absolute left-2 bottom-8 bg-[#5bb3ae] w-8 h-8 rounded-full grid place-content-center'> 
+              <span
+               onClick={()=>{
+                              dispatch(setOpenAddition(true));
+                              dispatch(setProductId(product.id))
+                            }} 
+              className='cursor-pointer absolute left-2 bottom-8 bg-[#5bb3ae] w-8 h-8 rounded-full grid place-content-center hover:brightness-80'> 
               <ShoppingCartIcon className='size-4.5'  />
               </span>
                </p>
@@ -160,7 +171,7 @@ const Category = () => {
         )}
         </div>
       </div>
-      <div className='flex flex-col gap-5 mt-8'>
+      {Number(min)<Number(max)&&<div className='flex flex-col gap-5 mt-8'>
       <div  onClick={()=>{dispatch(setCatMenuClicked2(!catMenuClicked2))}} className='flex justify-between items-baseline cursor-pointer'>
         <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked2?"rotate-180":"rotate-0"}`} size={20}/>
         <p className='text-lg'>تصفية حسب السعر</p>
@@ -170,8 +181,8 @@ const Category = () => {
           <p className='text-right'>Min price:</p>
           <Slider
           reverse
-          min={Number(categoryProducts?.data?.filters?.min_price)}
-          max={Number(categoryProducts?.data?.filters?.max_price)}
+          min={min}
+          max={max}
           value={Number(minPrice)}
           onChange={(value)=>dispatch(setMinPrice(Math.min(Number(value),Number(maxPrice))))}
           styles={{
@@ -198,8 +209,8 @@ const Category = () => {
           <p className='text-right'>Max price:</p>
           <Slider
           reverse
-          min={Number(categoryProducts?.data?.filters?.min_price)}
-          max={Number(categoryProducts?.data?.filters?.max_price)}
+          min={Number(min)}
+          max={Number(max)}
           value={Number(maxPrice)}
           onChange={(value)=>dispatch(setMaxPrice(Math.max(value,Number(minPrice))))}
           styles={{
@@ -227,7 +238,7 @@ const Category = () => {
         }} className='cursor-pointer w-[120px] h-[40px] grid place-content-center bg-[#0675a8] text-white rounded-sm' >Apply Filter </button>
         </div>
       </div>
-      </div>
+      </div>}
       {categoryProducts?.data?.filters?.colors?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
          <div  onClick={()=>{dispatch(setCatMenuClicked3(!catMenuClicked3))}} className='flex justify-between items-baseline cursor-pointer'>
@@ -293,7 +304,7 @@ const Category = () => {
     </div>
     </div>
     
-    </div>
+    </main>
   )
 }
 

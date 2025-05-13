@@ -57,9 +57,9 @@ const Forgotpassword = () => {
      }
   }
   return (
-    <div className='larger:flex larger:items-start'>
+    <main className='w-full larger:flex larger:items-start'>
     {isError&&<p className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showMessage?"translate-y-0":"-translate-y-[150px]"} bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{emailError}❌</p>}
-    <div className=' w-full h-[calc(100vh-90px)] grid place-content-center   larger:w-[50%]'>
+    <section className=' w-full h-[calc(100vh-90px)] grid place-content-center   larger:w-[50%]'>
        <form className='flex flex-col gap-5 w-[325px] text-right' onSubmit={handleSubmit}>
         <p className='text-2xl text-center'>إعادة تعيين كلمة المرور</p>
         <div>
@@ -79,9 +79,9 @@ const Forgotpassword = () => {
         
 
        </form>
-    </div>
-     <img src={background} alt='background' loading='lazy' width='735' height='735' className='hidden larger:block' />
-     </div>
+    </section>
+     <img src={background} alt='background' loading='lazy' className='hidden larger:block w-[50%] h-screen' />
+     </main>
   )
 }
 

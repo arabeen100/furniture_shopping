@@ -36,17 +36,22 @@ const Contactus = () =>{
           formData.append("message",message);
           try{const response=await contact(formData).unwrap();
             setSuccessMessage(response.data.message);
+            if(response.status){
+              setEmail("");
+              setMessage("");
+              setName("");
+              setPhone("");
+            }
           }catch(e){console.log(e.data.errors);
           };
       
      }
   return (
-    <div className='contact'>
+    <main className="w-full mx-auto mt-15 mb-10  bg-white p-6 rounded-2xl flex-col flex items-center">
       {(isSuccess)&&<p className={` fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[150px]"} bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{successMessage} ✔️</p>}
-      <div className='h-[calc(100vh-85px)]  grid place-content-center'>
-      
+   
+        <h2 className="text-3xl  mb-6 text-center">اتصل بنا</h2>
         <form onSubmit={handleSubmit} className='flex flex-col w-[300px] sm:w-[450px] gap-5 text-right'>
-          <p className='text-center text-4xl mb-15'>اتصل بنا</p>
           <div >
           <label htmlFor='name' className='hidden'>name</label>
           <input
@@ -93,8 +98,8 @@ const Contactus = () =>{
           </div>
           <button  type='submit' className='w-full h-[55px] grid place-content-center border bg-[#042e2e] text-white text-sm rounded-lg cursor-pointer hover:opacity-85 '>ارسل</button>
         </form>
-      </div>
-    </div>
+      
+    </main>
   )
 }
 

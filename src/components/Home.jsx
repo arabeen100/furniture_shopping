@@ -9,11 +9,14 @@ import { Navigation, Pagination ,Autoplay} from 'swiper/modules';
 import { HeartIcon ,ShoppingCartIcon } from 'lucide-react';
 import { useDispatch,useSelector } from 'react-redux'
 import { setError } from '@/features/login/login'
+import { setOpenAddition } from '@/features/addition/addition'
+import { setProductId } from '@/features/categoryproducts/catProducts'
 const Home = () => {
   const{token}=useSelector((state)=>state.login);
   const{error}=useSelector((state)=>state.checkout)
   const navigate=useNavigate();
   const dispatch=useDispatch();
+  const{successMessage}=useSelector((state)=>state.addition);
   const {data:carousels,isLoading}=useGetCarouselsQuery();
   const[addStatus,setAddStatus]=useState(false);
   const[deleteStatus,setDeleteStatus]=useState(false);
@@ -34,14 +37,14 @@ const Home = () => {
     }
   },[wishlistProducts])
    useEffect(()=>{
-            if(addStatus||deleteStatus||error){
+            if(addStatus||deleteStatus||error||successMessage){
              setShowMessage(true);
              const timer=setTimeout(()=>{
                setShowMessage(false);
             },3000)
            return ()=>clearTimeout(timer);
             }
-      },[addStatus,deleteStatus,error])
+      },[addStatus,deleteStatus,error,successMessage])
   useEffect(()=>{
       if(carousels){
         console.log(carousels)
@@ -93,12 +96,13 @@ const handleHeartIconClick=async(productId)=>{
     
     } 
   return (
-    <div>
+    <main>
       <div >
       <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showMessage?"translate-y-0":"-translate-y-[250px]"}`}>
          {addStatus&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{resp?.data?.message}✔️</p>}
          {deleteStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{res?.data?.message }✔️</p>}
          {error&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{error}</p>}
+          {successMessage&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>تم ارسال طلب الاسترجاع بنجاح ✔️</p>}
       </div>
         <Swiper modules={[Navigation,Pagination,Autoplay]}
         slidesPerView={1}
@@ -112,7 +116,7 @@ const handleHeartIconClick=async(productId)=>{
         {carousels?.data?.carousels.map(carousel=>
           <SwiperSlide  key={carousel.id}>
           <div className='w-full h-full bg-[#00000070] fixed z-20'></div>
-          <div className='w-full h-[366.844px] small:h-[466.109px]  larger:h-[530px] large:h-[585px] xlarge:h-[585px] min-[2000px]:h-[885px]'>
+          <div className='w-full h-[366.844px] small:h-[466.109px]  larger:h-[530px] large:h-[585px] xlarge:h-[43vw] min-[2000px]:h-[45vw]'>
             <img className='w-full h-full object-center object-cover'  src={`${carousel.image_link}`} loading='lazy' />
           </div>
           </SwiperSlide> )}
@@ -143,8 +147,11 @@ const handleHeartIconClick=async(productId)=>{
             <img className=' rounded-t-[20px] h-full w-full object-center object-cover ' alt='product' src={`${product.images?.[0]?.image_link}`} loading='lazy' />
             </Link>
             <div className='bg-[#042e2e] w-full h-[70px] rounded-b-[20px]'>
-             <p className='text-right text-white p-1 text-lg flex flex-row-reverse '>{product.name_ar.length>12?`...${product.name_ar.slice(0,12)}`:`${product.name_ar}`}
-              <span className='cursor-pointer absolute left-2 bottom-8 bg-[#5bb3ae] w-8 h-8 rounded-full grid place-content-center'> 
+             <p className='text-right text-white p-1 text-lg flex flex-row-reverse '> {product.name_ar.length>12?`...${product.name_ar.slice(0,12)}`:`${product.name_ar}`}
+              <span onClick={()=>{
+                dispatch(setOpenAddition(true));
+                dispatch(setProductId(product.id))
+              }} className='cursor-pointer absolute left-2 bottom-8 bg-[#5bb3ae] w-8 h-8 rounded-full grid place-content-center hover:brightness-80'> 
               <ShoppingCartIcon className='size-4.5'  />
               </span>
                </p>
@@ -159,9 +166,12 @@ const handleHeartIconClick=async(productId)=>{
       </div>
       <div className=' flex flex-col justify-center items-center gap-7 mt-15 mb-15 p-2 '>
         <p className='text-4xl text-center text-[#042e2e] ' >الفئات</p>
-        <div  className='flex justify-center flex-wrap '>
+        <div dir='rtl' className='  w-[75vw] large:max-w-[1000px] xlarge:max-w-[1100px] larger:w-[95%] min-w-[340px] grid grid-cols-2 gap-4
+         larger:grid-cols-3
+         large:grid-cols-4
+         auto-rows-fr'>
           {categories?.data?.categories?.map(category=>
-            <Link className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw] w-[40vw] max-w-[300px] min-w-[167px] p-1 ' key={category.id} to={`/categories/${category.name_ar}`}>
+            <Link className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[36vw] max-w-[270px] min-w-[167px] p-1 ' key={category.id} to={`/categories/${category.name_ar}`}>
             <div className='w-full'>
             <img className='  w-full h-full object-center object-cover hover:brightness-50' src={category.image_link} alt='category' loading='lazy'/>
            </div>
@@ -172,10 +182,10 @@ const handleHeartIconClick=async(productId)=>{
           
     
         </div>
-        <Link to="/categories" className='  text-xl text-white bg-[#042e2e] small:px-7 small:py-5 small:text-2xl py-2.5 px-5' >تسوق الان</Link>
+        <Link to="/categories" className='hover:opacity-90  text-xl text-white bg-[#042e2e] small:px-7 small:py-5 small:text-2xl py-2.5 px-5' >تسوق الان</Link>
 
       </div>
-    </div>
+    </main>
   )
 }
 

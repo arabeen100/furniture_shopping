@@ -10,12 +10,16 @@ import Plusbutton from './Plusbutton';
 import Categoriesmenu from './categories/Categoriesmenu';
 import Scrolltop from './Scrolltop';
 import Editaddress from './Editaddress';
+import Addition from './Addition';
+import Order from './Order';
 const Layout = () => {
   const dispatch=useDispatch();
   const {isOpen}=useSelector((state)=>state.search)
   const {expanded}=useSelector((state)=>state.sidebar);
   const {expandedMenu}=useSelector((state)=>state.sidebar);
   const {openEdit}=useSelector((state)=>state.checkout)
+  const{openOrder}=useSelector((state)=>state.checkout);  
+  const {openAddition}=useSelector((state)=>state.addition)
   return (
 
     <div  onClick={()=>{expanded && dispatch(setExpanded());
@@ -25,6 +29,8 @@ const Layout = () => {
           <AppSidebar/>
           <Scrolltop/>
           <Navbar/>
+          {openOrder&&<Order/>}
+          {openAddition&&<Addition/>}
           {openEdit&&<Editaddress/>}
           {isOpen&&<Search/>}
           <Plusbutton/>

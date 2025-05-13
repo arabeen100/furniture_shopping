@@ -83,12 +83,12 @@ useEffect(()=>{
       
      }
   return (
-    <div className='larger:flex larger:items-start'>
+    <main className='w-full larger:flex larger:items-start'>
      <div className={`fixed top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400 ${showError?"translate-y-0":"-translate-y-[250px]"}`}>
       {(isError&&password&&confirmPassword&&!confirmingError)&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}> Reset password code isn't correct ❌</p>}
       {(isSuccess&&password&&confirmPassword&&!confirmingError)&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>{successMessage} ✔️</p>}
      </div>
-      <div className=' w-full h-[calc(100vh-85px)] grid place-content-center   larger:w-[50%]'>
+      <section className=' w-full h-[calc(100vh-85px)] grid place-content-center   larger:w-[50%]'>
       
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 w-[325px] text-right'>
           <p className='text-center text-2xl'>أعد ضبط كلمة  المرور</p>
@@ -132,9 +132,9 @@ useEffect(()=>{
           </div>
           <button  type='submit' className='w-[325px] h-[40px] grid place-content-center border bg-[#042e2e] text-white text-sm rounded-lg cursor-pointer hover:opacity-85'>تحديث كلمة المرور</button>
         </form>
-      </div>
-      <img src={background} alt='background' loading='lazy' width='735' height='735' className='hidden larger:block' />
-    </div>
+      </section>
+      <img src={background} alt='background' loading='lazy' className='hidden larger:block w-[50%] h-screen' />
+    </main>
   )
 }
 

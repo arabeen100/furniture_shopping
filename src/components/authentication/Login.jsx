@@ -62,7 +62,7 @@ const Login = () => {
       
      }
   return (
-    <div className='larger:flex larger:items-start'>
+    <main className='w-full larger:flex larger:items-start'>
           <div className={` fixed z-30 top-[23px] left-[50%] -translate-x-[50%] transition-all duration-400  ${showError?"translate-y-0":"-translate-y-[300px]"}`}>
           {(isError&&password&&userIdentifier)&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}> Login failed: wrong email or password ❌</p>}
           {error&&<p className={`bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}> {error}❌</p>}
@@ -70,7 +70,7 @@ const Login = () => {
         </div>
 
   
-      <div className=' w-full h-[100vh] grid place-content-center   larger:w-[50%]'>
+      <section className=' w-full h-[100vh] grid place-content-center   larger:w-[50%]'>
       
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 w-[325px] text-right'>
           <p className='text-center text-2xl'>تسجيل الدخول</p>
@@ -107,10 +107,10 @@ const Login = () => {
           <p onClick={()=>{navigate("/auth/forgotpass")}} className='text-center hover:opacity-85 cursor-pointer text-sm'>نسيت كلمة المرور</p>
         </form>
        
-      </div>
-      <img src={background} alt='background' loading='lazy' width='735' height='735' className='hidden larger:block' />
+      </section>
+      <img src={background} alt='background' loading='lazy' className='hidden larger:block w-[50%] h-screen' />
         
-    </div>
+    </main>
   )
 }
 

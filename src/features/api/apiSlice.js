@@ -100,15 +100,12 @@ export const apiSlice= createApi({
             })}
         }),
         refund:builder.mutation({
-            query:({orderId,email,notes})=>{
-                const formData = new FormData();
-                formData.append('orderId', orderId);
-                formData.append('email', email);
-                formData.append('notes', notes);
+            query:(refundBody)=>{
+               
                 return({
                 url:'/orders/refund',
                 method:'POST',
-                body:formData,
+                body:refundBody,
             })}
         }),
         getShippingPrice:builder.query({
@@ -278,12 +275,14 @@ export const apiSlice= createApi({
         
     }),
     getUserOrders:builder.query({
-        query:(token)=>({
+        query:()=>{
+            const token=localStorage.getItem("userToken")
+            return({
             url:'/profile/orders',
             headers:{
-                Authorization:`bearer${token}`
+                "Authorization":`Bearer ${token}`
             }
-        })
+        })}
     }),
     getWishList:builder.query({
         query:()=>{
