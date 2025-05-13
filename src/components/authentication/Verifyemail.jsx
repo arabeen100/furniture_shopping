@@ -23,14 +23,6 @@ const Verifyemail = () => {
   const[resend]=useResendCodeMutation();
   const[showMessage,setShowMessage]=useState(false)
   const navigate=useNavigate();
-  useEffect(() => {
-    console.log("Status updated:", status);
-  }, [status]);
-  
-  useEffect(() => {
-    console.log("Error updated:", requiredError);
-  }, [requiredError]);
-  
   useEffect(()=>{
       const footer=document.querySelector("footer")
       footer.classList.add("hidden")

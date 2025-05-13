@@ -8,11 +8,6 @@ import { setOpenorder, setOrderId } from '@/features/checkout/checkout'
 const Userorders = () => {
   const dispatch=useDispatch();
   const{data:orders}=useGetUserOrdersQuery();
-  useEffect(()=>{
-    if(orders){
-      console.log(orders);
-    }
-  },[orders])
     useEffect(()=>{
         dispatch(setProfileClicked(false));
         dispatch(setUserOrdersClicked(true));

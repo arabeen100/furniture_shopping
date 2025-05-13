@@ -27,7 +27,6 @@ const Product = () => {
   const{data:products}=useGetProductsQuery({color:color,size:size,sort:sort,limit:limit,offset:offset,min_price:minPriceP,max_price:maxPriceP})
   useEffect(()=>{
     if(products){
-      console.log(products)
       const matchedProduct=products?.data?.products?.find(product=>((product?.name_ar).trim())===name.trim())
       dispatch(setProductId(matchedProduct.id));
     }
@@ -44,11 +43,6 @@ useEffect(()=>{
 },[product])
 const[selectedColorId,setSelectedColorId]=useState(null);
 const[selectedSizeId,setSelectedSizeId]=useState(null);
-  useEffect(()=>{
-    if(cart){
-      console.log(cart);
-    }
-  },[cart])
    useEffect(()=>{
       if(wishlistProducts?.data?.wishlist_products){
         setLikedItems(()=>
@@ -74,11 +68,6 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
    return ()=>clearTimeout(timer);
     }
 },[addStatus,deleteStatus,finalLimit,status,err])
-  useEffect(()=>{
-    if(product){
-      console.log(product)
-    }
-  },[product])
   useEffect(()=>{
     dispatch(setCount(1))
   },[name])

@@ -22,7 +22,6 @@ const Personalinfo = () => {
   const[updatedUser,{data:update,isError,isSuccess}]=useUpdateInfoMutation();
   useEffect(()=>{
     if(userInfo){
-      console.log(userInfo);
       setFirstName(userInfo.data.user.name.split(" ")[0]);
       setSecondName(userInfo.data.user.name.split(" ")[1]);
       setPhone(userInfo.data.user.phone);
@@ -44,12 +43,6 @@ const Personalinfo = () => {
        }
       
      },[errors,isSuccess])
-
-  useEffect(()=>{
-    if(addresses){
-      console.log(addresses);
-    }
-  },[addresses])
   useEffect(()=>{
       dispatch(setProfileClicked(true));
       dispatch(setUserOrdersClicked(false));

@@ -7,11 +7,6 @@ import { useDispatch } from 'react-redux';
 const Categories = () => {
   const dispatch=useDispatch();
   const {data:categories}=useGetCategoriesQuery();
-    useEffect(()=>{
-      if(categories){
-        console.log(categories)
-      }
-  },[categories])
   return (
     <main className=' flex flex-col justify-center items-center gap-7 mt-15 mb-15 p-2 '>
         <p className='text-4xl text-center text-[#042e2e] ' >الفئات</p>

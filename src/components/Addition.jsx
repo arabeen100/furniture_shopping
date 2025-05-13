@@ -40,11 +40,6 @@ useEffect(()=>{
 },[product])
 const[selectedColorId,setSelectedColorId]=useState(null);
 const[selectedSizeId,setSelectedSizeId]=useState(null);
-  useEffect(()=>{
-    if(cart){
-      console.log(cart);
-    }
-  },[cart])
    useEffect(()=>{
       if(wishlistProducts?.data?.wishlist_products){
         setLikedItems(()=>
@@ -70,11 +65,6 @@ const[selectedSizeId,setSelectedSizeId]=useState(null);
    return ()=>clearTimeout(timer);
     }
 },[addStatus,deleteStatus,finalLimit,status,err])
-  useEffect(()=>{
-    if(product){
-      console.log(product)
-    }
-  },[product])
   useEffect(()=>{
     dispatch(setCount(1))
   },[name])

@@ -6,12 +6,6 @@ const Faqs = () => {
   const {data:FAQs,isSuccess}=useGetFaqsQuery();
   const[chevronClicked1,setChevronClicked1]=useState(false);
   const[chevronClicked2,setChevronClicked2]=useState(false);
-
-    useEffect(()=>{
-        if(FAQs){
-          console.log(FAQs)
-        }
-    },[FAQs])
   return (
     <main className='flex flex-col justify-center items-center gap-10'>
       <h1 className='text-center text-4xl mt-20'>أسئلة متكررة</h1>

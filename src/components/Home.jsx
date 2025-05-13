@@ -45,26 +45,6 @@ const Home = () => {
            return ()=>clearTimeout(timer);
             }
       },[addStatus,deleteStatus,error,successMessage])
-  useEffect(()=>{
-      if(carousels){
-        console.log(carousels)
-      }
-  },[carousels])
-  useEffect(()=>{
-    if(categories){
-      console.log(categories)
-    }
-},[categories])
-  useEffect(()=>{
-    if(trendy){
-      console.log(trendy)
-    }
-},[trendy])
-useEffect(()=>{
-  if(wishlistProducts){
-    console.log(wishlistProducts)
-  }
-},[wishlistProducts])
 const handleHeartIconClick=async(productId)=>{
   if(token){
     if(!likedItems[productId]){
@@ -123,11 +103,11 @@ const handleHeartIconClick=async(productId)=>{
         </Swiper>
 
       </div>
-      <div className='mt-15 mb-15 p-2'>
+      <div className='mt-15 mb-15 p-'>
         <p className='text-4xl text-center text-[#042e2e] mb-12' >منتجات رائجة لأجلك</p>
         <Swiper modules={[Navigation]}
         slidesPerView={2}
-        spaceBetween={10}
+        spaceBetween={5}
         breakpoints={{768:{slidesPerView:3,spaceBetween:70,},
                       1200:{slidesPerView:4,spaceBetween:70} ,
       }}
@@ -137,7 +117,7 @@ const handleHeartIconClick=async(productId)=>{
         >
        
         {trendy?.data?.products?.map(product=>
-          <SwiperSlide className='w-[20vw] max-w-[300px] min-w-[167px]' key={product.id}>
+          <SwiperSlide className='w-[20vw] max-w-[300px] min-w-[167px]'    key={product.id}>
            
             <div className='relative  bg-gray-200 flex flex-col w-full h-[260px] larger:h-[320px] large:h-[320px] xlarge:h-[320px]  rounded-[20px] '>
               <div onClick={()=>{handleHeartIconClick(product.id)}}  className=' cursor-pointer w-9 h-9 rounded-full bg-white absolute grid place-content-center left-1.5 t.5'>
@@ -169,7 +149,7 @@ const handleHeartIconClick=async(productId)=>{
         <div dir='rtl' className='  w-[75vw] large:max-w-[1000px] xlarge:max-w-[1100px] larger:w-[95%] min-w-[340px] grid grid-cols-2 gap-4
          larger:grid-cols-3
          large:grid-cols-4
-         auto-rows-fr'>
+         auto-rows-fr '>
           {categories?.data?.categories?.map(category=>
             <Link className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[36vw] max-w-[270px] min-w-[167px] p-1 ' key={category.id} to={`/categories/${category.name_ar}`}>
             <div className='w-full'>

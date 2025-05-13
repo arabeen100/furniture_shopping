@@ -24,17 +24,7 @@ const Categoriesmenu = () => {
               document.body.classList.remove("overflow-hidden");
             }
         
-          },[expandedMenu])
-          useEffect(()=>{
-              if(categoryProducts){
-                console.log(categoryProducts);
-              }
-            },[categoryProducts])
-            useEffect(()=>{
-              console.log(size,typeof(size));
-              
-            },[size])
-            
+          },[expandedMenu])            
   return (
     <div className={`${expandedMenu&&"w-full h-full bg-[#00000070] fixed z-20"}`}>
     <div  onClick={(e)=>e.stopPropagation()} className={`h-full flex justify-center bg-white  transition-all overflow-y-auto duration-300  fixed left-0  z-30 w-[300px] ${expandedMenu ? " translate-x-0" : " -translate-x-full"}`}>

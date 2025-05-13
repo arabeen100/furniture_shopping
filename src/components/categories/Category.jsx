@@ -47,10 +47,6 @@ const Category = () => {
       dispatch(setMaxPrice(maxPriceP||newMax));    
     }
   },[name,categoryProducts])
-  useEffect(()=>{
-    console.log(min,max)
-  },[min,max])
-
    useEffect(()=>{
       if(wishlistProducts?.data?.wishlist_products){
         setLikedItems(()=>

@@ -32,9 +32,8 @@ const Wishlist = () => {
                 }
           },[succ])
     useEffect(()=>{
-      if(wishlistProducts){
-        console.log(wishlistProducts)
-      }else{
+      if(!wishlistProducts){
+      
         if(error){
           dispatch(setToken(""));
           dispatch(setItem());

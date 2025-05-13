@@ -51,7 +51,6 @@ const Checkout = () => {
   const{data:shipping}=useGetShippingPriceQuery();
   useEffect(()=>{
     if(shipping&&deliverClick){
-      console.log(shipping)
       const R = 6371; 
       const toRad = angle => (angle * Math.PI) / 180;
       const dLat = toRad(shipping?.data?.[0]?.latitude - choosenAddressLatitude);
@@ -83,11 +82,6 @@ const Checkout = () => {
 
   },[addresses])
   useEffect(()=>{
-    if(addresses){
-      console.log(addresses)
-    }
-  },[addresses])
-  useEffect(()=>{
     window.scrollTo(0,0);
   },[firstPayment,returnToCart])
   useEffect(()=>{
@@ -99,10 +93,6 @@ const Checkout = () => {
       ([...acc,{["id"]:product.id,["selectedColor"]:product.selectedColor,["selectedSize"]:product.selectedSize,["quantity"]:product.quantity}]),[]
       )
       setProducts(result)
-      console.log(result);
-      console.log(cartProducts);
-
-      
     }else{
       if(!isLoading){
       navigate("/")
@@ -112,11 +102,6 @@ const Checkout = () => {
       },3500)}
     }
   },[cartProducts])
-  useEffect(()=>{
-    if(checkout){
-      console.log(checkout);
-    }
-  },[checkout])
     useEffect(()=>{
       if(status||err||e||applyStatus||addAddressStatus||editStatus){
        setShowMessage(true);
