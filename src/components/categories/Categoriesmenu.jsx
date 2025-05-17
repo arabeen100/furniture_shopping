@@ -1,6 +1,6 @@
 import React ,{useEffect,useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { XIcon,ChevronDownIcon } from 'lucide-react'
+import { XIcon,ChevronUpIcon } from 'lucide-react'
 import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
 import Slider from 'rc-slider';
 import { Link } from 'react-router-dom';
@@ -34,7 +34,7 @@ const Categoriesmenu = () => {
       </div> 
       <div className={`flex flex-col gap-5 text-lg mt-6 `}>
         <div onClick={()=>{dispatch(setCatMenuClicked1(!catMenuClicked1))}} className='flex justify-between cursor-pointer'>
-         <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked1?"rotate-180":"rotate-0"}`}  size={20}/>
+         <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked1?"rotate-180":"rotate-0"}`}  size={20}/>
          <p>فئات</p>
         </div>
         <div className={`flex flex-col gap-5 ${catMenuClicked1?"max-h-0 opacity-0  pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"} transition-all `}>
@@ -48,7 +48,7 @@ const Categoriesmenu = () => {
       </div>
      {min<max&&<div className='flex flex-col gap-5 mt-8'>
       <div onClick={()=>{dispatch(setCatMenuClicked2(!catMenuClicked2))}} className='flex justify-between items-baseline cursor-pointer'>
-        <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked2?"rotate-180":"rotate-0"}`} size={20}/>
+        <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked2?"rotate-180":"rotate-0"}`} size={20}/>
         <p className='text-lg'>تصفية حسب السعر</p>
       </div>
       <div className={`flex flex-col gap-5 ${catMenuClicked2?"max-h-0 opacity-0 pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"}`}>
@@ -117,7 +117,7 @@ const Categoriesmenu = () => {
       {categoryProducts?.data?.filters?.colors?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
          <div onClick={()=>{dispatch(setCatMenuClicked3(!catMenuClicked3))}}  className='flex justify-between items-baseline cursor-pointer'>
-          <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked3?"rotate-180":"rotate-0"}`} size={20}/>
+          <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked3?"rotate-180":"rotate-0"}`} size={20}/>
           <p className='text-lg'>تصفية حسب اللون</p>
          </div>
          <div className={`flex flex-col gap-2  ${catMenuClicked3?"max-h-0 opacity-0  pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"}`}>
@@ -143,7 +143,7 @@ const Categoriesmenu = () => {
       {categoryProducts?.data?.filters?.sizes?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
          <div  onClick={()=>{dispatch(setCatMenuClicked4(!catMenuClicked4))}} className='flex justify-between items-baseline cursor-pointer'>
-          <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked4?"rotate-180":"rotate-0"}`} size={20}/>
+          <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked4?"rotate-180":"rotate-0"}`} size={20}/>
           <p className='text-lg'>تصفية حسب الحجم</p>
          </div>
          <div className={`flex flex-col gap-2 ${catMenuClicked4?"max-h-0 opacity-0  pointer-events-none":"max-h-fit opacity-100 pointer-events-auto"}`}>

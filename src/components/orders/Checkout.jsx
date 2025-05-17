@@ -7,6 +7,7 @@ import { useNavigate ,useLocation} from 'react-router-dom'
 import paypal from "../../assets/paypal.webp"
 import klarna from"../../assets/klarna.webp"
 const Checkout = () => {
+  const[message,setMessage]=useState("")
   const{pathname}=useLocation();
   const [addAddressStatus,setAddAddressStatus]=useState(false);
   const[products,setProducts]=useState([]);
@@ -103,14 +104,14 @@ const Checkout = () => {
     }
   },[cartProducts])
     useEffect(()=>{
-      if(status||err||e||applyStatus||addAddressStatus||editStatus){
+      if(status||err||e||applyStatus||addAddressStatus||editStatus||message){
        setShowMessage(true);
        const timer=setTimeout(()=>{
          setShowMessage(false);
       },3000)
      return ()=>clearTimeout(timer);
       }
-  },[status,err,e,applyStatus,addAddressStatus,editStatus])
+  },[status,err,e,applyStatus,addAddressStatus,editStatus,message])
   useEffect(()=>{
     if(isError&&count===1){
       setErr(true);
@@ -217,9 +218,8 @@ const handleAddAddress=async (e)=>{
   }
 }
 const handleCheckout=async()=>{
-
-
-  try {
+  if((deliverClick&&addresses?.data?.addresses?.length>0)||pickupClick){
+     try {
     const formData=new FormData();
     formData.append("price",Number(total)||(Number(sum)));
     formData.append("delivery",deliveryInfo);
@@ -250,6 +250,13 @@ const handleCheckout=async()=>{
   } catch (e) {
     console.log(e?.data?.errros);
     }
+
+  }else{
+    setMessage("لابد من اضافة عنوان فى حالة التوصيل");
+    setTimeout(()=>{
+      setMessage("");
+    },3500)
+  } 
   }
 
   return (
@@ -264,6 +271,7 @@ const handleCheckout=async()=>{
          {applyStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>تم تطبيق الكوبون بنجاح ✔️</p>}
          {addAddressStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>تمت إضافة العنوان بنجاح✔️</p>}
          {editStatus&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white`}>تم تعديل العنوان بنجاح✔️</p>}
+         {message&&<p className={` bg-[#298d8dfd] p-5 rounded-[8px] w-fit mx-auto mb-2 text-white text-right`}>{message}</p>}
         </div>
       
       <div className=' w-[90vw] small:w-[576px] larger:w-[768px] large:w-[992px] xlarge:w-[1200px] flex  flex-col  gap-6   my-13 items-center ' >
@@ -388,7 +396,7 @@ const handleCheckout=async()=>{
         <div className='w-full flex flex-col gap-2 items-end '>
           <p className='text-2xl'>اختر كيف تستلم الطلب</p>
           <div className='w-full flex justify-between'>
-            <p className='text-xl'>${deliverClick?shippingPrice:"--"}</p>
+            <p className='text-xl'>${(deliverClick&&addresses?.data?.addresses?.length>0)?shippingPrice:"--"}</p>
             <div onClick={()=>{
               setDeliverClick(true);
               setPickupClick(false);
@@ -509,14 +517,21 @@ const handleCheckout=async()=>{
        </div> 
        <div className=' large:ml-3 mt-25 flex flex-col  gap-7 w-fit'>
            <div className='flex justify-between border-b pb-3 '>
-            <p>${(sum+Number(shippingPrice)).toFixed(2)}</p>
+            <p>${((deliverClick&&addresses?.data?.addresses)||pickupClick)?((sum+Number(shippingPrice)).toFixed(2)):"--"}</p>
             <p>المجموع</p>
            </div>
            <div className={`${removeCoupon?"block":"hidden"} text-right `}>
             <p>أدخل رمز الخصم</p>
             <form onSubmit={(e)=>{e.preventDefault()}} className='flex mt-2'>
-              <button onClick={()=>{
-                setApplyClicked(true);
+              <button onClick={(e)=>{
+                if(deliverClick&&!addresses?.data?.addresses){
+                     setApplyClicked(false)
+                     setMessage("لابد من اضافة عنوان فى حالة التوصيل");
+                     setTimeout(()=>{
+                     setMessage("");
+                    },3500)                  
+                }else{
+                setApplyClicked(true);}
               }} className='cursor-pointer outline-0 p-4 bg-[#042e2e] text-white rounded-l-lg hover:opacity-90'>طبق</button>
               <input className='text-right outline-0 border flex-grow w-48 h-15 focus:border-2 focus:border-[#042e2e] rounded-r-lg large:w-30 xlarge:w-60'
               type='text'
@@ -537,8 +552,8 @@ const handleCheckout=async()=>{
            <div className='w-full border-t pt-6' >
             <div className='mb-4 flex justify-between '>
             <div className='flex gap-3' >
-            <p className={`${isSuccess&&!removeCoupon&&"line-through"}`} >${(sum+Number(shippingPrice)).toFixed(2)}</p>  
-            <p className={`${isSuccess&&!removeCoupon?"block":"hidden"}`}>${finalTotal.toFixed(2)}</p> 
+            <p className={`${isSuccess&&!removeCoupon&&"line-through"}`} >${((deliverClick&&addresses?.data?.addresses?.length>0)||pickupClick)?((sum+Number(shippingPrice)).toFixed(2)):"--"}</p>  
+            <p className={`${isSuccess&&!removeCoupon?"block":"hidden"}`}>${((deliverClick&&addresses?.data?.addresses?.length>0)||pickupClick)?(finalTotal.toFixed(2)):"--"}</p> 
             </div>
             <p>المجموع الكلي</p>
             </div>

@@ -113,11 +113,11 @@ const handleHeartIconClick=async(productId)=>{
       }}
         loop={true}
         navigation
-        className='w-[75vw] xlarge:w-[95%] large:w-[95%] large:max-w-[1000px] xlarge:max-w-[1100px] larger:w-[95%] min-w-[340px]'
+       /*  className='w-[75vw] xlarge:w-[95%] large:w-[95%] large:max-w-[1000px] xlarge:max-w-[1100px] larger:w-[95%] min-w-[340px]' */ className='w-[95%] small:w-[552px] larger:w-[744px] large:w-[968px] xlarge:w-[1176px]'
         >
        
         {trendy?.data?.products?.map(product=>
-          <SwiperSlide className='w-[20vw] max-w-[300px] min-w-[167px]'    key={product.id}>
+          <SwiperSlide /* className='w-[20vw] max-w-[300px] min-w-[167px]'  */ className='w-[calc(50%-10px)] larger:w-[calc(33.3333%-93.333px)] xlarge:w-[calc(25%-70px)]'   key={product.id}>
            
             <div className='relative  bg-gray-200 flex flex-col w-full h-[260px] larger:h-[320px] large:h-[320px] xlarge:h-[320px]  rounded-[20px] '>
               <div onClick={()=>{handleHeartIconClick(product.id)}}  className=' cursor-pointer w-9 h-9 rounded-full bg-white absolute grid place-content-center left-1.5 t.5'>
@@ -144,14 +144,14 @@ const handleHeartIconClick=async(productId)=>{
         </Swiper>
 
       </div>
-      <div className=' flex flex-col justify-center items-center gap-7 mt-15 mb-15 p-2 '>
+      <div className='w-full flex flex-col justify-center items-center gap-7 mt-15 mb-15 p-2 '>
         <p className='text-4xl text-center text-[#042e2e] ' >الفئات</p>
-        <div dir='rtl' className='  w-[75vw] large:max-w-[1000px] xlarge:max-w-[1100px] larger:w-[95%] min-w-[340px] grid grid-cols-2 gap-4
+        <div dir='rtl' className='w-[95%] small:w-[552px] larger:w-[744px] large:w-[968px] xlarge:w-[1176px] grid grid-cols-2 gap-4
          larger:grid-cols-3
          large:grid-cols-4
-         auto-rows-fr '>
+         auto-rows-fr'>
           {categories?.data?.categories?.map(category=>
-            <Link className='larger:min-w-[230px] larger:w-[30vw] large:w-[20vw] xlarge:w-[23vw]  w-[36vw] max-w-[270px] min-w-[167px] p-1 ' key={category.id} to={`/categories/${category.name_ar}`}>
+            <Link key={category.id} to={`/categories/${category.name_ar}`}>
             <div className='w-full'>
             <img className='  w-full h-full object-center object-cover hover:brightness-50' src={category.image_link} alt='category' loading='lazy'/>
            </div>

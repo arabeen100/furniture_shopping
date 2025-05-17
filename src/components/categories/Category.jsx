@@ -11,7 +11,7 @@ import { useGetCategoryProductsQuery,useGetCategoriesQuery,useGetWishListQuery ,
 import { setExpandedMenu } from '@/features/sidebar/sidebarSlice'
 import { setCategoryId, setCatMenuClicked1, setCatMenuClicked2, setCatMenuClicked3, setCatMenuClicked4, setColor, setLimit, setMaxPriceP, setMinPriceP, setOffset, setSize, setSort,setSelectedSizeId,setSelectedColorId,setMinPrice,setMaxPrice, setProductId,setMax,setMin } from '@/features/categoryproducts/catProducts'
 import Slider from 'rc-slider';
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronUpIcon } from 'lucide-react'
 import { setError } from '@/features/login/login'
 import { setOpenAddition } from '@/features/addition/addition'
 const Category = () => {
@@ -155,7 +155,7 @@ const Category = () => {
       <div className='w-[95%] flex flex-col h-fit pb-8'>
       <div className={`flex flex-col gap-5 text-lg  `}>
         <div  onClick={()=>{dispatch(setCatMenuClicked1(!catMenuClicked1))}}className='flex justify-between cursor-pointer'>
-         <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked1?"rotate-180":"rotate-0"}`}  size={20}/>
+         <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked1?"rotate-180":"rotate-0"}`}  size={20}/>
          <p>فئات</p>
         </div>
         <div className={`flex flex-col gap-5 ${catMenuClicked1?"max-h-0 opacity-0 ":"max-h-fit opacity-100"} transition-all `}>
@@ -169,7 +169,7 @@ const Category = () => {
       </div>
       {Number(min)<Number(max)&&<div className='flex flex-col gap-5 mt-8'>
       <div  onClick={()=>{dispatch(setCatMenuClicked2(!catMenuClicked2))}} className='flex justify-between items-baseline cursor-pointer'>
-        <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked2?"rotate-180":"rotate-0"}`} size={20}/>
+        <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked2?"rotate-180":"rotate-0"}`} size={20}/>
         <p className='text-lg'>تصفية حسب السعر</p>
       </div>
       <div className={`flex flex-col gap-5 ${catMenuClicked2?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
@@ -238,7 +238,7 @@ const Category = () => {
       {categoryProducts?.data?.filters?.colors?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
          <div  onClick={()=>{dispatch(setCatMenuClicked3(!catMenuClicked3))}} className='flex justify-between items-baseline cursor-pointer'>
-          <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked3?"rotate-180":"rotate-0"}`} size={20}/>
+          <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked3?"rotate-180":"rotate-0"}`} size={20}/>
           <p className='text-lg'>تصفية حسب اللون</p>
          </div>
          <div className={`flex flex-col gap-2 ${catMenuClicked3?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
@@ -264,7 +264,7 @@ const Category = () => {
       {categoryProducts?.data?.filters?.sizes?.length>0&&
       <div className='mt-8 flex flex-col gap-5'>
          <div  onClick={()=>{dispatch(setCatMenuClicked4(!catMenuClicked4))}}className='flex justify-between items-baseline cursor-pointer'>
-          <ChevronDownIcon className={`transition-all duration-300 ${catMenuClicked4?"rotate-180":"rotate-0"}`} size={20}/>
+          <ChevronUpIcon className={`transition-all duration-300 ${catMenuClicked4?"rotate-180":"rotate-0"}`} size={20}/>
           <p className='text-lg'>تصفية حسب الحجم</p>
          </div>
          <div className={`flex flex-col gap-2 ${catMenuClicked4?"max-h-0 opacity-0 ":"max-h-fit opacity-100"}`}>
