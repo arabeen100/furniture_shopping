@@ -26,7 +26,7 @@ This project is a single-page application (SPA) for furniture shopping. Users ca
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/furniture-shopping.git
+   git clone https://github.com/arabeen100/furniture-shopping.git
    cd furniture-shopping
    ```
 
@@ -44,7 +44,7 @@ This project is a single-page application (SPA) for furniture shopping. Users ca
    yarn dev
    ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+4. Open https://furniture-shopping-nu.vercel.app/ in your browser.
 
 ## 📁 Project Structure
 
