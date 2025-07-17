@@ -119,7 +119,7 @@ const Category = () => {
        <p className='text-lg'>فرز حسب الأحدث</p>
        <p className='text-lg'>عرض <span className='font-semibold'>{categoryProducts?.data?.products.length}</span> من <span className='font-semibold'>{categoryProducts?.data?.products.length}</span> نتائج</p>
       </div>
-      <img className='w-full flex-grow ' src={name==="غرف النوم"?rooms:name==="مجالس"?seatings:name==="مجامر"?fireplaces:name==="ستائر"?curtains:name==="any"?any:null}/>
+      <img className='w-full flex-grow ' src={name==="غرف النوم"?rooms:name==="مجالس"?seatings:name==="مجامر"?fireplaces:name==="ستائر"?curtains:name==="any"?any:null} loading='lazy'/>
       <div className='w-full flex-grow flex flex-wrap justify-end gap-2'>
         {categoryProducts?.data?.products.map(product=>
              <div className='flex-grow  small:flex-grow-0 small:w-[266px] larger:w-[202px] large:w-[205.328px] xlarge:w-[274.656px] max-small:max-w-12/25' key={product.id}>
