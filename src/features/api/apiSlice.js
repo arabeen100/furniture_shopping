@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice= createApi({
     reducerPath:'api',
     baseQuery: fetchBaseQuery({
-        baseUrl:"https://al-rahman-moebel.eu/api",
+        baseUrl:"https://alrhman.wisteirunuon-cheecktraacking.online/api",
     }),
     endpoints:(builder)=>({
         register:builder.mutation({
