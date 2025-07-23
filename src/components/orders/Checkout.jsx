@@ -553,7 +553,7 @@ const handleCheckout=async()=>{
             <div className='mb-4 flex justify-between '>
             <div className='flex gap-3' >
             <p className={`${isSuccess&&!removeCoupon&&"line-through"}`} >${((deliverClick&&addresses?.data?.addresses?.length>0)||pickupClick)?((sum+Number(shippingPrice)).toFixed(2)):"--"}</p>  
-            <p className={`${isSuccess&&!removeCoupon?"block":"hidden"}`}>${((deliverClick&&addresses?.data?.addresses?.length>0)||pickupClick)?(finalTotal.toFixed(2)):"--"}</p> 
+            <p className={`${isSuccess&&!removeCoupon?"block":"hidden"}`}>${((deliverClick&&addresses?.data?.addresses?.length>0))?(finalTotal.toFixed(2)):pickupClick?total.toFixed(2):"--"}</p> 
             </div>
             <p>المجموع الكلي</p>
             </div>
