@@ -3,7 +3,7 @@ import { useEffect,useState } from 'react'
 import background from "../../assets/background.webp"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useLogInMutation } from '@/features/api/apiSlice'
+import { apiSlice, useLogInMutation } from '@/features/api/apiSlice'
 import { setItem, setToken } from '@/features/login/login'
 
 const Login = () => {
@@ -56,6 +56,7 @@ const Login = () => {
             if(response.status){
               dispatch(setToken(response.data.token))
               dispatch(setItem());
+              dispatch(apiSlice.util.invalidateTags(["cart","orders","wish","profile","address"]))
           }
           navigate("/")
           }catch(e){console.log(e.data.errors)};

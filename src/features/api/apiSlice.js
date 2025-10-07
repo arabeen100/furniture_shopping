@@ -282,7 +282,8 @@ export const apiSlice= createApi({
             headers:{
                 "Authorization":`Bearer ${token}`
             }
-        })}
+        })},
+        providesTags:["orders"]
     }),
     getWishList:builder.query({
         query:()=>{
