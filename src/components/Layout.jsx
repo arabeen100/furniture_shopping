@@ -22,9 +22,9 @@ const Layout = () => {
   const {openAddition}=useSelector((state)=>state.addition)
   return (
 
-    <div  onClick={()=>{expanded && dispatch(setExpanded());
+    <div   onClick={()=>{expanded && dispatch(setExpanded());
     expandedMenu&&dispatch(setExpandedMenu());
-    }} className={`App`}>
+    }} className={`App flex flex-col`}>
           <Categoriesmenu/>
           <AppSidebar/>
           <Scrolltop/>
@@ -34,7 +34,9 @@ const Layout = () => {
           {openEdit&&<Editaddress/>}
           {isOpen&&<Search/>}
           <Plusbutton/>
+          <main className='flex-1'>
           <Outlet/>
+          </main>
           <Footer/>
           
     </div>
